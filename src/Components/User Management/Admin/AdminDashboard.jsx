@@ -1,11 +1,10 @@
-
-
 function AdminDashboard() {
+
   return (
-    <div className="flex justify-center bg-[black]">
-      AdminDashboard
+    <div>
+      hi
     </div>
-  )
+  );
 }
 
-export default AdminDashboard
+export default AdminDashboard;

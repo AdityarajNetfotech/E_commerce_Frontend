@@ -1,12 +1,11 @@
 import React from 'react'
 
-function Student() {
+function Product() {
   return (
     <div>
-      School
+      hi
     </div>
   )
 }
 
-export default Student
-
+export default Product
