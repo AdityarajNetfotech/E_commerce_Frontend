@@ -84,7 +84,7 @@ function OtpVerification() {
 
       if (response.data.success) {
         alert("OTP verified successfully!");
-        navigate("/dashboard");
+        navigate("/UserLogin");
       } else {
         setError("Invalid OTP. Please try again.");
       }

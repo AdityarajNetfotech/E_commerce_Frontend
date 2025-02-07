@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState("");
@@ -7,6 +8,7 @@ const ChangePassword = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +37,7 @@ const ChangePassword = () => {
 
       setSuccessMessage("Password reset successfully. Redirecting...");
       setTimeout(() => {
-        window.location.href = "/login"; // Redirect to login page
+        navigate("/UserLogin"); // Redirect using navigate
       }, 2000);
     } catch (err) {
       setError(err.message);

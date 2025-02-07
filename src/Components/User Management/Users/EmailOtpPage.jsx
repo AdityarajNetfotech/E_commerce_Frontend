@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EmailOtpPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (index, value) => {
     if (isNaN(value)) return;
@@ -47,7 +49,7 @@ const EmailOtpPage = () => {
 
       setSuccessMessage("OTP verified successfully. Redirecting...");
       setTimeout(() => {
-        window.location.href = "/ChangePasswordPage"; // Redirect to reset password page
+        navigate("/ChangePasswordPage"); // Redirect using navigate
       }, 2000);
     } catch (err) {
       setError(err.message);

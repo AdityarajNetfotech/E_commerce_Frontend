@@ -1,6 +1,6 @@
 import React from 'react'
 
-function MainLandingPage() {
+function StudentMainLandingPage() {
   return (
     <div>
       Hi
@@ -8,4 +8,4 @@ function MainLandingPage() {
   )
 }
 
-export default MainLandingPage
+export default StudentMainLandingPage

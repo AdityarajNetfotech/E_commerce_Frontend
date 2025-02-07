@@ -8,7 +8,7 @@ import Userlogin from './Components/User Management/Users/Userlogin'
 import EmailResetPage from './Components/User Management/Users/EmailResetPage';
 import EmailOtpPage from './Components/User Management/Users/EmailOtpPage';
 import ChangePasswordPage from './Components/User Management/Users/ChangePasswordPage';
-import MainLandingPage from './Pages/Student/StudentLandingPage/MainLandingPage';
+import StudentMainLandingPage from './Pages/Student/StudentLandingPage/MainLandingPage';
 import Product from './Pages/Student/ProductPages/Product';
 function App() {
   // const [count, setCount] = useState(0)
@@ -26,13 +26,10 @@ function App() {
     <Route path='/EmailResetPage' element={<EmailResetPage/>} />
     <Route path='/EmailOtpPage' element={<EmailOtpPage/>} />
     <Route path='/ChangePasswordPage' element={<ChangePasswordPage/>} />
-    <Route path='/MainLandingPage' element={<MainLandingPage/>} />
+    <Route path='/StudentMainLandingPage' element={<StudentMainLandingPage/>} />
     <Route path='/Product' element={<Product />} />
     </Routes>
     </BrowserRouter>
-      <div className='mt-10'>
-        <h1 className='flex justify-center items-center'>Student E-commerce application</h1>
-      </div>
     </>
   )
 }

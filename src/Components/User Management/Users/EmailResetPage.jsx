@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 export default function EmailResetPage() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,8 +36,8 @@ export default function EmailResetPage() {
 
       setSuccessMessage("An OTP has been sent to your email.");
       setTimeout(() => {
-        Navigate('/EmailOtpPage')// Redirect to OTP verification page
-      }, 5000);
+        navigate('/EmailOtpPage')// Redirect to OTP verification page
+      }, 2000);
     } catch (err) {
       setError(err.message);
     } finally {
