@@ -1,0 +1,244 @@
+/* Parent Section */
+.slider {
+  position: relative;
+}
+.content-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 0px 80px;
+  }
+  
+  /* Left Text Section */
+  .text-section {
+    align-content: center;
+    width: 40%;
+    height: 550px;
+    color: black;
+  }
+  
+  /* Heading */
+  .heading {
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 80px;
+  }
+  
+  /* Subheading */
+  .subheading {
+    font-size: 24px;
+    color:#3E3A37;
+    font-weight: 400;
+    line-height: 30px;
+    margin-bottom: 20px;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 11px;
+    overflow: hidden;
+    width: 453px;
+    height: 54px;
+    background: white;
+    padding: 5px 10px;
+    box-shadow: 15px 15px 15px rgba(255, 166, 0, 0.873); 
+  }
+
+  .custom-mt{
+    margin-top: 7rem;
+  }
+  
+  .search-bar input {
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  .search-bar button {
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 20%;
+  }
+  
+ /* Image Container */
+.image-container {
+    position: relative;
+    width: 50%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-item {
+    background: #FFF3CE;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+   
+    width: 300px;
+    height: 170px;
+    text-align: center;
+    border-radius: 24px;
+    padding: 35px 32px 35px 32px;
+    gap: 12px;
+    color: #5B5454;
+    font-weight: 600;
+    font-size: 26px;
+  }
+  
+  .item-Section {
+    position: absolute;
+    width: 1046px;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    column-gap: 30px; 
+   
+  }
+
+  @media (max-width: 990px) {
+    .content-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: auto;
+      width: 100%;
+      background:linear-gradient(rgba(245, 212, 113, 0.5), rgba(248, 194, 34, 0.5)),url("../Images/none.png") no-repeat center;
+      background-size: contain;
+    }
+
+    .heading {
+      font-size: 45px;
+      font-weight: 650;
+      width: 300px;
+      margin-bottom: 50px;
+      line-height: 50px;
+      text-align: center;
+      color:#0d6efd;
+      /* color: teal;
+      color: #0a1080; */
+      text-shadow: 0 0 10px #fdfcfe, 0 0 20px #f6f4f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+
+
+    .subheading {
+      font-size: 20px;
+      color:#333333;
+      text-shadow: 0 0 10px #fdfcfe, 0 0 20px #f6f4f2;
+      width: 400px;
+      font-weight: 600;
+      line-height: 25px;
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      border: 1px solid #000;
+      border-radius: 11px;
+      overflow: hidden;
+      width: 300px;
+      height: 45px;
+      background: white;
+      padding: 5px 5px;
+      box-shadow: 15px 15px 15px rgba(255, 166, 0, 0.873); 
+      align-content: center;
+    }
+
+    .custom-mt{
+      margin-top: 2rem;
+    }
+
+    .search-bar input {
+      border: none;
+      padding: 5px;
+      width: 100%;
+      font-size: 1rem;
+    }
+    
+    .search-bar button {
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      border-radius: 20%;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .group{
+    display: none;
+    
+    }
+
+    .item-Section {
+      position: absolute;
+      width: 700px;
+      bottom: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 25px;
+     column-gap: 5px; 
+    }
+
+    .card-item {
+      background: #FFF3CE;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+     
+      width: 150px;
+      height: 70px;
+      text-align: center;
+      border-radius: 18px;
+      padding: 35px 32px 35px 32px;
+      gap: 2px;
+      color: #5B5454;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .service-card-img{
+     height: 40px;
+     width: 40px;
+    }
+
+    .font-s{
+      font-size: 18px;
+    }
+
+
+  }
+  
