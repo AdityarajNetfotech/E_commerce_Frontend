@@ -1,32 +1,23 @@
-import React from "react";
 import productsData from "../../data.js";
-import ProductCard from "../ProductCards/ProductCard.jsx";
-import "../ProductList/ProductList.css";
-
+ import ProductCard from "../ProductCards/ProductCard.jsx";
+ 
 const ProductList = () => {
     return (
-        <section className="products position-relative">
-        <div className="grey-background container-fluid z-0  position-absolute"></div>
-                  
-                 
-            <div className="container">
-            <div className="heading-container"><h1 className=" custom-media custom-h2 mb-5">Explore Products</h1></div>
-                <div className="products-wrapper d-flex flex-wrap justify-content-between">
-                    
-
-
-                    
-                            {productsData.map((product) => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                            
-
+        <section className="products relative my-12 w-full ">
+            <div className="absolute top-[29%] w-full h-[540px] bg-gray-300 z-0"></div>
+            <div className="max-w-[1190px] mx-30 relative z-10 xl:mx-auto">
+                <div className="mb-5 ">
+                    <h1 className="text-4xl font-semibold w-auto inline-block border-b-4 border-orange-500 pb-2 max-[990px]:flex justify-center">Explore Products</h1>
+                </div>
+                <div className="grid grid-cols-3 gap-8 justify-center p-2 max-[990px]:flex max-[990px] :flex-col max-[990px]: flex-wrap">
+                    {productsData.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
                 </div>
             </div>
-            
         </section>
     );
 };
-
+ 
 export default ProductList;
-
+ 

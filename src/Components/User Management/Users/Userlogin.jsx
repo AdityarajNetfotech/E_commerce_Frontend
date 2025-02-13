@@ -38,7 +38,7 @@ export default function UserLogin() {
       }
 
       alert("Login successful!");
-      window.location.href = "/dashboard"; // Redirect after successful login
+      window.location.href = "/StudentMainLandingPage"; // Redirect after successful login
     } catch (err) {
       setLoading(false);
       setError(err.message);

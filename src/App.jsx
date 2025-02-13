@@ -10,7 +10,7 @@ import EmailOtpPage from './Components/User Management/Users/EmailOtpPage';
 import ChangePasswordPage from './Components/User Management/Users/ChangePasswordPage';
 import StudentMainLandingPage from './Pages/Student/StudentLandingPage/MainLandingPage';
 import Product from './Pages/Student/ProductPages/Product';
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
 
