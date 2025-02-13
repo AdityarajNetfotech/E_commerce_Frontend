@@ -1,4 +1,4 @@
-// src/data/data.js
+
 import uniformImg from "./Components/Images/Rectangle 420 (1).png"
 import bookImg from "./Components/Images/Rectangle 420 (2).png"
 import uniformRedImg from "./Components/Images/Rectangle 420.png"
