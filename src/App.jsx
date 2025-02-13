@@ -10,6 +10,8 @@ import EmailOtpPage from './Components/User Management/Users/EmailOtpPage';
 import ChangePasswordPage from './Components/User Management/Users/ChangePasswordPage';
 import StudentMainLandingPage from './Pages/Student/StudentLandingPage/MainLandingPage';
 import Product from './Pages/Student/ProductPages/Product';
+import ShoppingCart from './Pages/Student/ShoppingCart/ShoppingCart';
+import MyOrders from './Pages/Student/MyOrders/MyOrders';
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -29,6 +31,8 @@ function App() {
     <Route path='/ChangePasswordPage' element={<ChangePasswordPage/>} />
     <Route path='/StudentMainLandingPage' element={<StudentMainLandingPage/>} />
     <Route path='/Product' element={<Product />} />
+    <Route path='/ShoppingCart' element={<ShoppingCart />} />
+    <Route path='/MyOrders' element={<MyOrders />} />
     </Routes>
     </BrowserRouter>
     </>

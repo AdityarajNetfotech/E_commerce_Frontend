@@ -1,51 +1,57 @@
-import React from 'react'
-import logo from "../Images/Group.png";
-import socialMedia from "../Images/Frame 51.png"
-import "./Footer.css"
+import React from "react";
+import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
+import book from "../../components/images/book.png";
 
-function Footer() {
-    return (
-        <div className='footer-container  '>
-            <div className='container '>
-                <div className='footer-content d-flex justify-content-between align-item-center mt-4 mb-5'>
-                    <div className='footer-leftSide d-flex flex-column'>
-                        <div className='brand-name brand-title d-flex justify-content-center align-items-center mt-4 mb-5'>
-                            <img src={logo} alt="logo" style={{ width: "66px", height: "69px" }} />
-                            <div><span className="fw-bold custom-hw text-white mt-4 mb-5">Brand<span className="text-warning custom-hw mt-4 mb-5 ">Name</span></span></div>
-                        </div>
-                        <div className='mt-auto ms-7'>
-                            <h4 className='text-white custom-style'>Follow Us</h4>
-                            <img src={socialMedia} alt="logo" className="me-2 custom-img" />
-                        </div>
-                    </div>
-                    <div className='footer-rightSide d-flex justify-content-between mt-4 mb-5 gap-25'  >
-                        <div className='categories card-1 text-white'>
-                            <h4 className='mt-4 mb-4 '>Categories</h4>
-                            <div>
-                                <ul className="d-flex flex-column align-items-start ps-0 list-unstyled">
-                                    <li className=" custom-design mb-3 "><a className="text-decoration-none text-white" href>Uniform</a></li>
-                                    <li className="custom-design mb-3 "><a className="text-decoration-none text-white" href>Books</a></li>
-                                    <li className="custom-design mb-3 "><a className="text-decoration-none text-white" href>Stationary</a></li>
-                                </ul>
+const Footer = () => {
+  return (
+    <footer className="bg-grey-custom text-white py-8 sm:py-10 ">
+      <div className="container mx-auto px-4 sm:px-8 lg:px-30 flex flex-col md:flex-row justify-between items-start gap-8">
+    
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            <img src={book} alt="Brand Logo" className="w-12 h-12 mr-3" />
+            <h2 className="text-2xl sm:text-3xl font-bold">
+              Brand<span className="text-yellow-400">Name</span>
+            </h2>
+          </div>
 
-                            </div>
-                           
-
-                        </div>
-                        <div className="contacts customize-hw card-1 text-white">
-                                <h4 className="mt-4 mb-4 ">Contact Us</h4>
-                                <ul className="d-flex flex-column align-items-start ps-0 list-unstyled">
-                                    <li className="custom-design mb-3 "><a className="text-decoration-none text-white" href>Phone: +91 844644464</a></li>
-                                    <li className="custom-design mb-3 "><a className="text-decoration-none text-white" href>Email: info@netfotech.in</a></li>
-                                </ul>
-                            </div>
-                    </div>
-
-                </div>
-                <p className='text-white text-center custom-p mb-4'>Copyright &copy; 2025 by Netfotech Solutions. All Rights Reserved.</p>
-            </div>
+          <h3 className="mt-17 text-xl sm:text-2xl font-semibold">Follow Us :</h3>
+          <div className="flex gap-5 mt-5">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <FaFacebookF className="w-8 h-8 cursor-pointer hover:text-yellow-400 transition duration-300" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <FaInstagram className="w-8 h-8 cursor-pointer hover:text-yellow-400 transition duration-300" />
+            </a>
+            <a href="mailto:info@netfotech.in">
+              <FaEnvelope className="w-8 h-8 cursor-pointer hover:text-yellow-400 transition duration-300" />
+            </a>
+          </div>
         </div>
-    )
-}
 
-export default Footer
+        <div>
+          <h3 className="text-xl sm:text-3xl font-semibold">Categories</h3>
+          <ul className="mt-2 space-y-3 mt-5">
+            <li className="text-base sm:text-lg hover:text-yellow-400 cursor-pointer transition duration-300">Uniform</li>
+            <li className="text-base sm:text-lg hover:text-yellow-400 cursor-pointer transition duration-300">Books</li>
+            <li className="text-base sm:text-lg hover:text-yellow-400 cursor-pointer transition duration-300">Stationery</li>
+          </ul>
+        </div>
+
+     
+        <div>
+          <h3 className="text-xl sm:text-3xl font-semibold">Contact Us</h3>
+          <p className="text-base sm:text-lg mt-4">Phone: <a href="tel:+91844644464" className="hover:text-yellow-400 transition duration-300">+91 844644464</a></p>
+          <p className="text-base sm:text-lg mt-4">Email: <a href="mailto:info@netfotech.in" className="hover:text-yellow-400 transition duration-300">info@netfotech.in</a></p>
+        </div>
+      </div>
+
+     
+      <div className="text-center mt-6 text-base sm:text-lg border-t border-gray-600 pt-4">
+        <p>Copyright © 2025 by Netfotech Solutions. All Rights Reserved.</p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
