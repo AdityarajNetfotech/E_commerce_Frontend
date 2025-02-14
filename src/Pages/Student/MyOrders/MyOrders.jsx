@@ -1,27 +1,29 @@
 import React from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
 import Footer from "../../../Components/footer/Footer";
-import OrderHeader from "./header/OrderHeader";
+import Header from "./header/OrderHeader";
 import SidebarButtons from "../../../Components/button/Button";
 import OrderList from "./order/OrderList";
 
 const MyOrder = () => {
+  const myorder = "MyOrder"
+
   return (
     <div>
       <Navbar />
-      <OrderHeader />
+      <Header heading={myorder} />
 
       <div className="flex flex-col lg:flex-row justify-center items-start p-15 gap-8">
-        <SidebarButtons />  
+        <SidebarButtons />
         <OrderList />
       </div>
-      
-    <Footer />
+
+      <Footer />
     </div>
-  
+
 
   );
 };
 
- 
+
 export default MyOrder;

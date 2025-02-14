@@ -12,6 +12,10 @@ import StudentMainLandingPage from './Pages/Student/StudentLandingPage/MainLandi
 import Product from './Pages/Student/ProductPages/Product';
 import ShoppingCart from './Pages/Student/ShoppingCart/ShoppingCart';
 import MyOrders from './Pages/Student/MyOrders/MyOrders';
+import CustomerCare from './Pages/Student/CustomerCare/CustomerCare';
+import AccountDetails from './Pages/Student/Account/AccountDetail';
+import ProductDetail from './Pages/Student/ProductPages/product/ProductDetail';
+import DeliveryAddress from './Pages/Student/ShoppingCart/DeliveryAddress';
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -33,6 +37,11 @@ function App() {
     <Route path='/Product' element={<Product />} />
     <Route path='/ShoppingCart' element={<ShoppingCart />} />
     <Route path='/MyOrders' element={<MyOrders />} />
+    <Route path='/CustomerCare' element={<CustomerCare />} />
+    <Route path='/AccountDetail' element={<AccountDetails />} />
+    <Route path='/ProductDetail' element={<ProductDetail />} />
+    <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
+
     </Routes>
     </BrowserRouter>
     </>
