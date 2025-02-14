@@ -5,11 +5,11 @@ const SidebarButtons = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-[300px] ">
+    <div className="flex flex-col items-center gap-4 w-full max-w-[300px] h-[500px] rounded-lg pt-10 px-5 bg-[#FFF3CE]">
       {[
         { label: "My Orders", path: "/MyOrders" },
-        { label: "Customer Care", path: "/Product" },
-        { label: "Account Details", path: "/account-details" },
+        { label: "Customer Care", path: "/CustomerCare" },
+        { label: "Account Details", path: "/AccountDetail" },
       ].map(({ label, path }) => (
         <button
           key={label}

@@ -1,36 +1,42 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Anta&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  font-family: "Montserrat";
+}
 
 .bg-yellow-custom {
-    background-color: #ffc107;
-  }
-  
-  .bg-grey-custom {
-    background-color: #3E3A37;
-  }
-  
-  .bg-peach-custom {
-    background-color: #FFF3CE;
-  }
-  
-  .bg-orange-custom {
-    background-color: #FF902B;
-  }
+  background-color: #ffc107;
+}
 
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Narrow scrollbar */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f7f7f7; /* Light background */
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #ccc; /* Light gray scrollbar */
-    border-radius: 6px;
-  }
-  
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-  }
-  
-  
+.bg-grey-custom {
+  background-color: #3E3A37;
+}
+
+.bg-peach-custom {
+  background-color: #FFF3CE;
+}
+
+.bg-orange-custom {
+  background-color: #FF902B;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  /* Narrow scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f7f7f7;
+  /* Light background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  /* Light gray scrollbar */
+  border-radius: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}

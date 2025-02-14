@@ -41,7 +41,7 @@ const orders = [
 const OrderList = () => {
   return (
     <div className="w-full lg:w-[750px] bg-white shadow-lg rounded-lg">
-      <div className="max-h-[600px] overflow-y-auto p-4 custom-scrollbar space-y-4">
+      <div className="max-h-[600px] overflow-y-auto p-8 custom-scrollbar space-y-4">
         
     
        <div className="flex justify-between items-center mb-4 border-b pb-2">
