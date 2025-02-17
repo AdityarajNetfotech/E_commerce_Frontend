@@ -6,7 +6,7 @@ import SidebarButtons from "../../../Components/button/Button";
 import OrderList from "./order/OrderList";
 
 const MyOrder = () => {
-  const myorder = "MyOrder"
+  const myorder = "My Orders"
 
   return (
     <div>

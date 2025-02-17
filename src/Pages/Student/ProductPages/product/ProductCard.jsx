@@ -1,35 +1,33 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import cart from "../../../../components/images/cart.png";
 
-const ProductCard = ({ image, name, price, school }) => {
+const ProductCard = ({ id, img, name, price, school }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/ProductDetail`); // Navigate to ProductDetails page
+  };
+
   return (
-    <div className="flex flex-col items-center p-4 sm:p-6 gap-1 w-full bg-white border-2 border-gray-400 shadow-lg rounded-lg hover:border-orange-500 hover:shadow-xl transition-all duration-300">
+    <div 
+      onClick={handleClick} 
+      className="h-[430px] w-full max-w-[320px] border-gray-400 flex flex-col justify-between p-3 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300 cursor-pointer"
+    >
       <img
-        src={image}
+        src={img}
         alt={name}
-        className="w-full h-[200px] sm:h-[250px] md:h-[320px] object-cover rounded-md"
+        className="w-full h-full object-contain rounded-lg"
       />
-
-      <div className="flex flex-col items-start w-full h-auto gap-3 mt-4">
-        <div className="w-full h-[1px] bg-gray-500"></div>
-
-        <h3 className="text-black font-montserrat font-medium text-xl sm:text-2xl">
-          {name}
-        </h3>
-
-        <p className="text-[#635D5A] font-montserrat text-base sm:text-lg">
-          {school}
-        </p>
-
-        <div className="flex justify-between items-center w-full">
-          <div className="flex items-center gap-1">
-            <span className="text-blue-600 text-xl sm:text-2xl font-semibold">₹</span>
-            <span className="text-blue-600 text-xl sm:text-2xl font-semibold">{price}</span>
-          </div>
-
-          <button className="flex justify-center items-center w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 rounded-full transform -translate-y-2 hover:scale-110 transition-all duration-200">
-            <img src={cart} alt={name} className="w-6 h-6" />
-          </button>
+      <hr className="w-full border-gray-300" />
+      <div className="flex justify-between items-center w-full p-2">
+        <div>
+          <span className="text-xl sm:text-[20px] font-semibold">{name}</span> <br />
+          <span className="text-base sm:text-[15px] text-gray-600">{school}</span> <br />
+          <span className="text-xl sm:text-[18px] font-bold">₹ {price}</span>
+        </div>
+        <div className="flex justify-center items-center h-10 w-10 sm:h-12 sm:w-12 bg-[#FF902B] rounded-full cursor-pointer">
+          <img src={cart} alt="Cart Icon" className="w-6 h-6" />
         </div>
       </div>
     </div>

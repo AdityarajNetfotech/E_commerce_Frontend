@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
-import { FaShoppingCart, FaUserCircle, FaSearch, FaBars, FaTimes } from "react-icons/fa";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { FaShoppingCart, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 import hardh from "../Images/Group.png";
 import hardhh from "../Images/Group.png";
 
 function CustomNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate(); // ✅ Initialize the navigate function
+
+  const handleNavigation = (path) => {
+    navigate(path); // ✅ Navigate to the selected page
+    setMenuOpen(false); // ✅ Close user dropdown
+    setMobileMenuOpen(false); // ✅ Close mobile menu
+  };
+
   return (
     <header className="flex justify-between items-center px-20 py-10 bg-yellow-400 w-full">
       {/* Logo Section */}
@@ -24,9 +33,12 @@ function CustomNavbar() {
         </h2>
       </div>
 
-      {/* Icons and Burger Menu */}
+      {/* Icons and Menu */}
       <div className="flex items-center space-x-4">
-        <FaShoppingCart className="text-gray-900 text-3xl cursor-pointer" />
+        <FaShoppingCart
+          className="text-gray-900 text-3xl cursor-pointer"
+          onClick={() => handleNavigation("/ShoppingCart")}
+        />
 
         {/* User Dropdown */}
         <div className="relative hidden md:block">
@@ -40,10 +52,30 @@ function CustomNavbar() {
                 Welcome Sam!!
               </p>
               <ul className="text-gray-700">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My Orders</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Customer Care</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Account Details</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleNavigation("/MyOrders")}
+                >
+                  My Orders
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleNavigation("/CustomerCare")}
+                >
+                  Customer Care
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleNavigation("/AccountDetail")}
+                >
+                  Account Details
+                </li>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600 font-semibold"
+                  onClick={() => handleNavigation("/logout")}
+                >
+                  Logout
+                </li>
               </ul>
             </div>
           )}
@@ -67,26 +99,42 @@ function CustomNavbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-0 left-0 w-full h-screen bg-yellow-400 shadow-md p-6 z-20 flex flex-col space-y-4 ">
+        <div className="absolute top-0 left-0 w-full h-screen bg-yellow-400 shadow-md p-6 z-20 flex flex-col space-y-4">
           <FaTimes
             className="text-gray-900 text-3xl cursor-pointer self-end"
             onClick={() => setMobileMenuOpen(false)}
           />
           <h2 className="text-2xl font-semibold text-gray-800">Welcome Sam!!</h2>
           <ul className="text-gray-700 space-y-2">
-            <li className="py-2 hover:bg-yellow-600 cursor-pointer">My Orders</li>
-            <li className="py-2 hover:bg-yellow-600 cursor-pointer">Customer Care</li>
-            <li className="py-2 hover:bg-yellow-600 cursor-pointer">Account Details</li>
-            <li className="py-2 hover:bg-yellow-600 cursor-pointer">Logout</li>
+            <li
+              className="py-2 hover:bg-yellow-600 cursor-pointer"
+              onClick={() => handleNavigation("/MyOrders")}
+            >
+              My Orders
+            </li>
+            <li
+              className="py-2 hover:bg-yellow-600 cursor-pointer"
+              onClick={() => handleNavigation("/CustomerCare")}
+            >
+              Customer Care
+            </li>
+            <li
+              className="py-2 hover:bg-yellow-600 cursor-pointer"
+              onClick={() => handleNavigation("/AccountDetail")}
+            >
+              Account Details
+            </li>
+            <li
+              className="py-2 hover:bg-yellow-600 cursor-pointer text-red-600 font-semibold"
+              onClick={() => handleNavigation("/logout")}
+            >
+              Logout
+            </li>
           </ul>
         </div>
       )}
     </header>
-
-
-  )
+  );
 }
 
-export default CustomNavbar
-
-
+export default CustomNavbar;

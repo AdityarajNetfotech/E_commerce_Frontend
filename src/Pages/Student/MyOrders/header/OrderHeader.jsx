@@ -4,8 +4,8 @@ import airplane from "../../../../components/images/airplane.png";
 const Header = ({ heading }) => {
   return (
     <div className="relative bg-yellow-custom w-full h-[180px] sm:h-[100px] md:h-[300px] lg:h-[200px] flex flex-col items-center justify-center mx-auto opacity-100">
-      <h1 className="text-2xl sm:text-4xl md:text-3xl lg:text-5xl font-bold text-gray-900 font-montserrat text-center pt-5 md:pt-8"
-        style={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0.5)' }}>
+      <h1 className="text-2xl sm:text-4xl md:text-3xl lg:text-5xl font-bold text-gray-900 font-montserrat text-center pt-5 md:pt-8 -mt-16"
+        style={{ textShadow: '4px 4px 6px rgba(0, 0, 0, 0)' }}>
         {heading}
       </h1>
 
