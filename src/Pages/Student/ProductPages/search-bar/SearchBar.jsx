@@ -18,7 +18,7 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full flex justify-center">
-      <div className="absolute top-[-40px] flex flex-col md:flex-row sm:flex-row items-center bg-peach-custom shadow-lg p-4 sm:p-5 md:p-5 rounded-xl w-full  max-w-[1440px]  h-auto md:h-[100px]  sm-[50px]">
+      <div className="absolute top-[-50px] flex flex-col md:flex-row sm:flex-row items-center bg-peach-custom shadow-lg p-4 sm:p-5 md:p-5 rounded-xl w-full  max-w-[1420px]  h-auto md:h-[100px]  sm-[50px]">
     
         <div className="flex items-center bg-white px-3 sm:px-6 md:px-4  py-2 rounded-lg w-full sm:w-[400px] md:w-[200px] lg:w-[500px] sm:w-[100px] shadow-md border border-gray-custom relative mb-4 md:mb-0">
           <input
