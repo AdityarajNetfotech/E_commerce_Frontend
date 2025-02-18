@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EmailOtpPage = () => {
@@ -8,6 +8,7 @@ const EmailOtpPage = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
+  // Handle OTP input change
   const handleChange = (index, value) => {
     if (isNaN(value)) return;
     let newOtp = [...otp];
@@ -20,6 +21,7 @@ const EmailOtpPage = () => {
     }
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -34,7 +36,8 @@ const EmailOtpPage = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/auth/verify-otp", {
+      // Send OTP to the backend for verification
+      const response = await fetch("http://localhost:5000/api/student/verify-forgot-password-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Ensures session data is used
@@ -49,7 +52,7 @@ const EmailOtpPage = () => {
 
       setSuccessMessage("OTP verified successfully. Redirecting...");
       setTimeout(() => {
-        navigate("/ChangePasswordPage"); // Redirect using navigate
+        navigate("/ChangePasswordPage"); // Redirect to change password page
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -103,7 +106,7 @@ const EmailOtpPage = () => {
                   <button
                     type="button"
                     className="text-blue-600"
-                    onClick={() => window.location.reload()}
+                    onClick={() => window.location.reload()} // Reload to resend OTP
                   >
                     Resend OTP
                   </button>

@@ -52,46 +52,6 @@ const products = [
       price: 700,
       img: uniformImg,
       
-    },
-    {
-      id: 7,
-      name: "Product Name",
-      school: "School Name",
-      price: 700,
-      img: uniformImg,
-      
-    },
-    {
-      id: 8,
-      name: "Product Name",
-      school: "School Name",
-      price: 700,
-      img: bookImg,
-      
-    },
-    {
-      id: 9,
-      name: "Product Name",
-      school: "School Name",
-      price: 700,
-      img: uniformImg,
-      
-    },
-    {
-      id: 10,
-      name: "Product Name",
-      school: "School Name",
-      price: 700,
-      img: bookImg,
-      
-    },
-    {
-      id: 11,
-      name: "Product Name",
-      school: "School Name",
-      price: 700,
-      img: uniformImg,
-      
     }
   ];
   

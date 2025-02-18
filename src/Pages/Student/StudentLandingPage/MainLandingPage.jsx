@@ -1,7 +1,7 @@
 import Navbar from '../../../Components/Navbar/Navbar'
 import Content from '../../../Components/Content/Content'
 import ProductList from '../../../Components/ProductList/ProductList'
-// import Footer from '../../../Components/Footer/Footer'
+import Footer from '../../../Components/Footer/Footer'
  
  
  
@@ -13,7 +13,7 @@ function StudentMainLandingPage() {
     <Navbar />
     <Content  />
     <ProductList />
-    {/* <Footer /> */}
+    <Footer />
    
     </div>
   )

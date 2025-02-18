@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function UserLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // State to manage popup visibility
-
+  const [showPopup, setShowPopup] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,43 +16,36 @@ export default function UserLogin() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: "include", // Ensures cookies are sent if using session-based auth
+      // API request to login
+      const response = await axios.post("http://localhost:5000/api/student/login", {
+        email,
+        password,
       });
 
-      const data = await response.json();
       setLoading(false);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Login failed");
-      }
-
-      // If the backend returns a token, store it in localStorage
-      if (data.token) {
-        localStorage.setItem("authToken", data.token);
+      if (response.data.token) {
+        // Store the JWT token in localStorage
+        localStorage.setItem("authToken", response.data.token);
       }
 
       alert("Login successful!");
-      window.location.href = "/StudentMainLandingPage"; // Redirect after successful login
+      // Navigate to Student Main Landing Page
+      navigate("/StudentMainLandingPage"); 
     } catch (err) {
       setLoading(false);
-      setError(err.message);
+      setError(err.response?.data?.message || "Login failed");
     }
   };
 
   const handleForgotPassword = () => {
-    setShowPopup(true); // Show the popup when "Forgot Password" is clicked
+    setShowPopup(true); 
   };
 
   const handlePopupResponse = (confirmed) => {
     setShowPopup(false); // Close the popup
     if (confirmed) {
-      navigate("/reset-password"); // Navigate to reset password page
+      navigate("/reset-password"); 
     }
   };
 
@@ -119,26 +112,26 @@ export default function UserLogin() {
 
       {/* Popup Modal for "Forgot Password" */}
       {showPopup && (
-  <div className="fixed inset-0 flex items-center justify-center bg-opacity-30 backdrop-blur-lg">
-    <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full transform transition-all duration-300 scale-100 hover:scale-105">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700">Are you sure you want to reset your password?</h2>
-      <div className="flex justify-center gap-4">
-        <button
-          onClick={() => navigate("/EmailResetPage")}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-        >
-          Yes
-        </button>
-        <button
-          onClick={() => handlePopupResponse(false)}
-          className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition duration-300"
-        >
-          No
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-30 backdrop-blur-lg">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full transform transition-all duration-300 scale-100 hover:scale-105">
+            <h2 className="text-lg font-semibold mb-4 text-gray-700">Are you sure you want to reset your password?</h2>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => navigate("/EmailResetPage")}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => handlePopupResponse(false)}
+                className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition duration-300"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import cartIcon from "../Images/Cart icon.png";
 
 const ProductCard = ({ product }) => {
   return (
-    <>
-
+    <Link to={'/product'} className="no-underline">
+      {/* <Link to={`/product/${product.id}`} className="no-underline"></Link> */}
       <div
-        className="h-[430px] w-full max-w-[320px] border-gray-400 flex flex-col justify-between m-auto p-4 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300">
+        className="h-[430px] w-full max-w-[320px] border-gray-400 flex flex-col justify-between m-auto p-4 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300 cursor-pointer">
         <img
           src={product.img}
           alt="ProductImg"
@@ -24,8 +25,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
       </div>
-    </>
-
+    </Link>
   );
 };
 

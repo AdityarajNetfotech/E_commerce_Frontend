@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
+  const [email, setEmail] = useState(""); // Retrieve stored email
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
@@ -10,10 +11,24 @@ const ChangePassword = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("resetEmail");
+    if (storedEmail) {
+      setEmail(storedEmail);
+    } else {
+      setError("Session expired. Please request a password reset again.");
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccessMessage("");
+
+    if (!email) {
+      setError("Session expired. Please request a password reset again.");
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
@@ -22,11 +37,11 @@ const ChangePassword = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/auth/reset-password", {
+      const response = await fetch("http://localhost:5000/api/student/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // Ensures session data (email) is used
-        body: JSON.stringify({ newPassword: password, confirmPassword }),
+        credentials: "include", 
+        body: JSON.stringify({ email, newPassword: password, confirmPassword }),
       });
 
       const data = await response.json();
@@ -37,7 +52,8 @@ const ChangePassword = () => {
 
       setSuccessMessage("Password reset successfully. Redirecting...");
       setTimeout(() => {
-        navigate("/UserLogin"); // Redirect using navigate
+        localStorage.removeItem("resetEmail"); // ✅ Clear stored email
+        navigate("/UserLogin");
       }, 2000);
     } catch (err) {
       setError(err.message);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EmailResetPage() {
   const [email, setEmail] = useState("");
@@ -21,10 +21,11 @@ export default function EmailResetPage() {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/auth/forget-password", {
+
+      const response = await fetch("http://localhost:5000/api/student/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // To store session cookies
+        credentials: "include", 
         body: JSON.stringify({ email }),
       });
 
@@ -34,9 +35,12 @@ export default function EmailResetPage() {
         throw new Error(data.message || "Something went wrong");
       }
 
+      // ✅ Store email in localStorage
+      localStorage.setItem("resetEmail", email);
+
       setSuccessMessage("An OTP has been sent to your email.");
       setTimeout(() => {
-        navigate('/EmailOtpPage')// Redirect to OTP verification page
+        navigate('/EmailOtpPage');
       }, 2000);
     } catch (err) {
       setError(err.message);

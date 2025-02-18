@@ -17,6 +17,8 @@ import AccountDetails from './Pages/Student/Account/AccountDetail';
 import ProductDetail from './Pages/Student/ProductPages/product/ProductDetail';
 import DeliveryAddress from './Pages/Student/ShoppingCart/DeliveryAddress';
 import ProductCatlogue from './Pages/School/ProductCatalogue/ProductCatlogue';
+import Adminlogin from '../src/Components/User Management/Admin/Adminlogin';
+import PendingSchool from './Pages/Admin/PendingSchool/PendingSchool';
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -44,6 +46,9 @@ function App() {
     <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
      {/* School */}
      <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
+     {/* Admin */}
+     <Route path='/Adminlogin' element={<Adminlogin/>} />
+     <Route path='/PendingSchool' element={<PendingSchool/>} />
 
     </Routes>
     </BrowserRouter>

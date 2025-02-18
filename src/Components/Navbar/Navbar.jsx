@@ -1,18 +1,40 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 import hardh from "../Images/Group.png";
-import hardhh from "../Images/Group.png";
 
 function CustomNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigate = useNavigate(); // ✅ Initialize the navigate function
+  const navigate = useNavigate();
 
+  // Handle navigation
   const handleNavigation = (path) => {
-    navigate(path); // ✅ Navigate to the selected page
-    setMenuOpen(false); // ✅ Close user dropdown
-    setMobileMenuOpen(false); // ✅ Close mobile menu
+    navigate(path);
+    setMenuOpen(false);
+    setMobileMenuOpen(false);
+  };
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/student/logout", {
+        method: "POST",
+        credentials: "include", // Ensures cookies are sent
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Redirect user to the login page
+        navigate("/Userlogin");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   return (
@@ -27,7 +49,7 @@ function CustomNavbar() {
 
       {/* Desktop School Name */}
       <div className="hidden lg:flex items-center space-x-2">
-        <img src={hardhh} alt="School Logo" className="w-11 h-11" />
+        <img src={hardh} alt="School Logo" className="w-11 h-11" />
         <h2 className="text-xl md:text-3xl font-semibold text-gray-800">
           Gurukul High School, Ahmedabad
         </h2>
@@ -52,27 +74,18 @@ function CustomNavbar() {
                 Welcome Sam!!
               </p>
               <ul className="text-gray-700">
-                <li
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleNavigation("/MyOrders")}
-                >
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/MyOrders")}>
                   My Orders
                 </li>
-                <li
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleNavigation("/CustomerCare")}
-                >
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/CustomerCare")}>
                   Customer Care
                 </li>
-                <li
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                  onClick={() => handleNavigation("/AccountDetail")}
-                >
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/AccountDetail")}>
                   Account Details
                 </li>
                 <li
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600 font-semibold"
-                  onClick={() => handleNavigation("/logout")}
+                  onClick={handleLogout} // Call Logout function
                 >
                   Logout
                 </li>
@@ -84,15 +97,9 @@ function CustomNavbar() {
         {/* Mobile Menu Toggle */}
         <div className="md:hidden">
           {mobileMenuOpen ? (
-            <FaTimes
-              className="text-gray-900 text-3xl cursor-pointer"
-              onClick={() => setMobileMenuOpen(false)}
-            />
+            <FaTimes className="text-gray-900 text-3xl cursor-pointer" onClick={() => setMobileMenuOpen(false)} />
           ) : (
-            <FaBars
-              className="text-gray-900 text-3xl cursor-pointer"
-              onClick={() => setMobileMenuOpen(true)}
-            />
+            <FaBars className="text-gray-900 text-3xl cursor-pointer" onClick={() => setMobileMenuOpen(true)} />
           )}
         </div>
       </div>
@@ -100,34 +107,19 @@ function CustomNavbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="absolute top-0 left-0 w-full h-screen bg-yellow-400 shadow-md p-6 z-20 flex flex-col space-y-4">
-          <FaTimes
-            className="text-gray-900 text-3xl cursor-pointer self-end"
-            onClick={() => setMobileMenuOpen(false)}
-          />
+          <FaTimes className="text-gray-900 text-3xl cursor-pointer self-end" onClick={() => setMobileMenuOpen(false)} />
           <h2 className="text-2xl font-semibold text-gray-800">Welcome Sam!!</h2>
           <ul className="text-gray-700 space-y-2">
-            <li
-              className="py-2 hover:bg-yellow-600 cursor-pointer"
-              onClick={() => handleNavigation("/MyOrders")}
-            >
+            <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/MyOrders")}>
               My Orders
             </li>
-            <li
-              className="py-2 hover:bg-yellow-600 cursor-pointer"
-              onClick={() => handleNavigation("/CustomerCare")}
-            >
+            <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/CustomerCare")}>
               Customer Care
             </li>
-            <li
-              className="py-2 hover:bg-yellow-600 cursor-pointer"
-              onClick={() => handleNavigation("/AccountDetail")}
-            >
+            <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/AccountDetail")}>
               Account Details
             </li>
-            <li
-              className="py-2 hover:bg-yellow-600 cursor-pointer text-red-600 font-semibold"
-              onClick={() => handleNavigation("/logout")}
-            >
+            <li className="py-2 hover:bg-yellow-600 cursor-pointer text-red-600 font-semibold" onClick={handleLogout}>
               Logout
             </li>
           </ul>

@@ -77,12 +77,11 @@ function OtpVerification() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/verifyEmail", {
-        email,
-        code: otpCode,
+      const response = await axios.post("http://localhost:5000/api/student/verify", {
+        otp: otpCode, // Send OTP as 'otp' in the request body
       });
 
-      if (response.data.success) {
+      if (response.data.message === "Registration successful!") {
         alert("OTP verified successfully!");
         navigate("/UserLogin");
       } else {
@@ -98,13 +97,14 @@ function OtpVerification() {
   const handleResendOtp = async () => {
     try {
       setMessage(""); // Clear previous messages
-      setError(""); 
+      setError(""); // Clear any previous errors
 
-      const response = await axios.post("http://localhost:5000/auth/resendOtp", { email });
+      // Call the backend API to resend OTP
+      const response = await axios.post("http://localhost:5000/api/student/resend-otp", { email });
 
-      if (response.data.success) {
-        setMessage("A new OTP has been sent to your email.");
-        startResendTimer(); // Restart the timer
+      if (response.data.message) {
+        setMessage(response.data.message); // Display success message
+        startResendTimer(); // Restart the resend timer
       } else {
         setError("Failed to resend OTP. Please try again.");
       }
@@ -153,9 +153,7 @@ function OtpVerification() {
           Didn't receive the code?{" "}
           <button
             onClick={handleResendOtp}
-            className={`text-blue-600 hover:text-blue-700 ${
-              isResendDisabled ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`text-blue-600 hover:text-blue-700 ${isResendDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={isResendDisabled}
           >
             {isResendDisabled ? `Resend in ${resendTimer}s` : "Resend OTP"}

@@ -1,8 +1,9 @@
+import AdminSidebar from "../../SideBar/AdminSideBar";
 function AdminDashboard() {
 
   return (
     <div>
-      hi
+      <AdminSidebar/>
     </div>
   );
 }
