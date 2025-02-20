@@ -12,7 +12,7 @@ function AccountDetails() {
             <CustomNavbar />
             <Header heading={accountdetail} />
 
-            <section className='flex flex-col lg:flex-row justify-center items-start p-15 gap-8'>
+            <section className='flex flex-col lg:flex-row justify-center items-start bg-[#ECECEC] p-15 gap-8'>
                 <SidebarButtons />
                 <div className='w-full lg:w-[750px] bg-white shadow-lg rounded-lg p-8'>
 
