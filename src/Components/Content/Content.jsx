@@ -66,15 +66,22 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      <section className="max-padd-container py-16 xl:py-20" id="shop">
-        <div className="-mt-40 flex items-start gap-6 flex-wrap justify-center">
+      <section className=' max-padd-container py-16 xl:py-20 w-[95%] m-auto' id='shop'>
+        <div className='-mt-30 lg:-mt-40 flex items-start gap-6 flex-wrap justify-center  '>
           {categories.map((item) => (
-            <div key={item.name} className="py-9 px-20 rounded-3xl flex justify-center text-center gap-4 cursor-pointer bg-[#FFF3CE] max-w-80 min-w-80">
-              <img src={item.image} alt="CategoryImg" height={95} width={95} />
-              <h4 className="flex justify-center items-center text-3xl font-semibold leading-[24px]">{item.name}</h4>
+            <div
+              id={item.name}
+              key={item.name}
+              className={`py-4 lg:py-8 px-6 rounded-3xl flex justify-center text-center gap-4 cursor-pointer bg-[#FFF3CE] w-80 sm:w-70 md:w-80 lg:w-80 transition-all duration-300 shadow-[4px_8px_8px_rgba(255,144,43,0.32)]`}
+            >
+              <img src={item.image} height={95} width={95} alt='CategoryImg' className="transition-all duration-300" />
+              <h4 className='flex justify-center items-center text-3xl font-semibold leading-[24px]'>
+                {item.name}
+              </h4>
             </div>
+
           ))}
+          {/* <ProductList/> */}
         </div>
       </section>
     </>

@@ -42,7 +42,7 @@ function AddProduct() {
             </Link>
           </div>
           <div className="flex justify-center mb-6">
-          <Link to="/add-category">
+          <Link to="/add-subcategory">
             <button className="bg-black text-white py-2 px-4 rounded-[8px]">
               Add New Category +
             </button>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import dltbtn from "../../../../Components/Images/DangerButton.png"
 import media from "../../../../Components/Images/Media.png"
+import { useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
+  const navigate = useNavigate();
 
   const [row, setRow] = useState([
     { stockQty: "", price: "" },
@@ -182,7 +184,9 @@ const AddProductForm = () => {
           <button className="bg-black text-white px-3 py-1 rounded-lg">
             Cancel
           </button>
-          <button className="bg-orange-500 text-white px-3 py-1 rounded-lg">
+          <button className="bg-orange-500 text-white px-3 py-1 rounded-lg"
+          onClick={()=>navigate('/ProdReview')}
+          >
             Done
           </button>
         </div>

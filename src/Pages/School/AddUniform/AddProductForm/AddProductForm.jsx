@@ -1,9 +1,11 @@
-import React, { useState }  from "react";
+import React, { useState } from "react";
 import dltbtn from "../../../../Components/Images/DangerButton.png"
 import attach from "../../../../Components/Images/Attach.png"
 import media from "../../../../Components/Images/Media.png"
+import { useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
+  const navigate = useNavigate();
 
   const [variations, setVariations] = useState([{
     variationType: "",
@@ -186,7 +188,7 @@ const AddProductForm = () => {
         </div>
       </div>
 
-      
+
       <div className="bg-gray-100 p-6">
         <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-4">Variation</h2>
@@ -218,10 +220,10 @@ const AddProductForm = () => {
                       value={variant.variationInfo}
                       onChange={(e) => handleInputChange(e, variantIndex)}
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      >
+                    >
                       <option>Select (Red)</option>
-                    <option value="Red">Red</option>
-                    <option value="Yellow">Yellow</option>
+                      <option value="Red">Red</option>
+                      <option value="Yellow">Yellow</option>
                     </select>
                   </div>
                   <button
@@ -249,11 +251,11 @@ const AddProductForm = () => {
                         handleInputChange(e, variantIndex, subVariantIndex)
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      
+
                     >
-                    <option>Size</option>
-                    <option value="small">S</option>
-                    <option value="medium">M</option>
+                      <option>Size</option>
+                      <option value="small">S</option>
+                      <option value="medium">M</option>
 
                     </select>
                   </div>
@@ -262,18 +264,18 @@ const AddProductForm = () => {
                       Sub Variant Info
                     </label>
                     <select
-                     
+
                       name="subVariationInfo"
                       value={subVariant.subVariationInfo}
                       onChange={(e) =>
                         handleInputChange(e, variantIndex, subVariantIndex)
                       }
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                     
-                    > 
+
+                    >
                       <option>05</option>
-                    <option value="small">01</option>
-                    <option value="medium">02</option>
+                      <option value="small">01</option>
+                      <option value="medium">02</option>
                     </select>
                   </div>
                   <div>
@@ -369,7 +371,9 @@ const AddProductForm = () => {
           <button className="bg-black text-white px-3 py-1 rounded-lg">
             Cancel
           </button>
-          <button className="bg-orange-500 text-white px-3 py-1 rounded-lg">
+          <button className="bg-orange-500 text-white px-3 py-1 rounded-lg"
+            onClick={() => navigate("/ProdReview")}
+          >
             Done
           </button>
         </div>
