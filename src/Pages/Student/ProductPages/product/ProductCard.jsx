@@ -2,16 +2,20 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import cart from "../../../../components/images/cart.png";
 
-const ProductCard = ({ id, img, name, price, school }) => {
+const ProductCard = ({ id, img, name, price, school, sizes, productInfo, sellerInfo }) => {
   const navigate = useNavigate();
 
+  // console.log("Product Data:", { id, img, name, price, school, sizes, productInfo, sellerInfo });
+
   const handleClick = () => {
-    navigate(`/ProductDetail`); // Navigate to ProductDetails page
+    navigate(`/ProductDetail`, {
+      state: { img, name, price, school, sizes, productInfo, sellerInfo },
+    });
   };
 
   return (
-    <div 
-      onClick={handleClick} 
+    <div
+      onClick={handleClick}
       className="h-[430px] w-full max-w-[320px] border-gray-400 flex flex-col justify-between p-3 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300 cursor-pointer"
     >
       <img

@@ -4,6 +4,7 @@ import Prev from "../../../../Components/Images/PrevArrow.png";
 import Next from "../../../../Components/Images/NextArrow.png";
 import search from "../../../../Components/Images/SearchOutline.png";
 import Replay from "../../../../Components/Images/ReplayIcon.png"
+import { Link } from 'react-router-dom';
 
 
 
@@ -194,7 +195,7 @@ const TableList = () => {
                         </div>
                         
                         <button className="bg-orange-500 text-white px-4 py-2 rounded-lg">
-                            Add New Product +
+                            <Link to='/add-product'>Add New Product +</Link>
                         </button>
                     </div>
                 </div>

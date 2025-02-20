@@ -23,6 +23,8 @@ import AddNewProduct from './Pages/School/AddNewProduct/AddNewProduct';
 import AddUniform from './Pages/School/AddUniform/AddUniform';
 import AddStationary from './Pages/School/AddStationary/AddStationary';
 import AddBook from './Pages/School/AddBook/AddBook';
+import ProductReview from './Pages/School/ProductReview/ProductReview';
+import AddSubCategory from './Pages/School/AddNewProduct/AddSubCategory';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -30,37 +32,39 @@ function App() {
 
   return (
     <>
-    <BrowserRouter>
-    <Routes>
-      {/* Student */}
-    <Route path='/AdminDashboard' element={<AdminDashboard />} />
-    <Route path='/UserRegister' element={<UserRegister />} />
-    <Route path="/otp-verification" element={<OtpVerification />} />
-    <Route path='/SchoolDashboard' element={<SchoolDashboard/>} />
-    <Route path='/Userlogin' element={<Userlogin/>} />
-    <Route path='/EmailResetPage' element={<EmailResetPage/>} />
-    <Route path='/EmailOtpPage' element={<EmailOtpPage/>} />
-    <Route path='/ChangePasswordPage' element={<ChangePasswordPage/>} />
-    <Route path='/StudentMainLandingPage' element={<StudentMainLandingPage/>} />
-    <Route path='/Product' element={<Product />} />
-    <Route path='/ShoppingCart' element={<ShoppingCart />} />
-    <Route path='/MyOrders' element={<MyOrders />} />
-    <Route path='/CustomerCare' element={<CustomerCare />} />
-    <Route path='/AccountDetail' element={<AccountDetails />} />
-    <Route path='/ProductDetail' element={<ProductDetail />} />
-    <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
-     {/* School */}
-     <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
-     {/* Admin */}
-     <Route path='/Adminlogin' element={<Adminlogin/>} />
-     <Route path='/PendingSchool' element={<PendingSchool/>} />
-     <Route path='/NewProd' element={<AddNewProduct />} />
-     <Route path='/uniform' element={<AddUniform />} />
-     <Route path='/books' element={<AddBook />} />
-     <Route path='/stationery' element={<AddStationary />} />
+      <BrowserRouter>
+        <Routes>
+          {/* Student */}
+          <Route path='/AdminDashboard' element={<AdminDashboard />} />
+          <Route path='/UserRegister' element={<UserRegister />} />
+          <Route path="/otp-verification" element={<OtpVerification />} />
+          <Route path='/SchoolDashboard' element={<SchoolDashboard />} />
+          <Route path='/Userlogin' element={<Userlogin />} />
+          <Route path='/EmailResetPage' element={<EmailResetPage />} />
+          <Route path='/EmailOtpPage' element={<EmailOtpPage />} />
+          <Route path='/ChangePasswordPage' element={<ChangePasswordPage />} />
+          <Route path='/StudentMainLandingPage' element={<StudentMainLandingPage />} />
+          <Route path='/Product' element={<Product />} />
+          <Route path='/ShoppingCart' element={<ShoppingCart />} />
+          <Route path='/MyOrders' element={<MyOrders />} />
+          <Route path='/CustomerCare' element={<CustomerCare />} />
+          <Route path='/AccountDetail' element={<AccountDetails />} />
+          <Route path='/ProductDetail' element={<ProductDetail />} />
+          <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
+          {/* School */}
+          <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
+          <Route path='/ProdReview' element={<ProductReview />} />
+          {/* Admin */}
+          <Route path='/Adminlogin' element={<Adminlogin />} />
+          <Route path='/PendingSchool' element={<PendingSchool />} />
+          <Route path='/add-product' element={<AddNewProduct />} />
+          <Route path='/add-subcategory' element={<AddSubCategory />} />
+          <Route path='/uniform' element={<AddUniform />} />
+          <Route path='/books' element={<AddBook />} />
+          <Route path='/stationery' element={<AddStationary />} />
 
-    </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
