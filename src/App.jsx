@@ -19,6 +19,11 @@ import DeliveryAddress from './Pages/Student/ShoppingCart/DeliveryAddress';
 import ProductCatlogue from './Pages/School/ProductCatalogue/ProductCatlogue';
 import Adminlogin from '../src/Components/User Management/Admin/Adminlogin';
 import PendingSchool from './Pages/Admin/PendingSchool/PendingSchool';
+import AddNewProduct from './Pages/School/AddNewProduct/AddNewProduct';
+import AddUniform from './Pages/School/AddUniform/AddUniform';
+import AddStationary from './Pages/School/AddStationary/AddStationary';
+import AddBook from './Pages/School/AddBook/AddBook';
+
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -49,6 +54,10 @@ function App() {
      {/* Admin */}
      <Route path='/Adminlogin' element={<Adminlogin/>} />
      <Route path='/PendingSchool' element={<PendingSchool/>} />
+     <Route path='/NewProd' element={<AddNewProduct />} />
+     <Route path='/uniform' element={<AddUniform />} />
+     <Route path='/books' element={<AddBook />} />
+     <Route path='/stationery' element={<AddStationary />} />
 
     </Routes>
     </BrowserRouter>
