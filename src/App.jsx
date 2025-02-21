@@ -27,6 +27,7 @@ import ProductReview from './Pages/School/ProductReview/ProductReview';
 import AddSubCategory from './Pages/School/AddNewProduct/AddSubCategory';
 import SchoolRegister from './Components/User Management/School/SchoolRegister';
 import SchoolLogin from './Components/User Management/School/Schoollogin';
+import SchoolEmailResetPage from './Components/User Management/School/SchoolEmailResetPage';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path='/ProdReview' element={<ProductReview />} />
           <Route path='/SchoolLogin' element={<SchoolLogin />} />
  <Route path='/SchoolRegister' element={<SchoolRegister />} />
+ <Route path='/schoolemailresetpage' element={<SchoolEmailResetPage />} />
           {/* Admin */}
           <Route path='/Adminlogin' element={<Adminlogin />} />
           <Route path='/PendingSchool' element={<PendingSchool />} />

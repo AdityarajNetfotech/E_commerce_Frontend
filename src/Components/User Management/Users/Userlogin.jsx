@@ -31,7 +31,7 @@ export default function UserLogin() {
 
       alert("Login successful!");
       // Navigate to Student Main Landing Page
-      navigate("/StudentMainLandingPage"); 
+      navigate("/SchoolDashboard"); 
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || "Login failed");
