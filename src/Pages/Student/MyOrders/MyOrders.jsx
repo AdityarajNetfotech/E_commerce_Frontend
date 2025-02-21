@@ -13,7 +13,7 @@ const MyOrder = () => {
       <Navbar />
       <Header heading={myorder} />
 
-      <div className="flex flex-col lg:flex-row justify-center items-start p-15 gap-8">
+      <div className="flex flex-col lg:flex-row justify-center items-stretch bg-[#ECECEC] min-h-screen  ">
         <SidebarButtons />
         <OrderList />
       </div>

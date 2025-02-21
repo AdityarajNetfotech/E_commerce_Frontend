@@ -63,7 +63,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <section className="bg-gray-100">
+    <section className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full p-6 bg-white rounded-lg shadow-md md:mt-0 sm:max-w-md sm:p-8">
           <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -128,7 +128,7 @@ const ChangePassword = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+              className="w-full bg-[#FF902A] text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
             >
               {loading ? "Resetting..." : "Reset Password"}
             </button>

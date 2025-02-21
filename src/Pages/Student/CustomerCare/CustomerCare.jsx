@@ -15,7 +15,7 @@ function CustomerCare() {
             <CustomNavbar />
             <Header heading={customercare} />
             
-            <section className='flex flex-col lg:flex-row justify-center items-start bg-[#ECECEC] p-15 gap-8'>
+            <section className='flex flex-col lg:flex-row justify-center items-stretch bg-[#ECECEC] min-h-screen p-15 gap-0'>
                 <SidebarButtons />
                 <div className='w-full lg:w-[750px] bg-white shadow-lg rounded-lg p-8'>
                     <div className='flex justify-between cursor-pointer text-[22px]'>

@@ -115,7 +115,7 @@ function OtpVerification() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+    <div className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
       <div className="max-w-md w-full text-center bg-white px-6 sm:px-10 py-10 rounded-xl shadow-lg">
         <header className="mb-6">
           <h1 className="text-2xl font-bold mb-1 text-gray-900">OTP Verification</h1>
@@ -143,7 +143,7 @@ function OtpVerification() {
 
           <button
             type="submit"
-            className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 transition"
+            className="w-full mt-6 bg-[#FF902A] hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 transition"
           >
             Verify OTP
           </button>
