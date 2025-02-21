@@ -61,8 +61,8 @@ const products = [
   },
   {
     id: 5,
-    name: "Yellow School Uniform",
-    school: "Oakwood International School",
+    name: "Yellow School",
+    school: "Oakwood School",
     price: 900,
     img: uniformRedImg,
     sizes: [32, 34, 36, 38],

@@ -25,6 +25,8 @@ import AddStationary from './Pages/School/AddStationary/AddStationary';
 import AddBook from './Pages/School/AddBook/AddBook';
 import ProductReview from './Pages/School/ProductReview/ProductReview';
 import AddSubCategory from './Pages/School/AddNewProduct/AddSubCategory';
+import SchoolRegister from './Components/User Management/School/SchoolRegister';
+import SchoolLogin from './Components/User Management/School/Schoollogin';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -54,6 +56,8 @@ function App() {
           {/* School */}
           <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
           <Route path='/ProdReview' element={<ProductReview />} />
+          <Route path='/SchoolLogin' element={<SchoolLogin />} />
+ <Route path='/SchoolRegister' element={<SchoolRegister />} />
           {/* Admin */}
           <Route path='/Adminlogin' element={<Adminlogin />} />
           <Route path='/PendingSchool' element={<PendingSchool />} />
