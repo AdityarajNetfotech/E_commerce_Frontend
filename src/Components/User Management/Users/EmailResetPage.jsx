@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+//import Logo from "../../../Components/Images/Logo.png"; 
 
 export default function EmailResetPage() {
   const [email, setEmail] = useState("");
@@ -50,7 +51,10 @@ export default function EmailResetPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
+     
+
+
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-semibold text-center mb-6">Enter Your Email</h2>
         
@@ -71,12 +75,13 @@ export default function EmailResetPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+            className="w-full bg-[#FF902A] text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400"
           >
             {loading ? "Processing..." : "Submit"}
           </button>
         </form>
       </div>
     </div>
+
   );
 }

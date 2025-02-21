@@ -7,6 +7,9 @@ import TableList from './Catalogue/TableList'
 
 
 function ProductCatlogue() {
+
+   const productcatalogue = "Product Catalogue"
+
   return (
     <div>
       <div className="flex flex-col lg:flex-row min-h-screen ">
@@ -15,7 +18,7 @@ function ProductCatlogue() {
         </div>
         <div className=" flex flex-col flex-1 ">
 
-          <Header />
+          <Header heading={productcatalogue} />
           
           <div className="flex-1 overflow-auto">
             <TableList />

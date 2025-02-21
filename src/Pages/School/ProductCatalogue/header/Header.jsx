@@ -1,7 +1,7 @@
 import React from "react";
 import school from "../../../../Components/Images/School.png";
 
-const Header = () => {
+const Header = ({heading}) => {
   return (
     <header className="flex items-center justify-between py-2 px-4 bg-[#ECECEC]">
       
@@ -10,7 +10,7 @@ const Header = () => {
           &#x276E;
         </button>
         <h1 className="text-gray-800 text-lg sm:text-[32px] font-medium">
-          Product Catalogue
+        {heading}
         </h1>
       </div>
 

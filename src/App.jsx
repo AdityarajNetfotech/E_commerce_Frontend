@@ -27,6 +27,7 @@ import ProductReview from './Pages/School/ProductReview/ProductReview';
 import AddSubCategory from './Pages/School/AddNewProduct/AddSubCategory';
 import SchoolRegister from './Components/User Management/School/SchoolRegister';
 import SchoolLogin from './Components/User Management/School/Schoollogin';
+import ManageOrders from './Pages/School/ManageOrders/ManageOrders';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -55,9 +56,10 @@ function App() {
           <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
           {/* School */}
           <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
+          <Route path='/ManageOrders' element={<ManageOrders />} />
           <Route path='/ProdReview' element={<ProductReview />} />
           <Route path='/SchoolLogin' element={<SchoolLogin />} />
- <Route path='/SchoolRegister' element={<SchoolRegister />} />
+          <Route path='/SchoolRegister' element={<SchoolRegister />} />
           {/* Admin */}
           <Route path='/Adminlogin' element={<Adminlogin />} />
           <Route path='/PendingSchool' element={<PendingSchool />} />

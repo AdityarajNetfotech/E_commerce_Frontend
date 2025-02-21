@@ -12,9 +12,9 @@ const SidebarButtons = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-5 w-full max-w-[320px] h-[500px] rounded-lg pt-10 px-6 bg-peach-custom
-                    md:w-[250px] md:h-[460px] 
-                    sm:w-[180px] sm:h-[100px] sm:p-3 sm:gap-3">
+    <div className="flex flex-col items-center gap-5 w-full max-w-[320px] min-h-full rounded-lg p-10 px-6 bg-peach-custom
+                  md:w-[340px] 
+                  sm:w-[180px] sm:p-3 sm:gap-3 flex-grow">
       {buttons.map(({ label, path }) => (
         <button
           key={label}
