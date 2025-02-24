@@ -36,6 +36,8 @@ import SchoolEmailResetPage from "./Components/User Management/School/SchoolEmai
 import ManageOrders from "./Pages/School/ManageOrders/ManageOrders";
 import SchoolEmailOtpPage from "./Components/User Management/School/SchoolEmailOtpPage";
 import SchoolChangePassword from "./Components/User Management/School/SchoolChangePasswordPage";
+import RegisterSchool from "./Pages/Admin/RegisterSchool/RegisterSchool";
+import RegisterStudent from "./Pages/Admin/RegisterStudent/RegisterStudent";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -89,7 +91,8 @@ function App() {
           <Route path="/add-subcategory" element={<AddSubCategory />} />
           <Route path="/uniform" element={<AddUniform />} />
           <Route path="/books" element={<AddBook />} />
-          <Route path="/stationery" element={<AddStationary />} />
+          <Route path="/RegisterSchool" element={<RegisterSchool />} />
+          <Route path="/RegisterStudent" element={<RegisterStudent />} />
         </Routes>
       </BrowserRouter>
     </>
