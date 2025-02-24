@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../../Components/Images/Logo.png"; 
+import Logo from "../../../Components/Images/Logo.png";
 
 function UserRegister() {
   const [schools, setSchools] = useState([]);
@@ -11,14 +11,33 @@ function UserRegister() {
     mobileNumber: "",
     password: "",
     schoolId: "",
+    grade: "",
+    gender: "",
+    number: "",
   });
+  const romanNumerals = [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII",
+    "IX",
+    "X",
+    "XI",
+    "XII",
+  ];
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/school/getAllSchools");
+        const response = await axios.get(
+          "http://localhost:5000/api/admin/getAllSchools"
+        );
         if (response.data.schools) {
           setSchools(response.data.schools);
         } else {
@@ -40,13 +59,24 @@ function UserRegister() {
     e.preventDefault();
     setError("");
 
-    if (!formData.name || !formData.email || !formData.password || !formData.schoolId) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.schoolId ||
+      !formData.grade ||
+      !formData.gender ||
+      !formData.number
+    ) {
       setError("Please provide all fields.");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/student/register", formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/student/register",
+        formData
+      );
 
       if (response.status === 201) {
         alert("Registration successful! Please verify OTP.");
@@ -54,19 +84,20 @@ function UserRegister() {
       }
     } catch (error) {
       console.error("Error registering user:", error);
-      setError(error.response?.data?.message || "Registration failed. Please try again.");
+      setError(
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
     }
   };
 
   return (
     <section className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
       <div className="flex items-center gap-60">
-      
         <div className="hidden md:block">
           <img src={Logo} alt="Company Logo" className="w-150 h-auto" />
         </div>
 
-        
         <div className="w-full bg-white rounded-lg shadow-lg sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-3.5">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -75,7 +106,9 @@ function UserRegister() {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700">Full Name</label>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -87,7 +120,9 @@ function UserRegister() {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700">Email</label>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Email
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -99,11 +134,13 @@ function UserRegister() {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700">Mobile Number</label>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Mobile Number
+                </label>
                 <input
                   type="number"
-                  name="mobileNumber"
-                  value={formData.mobileNumber}
+                  name="number"
+                  value={formData.number}
                   onChange={handleChange}
                   placeholder="1234567890"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -111,7 +148,9 @@ function UserRegister() {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700">Password</label>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -123,7 +162,9 @@ function UserRegister() {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700">Select School</label>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Select School
+                </label>
                 <select
                   name="schoolId"
                   value={formData.schoolId}
@@ -137,6 +178,46 @@ function UserRegister() {
                       {school.name}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Grade
+                </label>
+                <select
+                  name="grade"
+                  value={formData.grade}
+                  onChange={handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                >
+                  <option value="">
+                    Select Grade
+                  </option>
+                  {romanNumerals.map((num, index) => (
+                    <option key={num} value={index + 1}>
+                      {num}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-700">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  required
+                >
+                  <option value="" >
+                    Select Gender
+                  </option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
                 </select>
               </div>
               <button
