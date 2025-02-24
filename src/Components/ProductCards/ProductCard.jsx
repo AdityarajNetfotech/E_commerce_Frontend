@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
     <Link to={'/product'} className="no-underline">
       {/* <Link to={`/product/${product.id}`} className="no-underline"></Link> */}
       <div
-        className="h-[430px] w-full max-w-[320px] border-gray-400 flex flex-col justify-between m-auto p-4 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300 cursor-pointer">
+        className="h-[430px] max-w-[320px] border-gray-400 flex flex-col justify-between p-4 rounded-lg bg-white shadow-md hover:shadow-[#FF902B] transition-all duration-300 cursor-pointer m-auto">
         <img
           src={product.img}
           alt="ProductImg"
