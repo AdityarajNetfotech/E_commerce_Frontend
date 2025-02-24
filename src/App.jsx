@@ -38,6 +38,8 @@ import SchoolEmailOtpPage from "./Components/User Management/School/SchoolEmailO
 import SchoolChangePassword from "./Components/User Management/School/SchoolChangePasswordPage";
 import RegisterSchool from "./Pages/Admin/RegisterSchool/RegisterSchool";
 import RegisterStudent from "./Pages/Admin/RegisterStudent/RegisterStudent";
+import OrderDetails from "./Pages/School/ManageOrders/OrderDetails";
+import ManageStudent from "./Pages/School/ManageStudent/ManageStudent";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -72,6 +74,9 @@ function App() {
           <Route path="/ProdReview" element={<ProductReview />} />
           <Route path="/SchoolLogin" element={<SchoolLogin />} />
           <Route path="/SchoolRegister" element={<SchoolRegister />} />
+          <Route path='/OrderDetails' element={<OrderDetails />} />
+          <Route path='/ManageStudent' element={<ManageStudent />} />
+
           <Route
             path="/schoolemailresetpage"
             element={<SchoolEmailResetPage />}
