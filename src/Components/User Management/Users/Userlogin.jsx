@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Logo from "../../../Components/Images/Logo.png"; 
 
 export default function UserLogin() {
   const [email, setEmail] = useState("");
@@ -43,14 +44,20 @@ export default function UserLogin() {
   };
 
   const handlePopupResponse = (confirmed) => {
-    setShowPopup(false); // Close the popup
+    setShowPopup(false); 
     if (confirmed) {
       navigate("/reset-password"); 
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
+      <div className="flex items-center gap-60">
+
+        <div className="hidden md:block">
+           <img src={Logo} alt="Company Logo" className="w-100 h-auto" />
+        </div>
+        
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-semibold text-center mb-6">Sign in</h2>
         {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
@@ -90,7 +97,7 @@ export default function UserLogin() {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full bg-[#FF902A] text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             disabled={loading}
           >
             {loading ? "Signing in..." : "Sign in"}
@@ -110,7 +117,7 @@ export default function UserLogin() {
         </div>
       </div>
 
-      {/* Popup Modal for "Forgot Password" */}
+  
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-30 backdrop-blur-lg">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-md w-full transform transition-all duration-300 scale-100 hover:scale-105">
@@ -133,5 +140,6 @@ export default function UserLogin() {
         </div>
       )}
     </div>
+  </div>
   );
 }

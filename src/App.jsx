@@ -27,7 +27,11 @@ import ProductReview from './Pages/School/ProductReview/ProductReview';
 import AddSubCategory from './Pages/School/AddNewProduct/AddSubCategory';
 import SchoolRegister from './Components/User Management/School/SchoolRegister';
 import SchoolLogin from './Components/User Management/School/Schoollogin';
+<<<<<<< HEAD
 import SchoolEmailResetPage from './Components/User Management/School/SchoolEmailResetPage';
+=======
+import ManageOrders from './Pages/School/ManageOrders/ManageOrders';
+>>>>>>> 0b1185fe37fe0ac638e2536797af6451da42e64e
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
@@ -56,10 +60,15 @@ function App() {
           <Route path='/DeliveryAddress' element={<DeliveryAddress />} />
           {/* School */}
           <Route path='/ProdCatalogue' element={<ProductCatlogue />} />
+          <Route path='/ManageOrders' element={<ManageOrders />} />
           <Route path='/ProdReview' element={<ProductReview />} />
           <Route path='/SchoolLogin' element={<SchoolLogin />} />
+<<<<<<< HEAD
  <Route path='/SchoolRegister' element={<SchoolRegister />} />
  <Route path='/schoolemailresetpage' element={<SchoolEmailResetPage />} />
+=======
+          <Route path='/SchoolRegister' element={<SchoolRegister />} />
+>>>>>>> 0b1185fe37fe0ac638e2536797af6451da42e64e
           {/* Admin */}
           <Route path='/Adminlogin' element={<Adminlogin />} />
           <Route path='/PendingSchool' element={<PendingSchool />} />
