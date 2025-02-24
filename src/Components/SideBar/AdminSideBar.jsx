@@ -1,6 +1,7 @@
 import edukart from "../Images/Edukart.png";
-
+import { NavLink, useLocation } from "react-router-dom";
 const AdminSidebar = () => {
+  const location = useLocation();
   return (
     <div className="lg:flex lg:flex-row ">
       
@@ -22,14 +23,28 @@ const AdminSidebar = () => {
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
               Dashboard
             </li>
+            
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              Pending School
+            <NavLink
+                to="/PendingSchool"
+              >
+                Pending Schools
+              </NavLink>
             </li>
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              Manage Orders
+            <NavLink
+                to="/RegisterSchool"
+              >
+                Register School
+              </NavLink>
             </li>
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              Manage Students
+            <NavLink
+                to="/RegisterStudent"
+              >
+                Register Student
+              </NavLink>
+              
             </li>
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
               Account Details
