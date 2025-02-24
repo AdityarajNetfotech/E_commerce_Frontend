@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../../Components/Images/Logo.png"; 
 import axios from "axios";
 
 export default function SchoolLogin() {
@@ -50,7 +51,13 @@ export default function SchoolLogin() {
     }
   };
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="flex justify-center items-center min-h-screen bg-[#F7C322]">
+        <div className="flex items-center gap-60">
+            <div className="hidden md:block">
+              <img src={Logo} alt="Company Logo" className="w-100 h-auto" />
+            </div>
+
+
         <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
           <h2 className="text-2xl font-semibold text-center mb-6">School Login</h2>
           {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
@@ -90,7 +97,7 @@ export default function SchoolLogin() {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+              className="w-full bg-[#FF902A] text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
               disabled={loading}
             >
               {loading ? "Signing in..." : "Sign in"}
@@ -132,6 +139,7 @@ export default function SchoolLogin() {
         </div>
       )}
       </div>
+    </div>
     );
   }
   

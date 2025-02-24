@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "../../../Components/Images/Logo.png"; 
 import axios from "axios";
 
 function SchoolRegister() {
@@ -59,7 +60,12 @@ function SchoolRegister() {
   
 
   return (
-    <section className="bg-gray-100 min-h-screen flex flex-col items-center justify-center px-6 py-8">
+    <section className="bg-[#F7C322] min-h-screen flex flex-col items-center justify-center px-6 py-8">
+       <div className="flex items-center gap-60">
+                  <div className="hidden md:block">
+                    <img src={Logo} alt="Company Logo" className="w-100 h-auto" />
+                  </div>
+      
       <div className="w-full bg-white rounded-lg shadow-lg sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -95,16 +101,18 @@ function SchoolRegister() {
               <label className="block mb-2 text-sm font-medium text-gray-700">Affiliation Certificate</label>
               <input type="file" name="affiliationCertificate" onChange={handleChange} required className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
             </div>
-            <button type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 my-4">
+            <button type="submit" className="w-full text-white bg-[#FF902A] hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 my-4">
               Register
             </button>
-            <button type="button" onClick={() => navigate("/schoolLogin")} className="w-full text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5">
+            <button type="button" onClick={() => navigate("/schoolLogin")} className="w-full text-white bg-[#131313] hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5">
               Login
             </button>
           </form>
         </div>
       </div>
+     </div>
     </section>
+    
   );
 }
 
