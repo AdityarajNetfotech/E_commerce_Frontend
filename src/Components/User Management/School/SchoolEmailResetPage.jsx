@@ -40,7 +40,7 @@ export default function SchoolEmailResetPage() {
 
       setSuccessMessage("An OTP has been sent to your email.");
       setTimeout(() => {
-        navigate('/SchoolEmailOtpPage');
+        navigate('/schoolemailotppage');
       }, 2000);
     } catch (err) {
       setError(err.message);
