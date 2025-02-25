@@ -40,6 +40,8 @@ import RegisterSchool from "./Pages/Admin/RegisterSchool/RegisterSchool";
 import RegisterStudent from "./Pages/Admin/RegisterStudent/RegisterStudent";
 import OrderDetails from "./Pages/School/ManageOrders/OrderDetails";
 import ManageStudent from "./Pages/School/ManageStudent/ManageStudent";
+import AllOrderDetails from './Pages/School/AllOrderDetails/AllOrderDetails';
+import Dashboard from './Pages/School/Dashboard/Dashboard';
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -76,6 +78,8 @@ function App() {
           <Route path="/SchoolRegister" element={<SchoolRegister />} />
           <Route path='/OrderDetails' element={<OrderDetails />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
+          <Route path='/AllOrders' element={<AllOrderDetails />} />
+          <Route path='/Dashboard' element={<Dashboard />} />
 
           <Route
             path="/schoolemailresetpage"
