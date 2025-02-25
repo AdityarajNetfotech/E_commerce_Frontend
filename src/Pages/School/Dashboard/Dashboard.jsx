@@ -1,13 +1,13 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/Footer/Footer'
-import Header from './header/Header'
-import AddProduct from './AddProduct/AddProduct'
+import Header from './header/header'
+import DashboardScreen from './DashboardScreen/DashboardScreen'
 
 
 
 
-function AddNewProduct() {
+function Dashboard() {
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:h-screen min-h-screen">
@@ -19,7 +19,7 @@ function AddNewProduct() {
           <Header />
           
           <div className="flex-1 overflow-auto">
-            <AddProduct />
+            <DashboardScreen />
             
           </div>
 
@@ -34,5 +34,5 @@ function AddNewProduct() {
   )
 }
 
-export default AddNewProduct
+export default Dashboard
 

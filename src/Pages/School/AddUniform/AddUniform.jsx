@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Footer from '../../../Components/footer/Footer'
+import Footer from '../../../Components/Footer/Footer'
 import Header from './header/Header'
 import AddProductForm from './AddProductForm/AddProductForm'
 
