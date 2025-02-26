@@ -42,6 +42,7 @@ import OrderDetails from "./Pages/School/ManageOrders/OrderDetails";
 import ManageStudent from "./Pages/School/ManageStudent/ManageStudent";
 import AllOrderDetails from './Pages/School/AllOrderDetails/AllOrderDetails';
 import Dashboard from './Pages/School/Dashboard/Dashboard';
+import AccountDetail from "./Pages/School/AccountDetail/AccountDetail";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -67,7 +68,7 @@ function App() {
           <Route path="/ShoppingCart" element={<ShoppingCart />} />
           <Route path="/MyOrders" element={<MyOrders />} />
           <Route path="/CustomerCare" element={<CustomerCare />} />
-          <Route path="/AccountDetail" element={<AccountDetails />} />
+          <Route path="/AccountDetails" element={<AccountDetails />} />
           <Route path="/ProductDetail" element={<ProductDetail />} />
           <Route path="/DeliveryAddress" element={<DeliveryAddress />} />
           {/* School */}
@@ -77,6 +78,7 @@ function App() {
           <Route path="/SchoolLogin" element={<SchoolLogin />} />
           <Route path="/SchoolRegister" element={<SchoolRegister />} />
           <Route path='/OrderDetails' element={<OrderDetails />} />
+          <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />
           <Route path='/Dashboard' element={<Dashboard />} />

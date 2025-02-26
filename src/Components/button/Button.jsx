@@ -8,7 +8,7 @@ const SidebarButtons = () => {
   const buttons = [
     { label: "My Orders", path: "/MyOrders" },
     { label: "Customer Care", path: "/CustomerCare" },
-    { label: "Account Details", path: "/AccountDetail" },
+    { label: "Account Details", path: "/AccountDetails" },
   ];
 
   return (

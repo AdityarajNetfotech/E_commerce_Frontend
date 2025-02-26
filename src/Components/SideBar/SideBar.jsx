@@ -73,9 +73,9 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/account"
+                to="/AccountDetail"
                 className={`block px-6 py-2 rounded-md cursor-pointer transition ${
-                  location.pathname === "/account"
+                  location.pathname === "/AccountDetail"
                     ? "bg-black text-white"
                     : "hover:bg-yellow-400"
                 }`}
