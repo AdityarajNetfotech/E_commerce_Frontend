@@ -43,6 +43,8 @@ import ManageStudent from "./Pages/School/ManageStudent/ManageStudent";
 import AllOrderDetails from './Pages/School/AllOrderDetails/AllOrderDetails';
 import Dashboard from './Pages/School/Dashboard/Dashboard';
 import AccountDetail from "./Pages/School/AccountDetail/AccountDetail";
+import HomeLandingPage from "./Pages/Home/HomeLandingPage";
+import HomeSignUp from "./Pages/Home/HomeSignUp";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -51,6 +53,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* Student */}
+          <Route path="/MainLandingPage" element={<HomeLandingPage />} />
+          <Route path="/Register" element={<HomeSignUp />} />
           {/* Student */}
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/UserRegister" element={<UserRegister />} />
