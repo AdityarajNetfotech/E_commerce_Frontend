@@ -54,7 +54,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Student */}
-          <Route path="/MainLandingPage" element={<HomeLandingPage />} />
+          <Route path="/" element={<HomeLandingPage />} />
           <Route path="/Register" element={<HomeSignUp />} />
           {/* Student */}
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
@@ -93,7 +93,7 @@ function App() {
             element={<SchoolEmailResetPage />}
           />
            <Route
-            path="/schoolemailotppage"
+            path="/schoolemailotppage"`
             element={<SchoolEmailOtpPage />}
           />
            <Route

@@ -61,7 +61,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to="/students"
+                to="/ManageStudent"
                 className={`block px-6 py-2 rounded-md cursor-pointer transition ${
                   location.pathname === "/students"
                     ? "bg-black text-white"
