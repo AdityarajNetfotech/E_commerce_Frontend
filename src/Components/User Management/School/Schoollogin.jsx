@@ -28,7 +28,7 @@ export default function SchoolLogin() {
 
       if (response.data.token) {
         // Store the JWT token in localStorage
-        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("schoolToken", response.data.token);
       }
 
       alert("Login successful!");
