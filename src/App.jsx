@@ -93,7 +93,7 @@ function App() {
             element={<SchoolEmailResetPage />}
           />
            <Route
-            path="/schoolemailotppage"`
+            path="/schoolemailotppage"
             element={<SchoolEmailOtpPage />}
           />
            <Route
