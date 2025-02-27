@@ -1,6 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import uniform from "../../../../Components/Images/BlueUniform.png";
-import PrimaryIcon from "../../../../Components/Images/PrimaryIcon.png"; 
+import PrimaryIcon from "../../../../Components/Images/PrimaryIcon.png";
 
 const statusColors = {
   Delivered: "bg-green-100 text-green-600",
@@ -9,6 +10,12 @@ const statusColors = {
 };
 
 const OrderRow = ({ order, index }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/OrderDetails`, { state: { order } });
+  };
+
   return (
     <tr className={`border-b ${index % 2 === 0 ? "bg-yellow-50" : "bg-[#F4F4F4]"}`}>
       <td className="p-1">{order.id}</td>
@@ -31,7 +38,7 @@ const OrderRow = ({ order, index }) => {
       </td>
       <td className="p-1">{order.date}</td>
       <td className="p-1">
-        <button className="text-gray-600 hover:text-gray-800 transition">
+        <button onClick={handleViewDetails} className="text-gray-600 hover:text-gray-800 transition">
           <img src={PrimaryIcon} alt="Details" className="w-10 h-10" />
         </button>
       </td>
