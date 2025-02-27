@@ -82,7 +82,7 @@ function App() {
           <Route path="/ProdReview" element={<ProductReview />} />
           <Route path="/SchoolLogin" element={<SchoolLogin />} />
           <Route path="/SchoolRegister" element={<SchoolRegister />} />
-          <Route path='/OrderDetails' element={<OrderDetails />} />
+          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />

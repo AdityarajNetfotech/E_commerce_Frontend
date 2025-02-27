@@ -157,7 +157,7 @@ const AccountDetailsForm = () => {
                  
           <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-lg">
             {!isEditing ? (
-              <button type="button" onClick={() => setIsEditing(true)} className="w-full sm:w-[250px] py-2 sm:py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition">
+              <button type="button" onClick={() => setIsEditing(true)} className="w-full sm:w-[250px] py-2 sm:py-3 bg-[#FF902A] text-white rounded-lg font-semibold hover:bg-orange-600 transition">
                 Edit
               </button>
             ) : (
