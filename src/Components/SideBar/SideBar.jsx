@@ -1,13 +1,40 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import edukart from "../Images/Edukart.png";
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/school/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log("Logout successful");
+
+        // Remove token from localStorage
+        localStorage.removeItem("schoolToken");
+
+        // Redirect to login page
+        navigate("/schoolLogin");
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <div className="lg:flex lg:flex-row">
-      <div className="bg-yellow-500  text-black lg:h-screen w-full lg:w-[18rem] flex-shrink-0 flex flex-col">
+      <div className="bg-yellow-500 text-black lg:h-screen w-full lg:w-[18rem] flex-shrink-0 flex flex-col">
         {/* Logo */}
         <div className="flex items-center p-4">
           <div className="flex items-center gap-2">
@@ -63,7 +90,7 @@ const Sidebar = () => {
               <NavLink
                 to="/ManageStudent"
                 className={`block px-6 py-2 rounded-md cursor-pointer transition ${
-                  location.pathname === "/students"
+                  location.pathname === "/ManageStudent"
                     ? "bg-black text-white"
                     : "hover:bg-yellow-400"
                 }`}
@@ -82,6 +109,13 @@ const Sidebar = () => {
               >
                 Account Details
               </NavLink>
+            </li>
+            {/* Logout Button */}
+            <li
+              onClick={handleLogout}
+              className="block px-6 py-2 rounded-md cursor-pointer transition bg-red-500 text-white hover:bg-red-600 text-center"
+            >
+              Logout
             </li>
           </ul>
         </nav>

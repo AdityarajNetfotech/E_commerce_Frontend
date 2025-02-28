@@ -22,7 +22,7 @@ export default function UserLogin() {
         email,
         password,
       });
-
+      console.log(response.data)
       setLoading(false);
 
       if (response.data.token) {

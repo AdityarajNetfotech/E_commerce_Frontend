@@ -24,14 +24,19 @@ function CustomNavbar() {
     try {
       const response = await fetch("http://localhost:5000/api/student/logout", {
         method: "POST",
-        credentials: "include", // Ensures cookies are sent
+        credentials: "include", 
         headers: {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (response.ok) {
-        // Redirect user to the login page
+        console.log("Logout successful");
+
+        // Remove token from local storage
+        localStorage.removeItem("authToken");
+
+        // Redirect to login page
         navigate("/Userlogin");
       } else {
         console.error("Logout failed");
@@ -39,8 +44,8 @@ function CustomNavbar() {
     } catch (error) {
       console.error("Error logging out:", error);
     }
-  };
-
+};
+  
 
   return (
     <header className="flex justify-between items-center px-2 py-2 md:px-20 md:py-10 bg-yellow-400 w-full">
