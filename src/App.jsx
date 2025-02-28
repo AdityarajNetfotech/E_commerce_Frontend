@@ -53,7 +53,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          {/* Student */}
+          {/* Home */}
           <Route path="/" element={<HomeLandingPage />} />
           <Route path="/Register" element={<HomeSignUp />} />
           {/* Student */}
