@@ -1,31 +1,90 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from "react";
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/footer/Footer'
-import Header from '../ProductCatalogue/header/Header'
+import icon from '../../../Components/Images/goThrough.png'
+import Header from '../Dashboard/header/header';
+import axios from 'axios';
 
 function ManageStudent() {
+    const [students, setStudents] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [grades, setGrades] = useState([]); 
+    const [selectedGrade, setSelectedGrade] = useState("");
+    const studentsPerPage = 4;
+
+
+
+    const fetchStudentDetail = async () => {
+        try {
+            const token = localStorage.getItem("schoolToken");
+            if (!token) {
+                console.log("Unauthorized: No token found");
+                return;
+            }
+
+            const response = await axios.get("http://localhost:5000/api/school/students", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // console.log("Students Data:", response.data.students);
+            const allStudents = response.data.students;
+            setStudents(allStudents);
+
+            const uniqueGrades = [...new Set(allStudents.map(student => student.grade))];
+            setGrades(uniqueGrades);
+            
+        } catch (error) {
+            console.log("Error fetching students:", error.response?.data?.message || error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchStudentDetail();
+    }, []);
+
+
+
+    const filteredStudents = students.filter((student) =>
+        student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        student.number.toString().includes(searchQuery)
+    );
+
+    const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
+    const indexOfLastStudent = currentPage * studentsPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+    const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+
+
     return (
         <>
             <div className="flex flex-col lg:flex-row min-h-screen ">
                 <div>
                     <Sidebar />
                 </div>
-                
+
                 <div className=" flex flex-col flex-1 ">
                     <Header heading={"Manage Student"} />
 
                     <div className="flex-1 overflow-auto">
 
                         <div className="min-h-screen p-4 bg-[#ECECEC]">
-                            <div className="rounded-2xl p-6 shadow-sm bg-white">
+                            <div className="rounded-2xl py-6 px-4 shadow-sm bg-white">
                                 <div className='bg-[#FFF3CE] rounded-2xl px-3 py-6'>
                                     <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-6">
                                         <div className="relative">
                                             <input
                                                 type="text"
-                                                placeholder="Search something"
+                                                placeholder="Search Here..."
+                                                value={searchQuery}
+                                                onChange={(e) => setSearchQuery(e.target.value)}
                                                 className="bg-white pr-10 pl-4 py-2 rounded-lg w-full md:w-[250px] focus:outline-none focus:ring-2 focus:ring-blue-100"
                                             />
+
                                             <i className="fa-solid fa-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
                                         </div>
 
@@ -36,13 +95,31 @@ function ManageStudent() {
                                             <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white">
                                                 <span className="text-gray-600">Month: January</span>
                                             </button>
-                                            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white">
-                                                <span className="text-gray-600">Grade: Fourth</span>
-                                            </button>
-                                            <button className="text-blue-600 hover:text-blue-700">
+                                            <select
+                                            value={selectedGrade}
+                                            onChange={(e) => setSelectedGrade(e.target.value)}
+                                            className="px-4 py-2 rounded-lg bg-white text-gray-600"
+                                        >
+                                            <option value="">All Grades</option>
+                                            {grades.map((grade, index) => (
+                                                <option key={index} value={grade}>
+                                                    {grade}
+                                                </option>
+                                            ))}
+                                        </select>
+
+                                        <button
+                                            className="text-blue-600 hover:text-blue-700 cursor-pointer"
+                                            onClick={() => {
+                                                setSearchQuery("");
+                                                setSelectedGrade("");
+                                                setCurrentPage(1);
+                                            }}
+                                        >
                                                 <i className="fa-solid fa-rotate-left" />
                                                 Reset Filter
                                             </button>
+
                                         </div>
                                     </div>
 
@@ -64,63 +141,75 @@ function ManageStudent() {
                                 <div className="w-full overflow-hidden">
                                     <div className="max-w-full overflow-x-auto">
                                         <table className="w-full min-w-max border-separate border-spacing-y-2">
-
-                                            <thead className=''>
+                                            <thead>
                                                 <tr className="bg-[#ECECEC]">
-                                                    <th className="text-left py-4 px-4 font-medium text-gray-600 rounded-l-xl">Student Name</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600">Email Id</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600">Mobile No.</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600">Grade</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600">Gender</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600">Last Active</th>
-                                                    <th className="text-left py-4 font-medium text-gray-600 rounded-r-xl">All Orders</th>
+                                                    <th className="text-left py-4 font-medium text-gray-600 pl-2 rounded-l-xl w-[150px]">Student Name</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600 w-[200px]">Email Id</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600">Mobile No.</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600">Grade</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600">Gender</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600">Last Active</th>
+                                                    <th className="text-center py-4 font-medium text-gray-600 pr-2 rounded-r-xl">All Orders</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-gray-100 space-y-2">
-                                                <tr className="bg-[#FFFAEA]">
-                                                    <td className="py-4 px-2 rounded-l-xl text-center">John Bushmill</td>
-                                                    <td className="py-4 px-2 text-center">Bhagyashree.Radhakrishnan@gmail.com</td>
-                                                    <td className="py-4 text-center">+91 987654321</td>
-                                                    <td className="py-4 text-center">Fourth</td>
-                                                    <td className="py-4 text-center">F</td>
-                                                    <td className="py-4 text-center">29 Dec'24</td>
-                                                    <td className="py-4 rounded-r-xl text-center">
-                                                        <button className="flex justify-center items-center gap-1 text-gray-600 hover:text-blue-600">
-                                                            05 items
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr className="bg-[#F4F4F4]">
-                                                    <td className="py-4 px-2 rounded-l-xl text-center">John Bushmill</td>
-                                                    <td className="py-4 px-2 text-center">Bhagyashree.Radhakrishnan@gmail.com</td>
-                                                    <td className="py-4 text-center">+91 987654321</td>
-                                                    <td className="py-4 text-center">Sixth</td>
-                                                    <td className="py-4 text-center">M</td>
-                                                    <td className="py-4 text-center">29 Dec'24</td>
-                                                    <td className="py-4 rounded-r-xl text-center">
-                                                        <button className="flex justify-center items-center gap-1 text-gray-600 hover:text-blue-600">
-                                                            05 items
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                {currentStudents.length > 0 ? (
+                                                    currentStudents.map((student, index) => (  
+                                                        <tr
+                                                            key={index}
+                                                            className={`${index % 2 === 0 ? "bg-[#FFFAEA]" : "bg-[#F4F4F4]"}`}
+                                                        >
+                                                            <td className="py-4 px-2 text-center w-[150px] break-all whitespace-normal rounded-l-xl">
+                                                                {student.name
+                                                                    .split(" ")
+                                                                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                                                                    .join(" ")}
+                                                            </td>
+                                                            <td className="py-4 px-2 text-center w-[200px] break-all whitespace-normal">
+                                                                {student.email}
+                                                            </td>
+                                                            <td className="py-4 text-center">{student.number || "N/A"}</td>
+                                                            <td className="py-4 text-center">{student.grade || "N/A"}</td>
+                                                            <td className="py-4 text-center">{student.gender || "N/A"}</td>
+                                                            <td className="py-4 text-center">{student.lastactive || "N/A"}</td>
+                                                            <td className="py-4 text-center rounded-r-xl">
+                                                                <button className="w-full flex justify-center items-center gap-2 hover:text-blue-600 cursor-pointer border py-1 rounded-lg bg-white text-black">
+                                                                    {student.orders || 0}
+                                                                    <img src={icon} alt="" className="w-5 h-5" />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="7" className="text-center py-4 text-gray-500">
+                                                            No matching students found.
+                                                        </td>
+                                                    </tr>
+                                                )}
                                             </tbody>
 
-
-
                                         </table>
+
                                     </div>
                                 </div>
 
 
-                                <div className="flex items-center justify-center mt-6">
-                                    <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-blue-600 cursor-pointer">
-                                        <i className="fa-solid fa-angle-left" />
-                                        Prev
+                                <div className="flex items-center justify-center mt-6 space-x-4">
+                                    <button
+                                        className={`px-4 py-2 rounded-lg ${currentPage === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-600 hover:text-blue-600"}`}
+                                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                    >
+                                        <i className="fa-solid fa-angle-left" /> Prev
                                     </button>
-                                    <span className="text-gray-600">Page 01</span>
-                                    <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-blue-600 cursor-pointer">
-                                        Next
-                                        <i className="fa-solid fa-angle-right" />
+                                    <span className="text-gray-600">Page {currentPage} of {totalPages}</span>
+                                    <button
+                                        className={`px-4 py-2 rounded-lg ${currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-gray-600 hover:text-blue-600"}`}
+                                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                                        disabled={currentPage === totalPages}
+                                    >
+                                        Next <i className="fa-solid fa-angle-right" />
                                     </button>
                                 </div>
                             </div>

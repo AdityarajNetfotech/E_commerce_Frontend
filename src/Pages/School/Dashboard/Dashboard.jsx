@@ -16,7 +16,7 @@ function Dashboard() {
         </div>
         <div className=" flex flex-col flex-1 ">
 
-          <Header />
+          <Header heading={"Dashboard"}/>
           
           <div className="flex-1 overflow-auto">
             <DashboardScreen />
