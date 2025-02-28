@@ -107,6 +107,7 @@ function App() {
           <Route path="/add-subcategory" element={<AddSubCategory />} />
           <Route path="/uniform" element={<AddUniform />} />
           <Route path="/books" element={<AddBook />} />
+          <Route path="/stationery" element={<AddStationary />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
         </Routes>
