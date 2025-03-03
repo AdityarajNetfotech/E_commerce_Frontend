@@ -11,16 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 const AddProductForm = () => {
   const navigate = useNavigate();
 
-  const handleSuccess = () => {
-    toast.success("Product added successfully!", {
-      position: "top-right",
-      autoClose: 3000, 
-      className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
-      bodyClassName: "text-sm",
-      progressClassName: "bg-green-700",
-      
-    });
-  };
+  
 
  
 
@@ -228,12 +219,26 @@ const AddProductForm = () => {
       });
 
       if (response.status >= 200 && response.status < 300) {
-        navigate("/ProdReview");
+        
+        toast.success("Product added successfully!", {
+                  position: "top-right",
+                  autoClose: 3000,
+                  className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
+                  bodyClassName: "text-sm",
+                  progressClassName: "bg-green-700",
+                  onClose: () => navigate("/ProdReview"),
+            
+                });
+
+                setTimeout(() => navigate("/ProdReview"), 2000);
 
       
-      }
+      } else {
+              toast.error(data.message || "Something went wrong!");
+            }
     } catch (err) {
       console.error("Error adding product:", err);
+      toast.error("Error submitting form!");
       setError("Failed to add product. Please try again.");
     }
   };
@@ -576,7 +581,7 @@ const AddProductForm = () => {
               className="bg-black text-white px-3 py-1 rounded-lg">
               Cancel
             </button>
-            <button type="submit" onClick={handleSuccess} className="bg-orange-500 text-white px-3 py-1 rounded-lg"
+            <button type="submit"  className="bg-orange-500 text-white px-3 py-1 rounded-lg"
             >
               Done
             </button>
