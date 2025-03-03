@@ -8,16 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 const AddProductForm = () => {
   const navigate = useNavigate();
 
-  // const handleSuccess = () => {
-  //     toast.success("Product added successfully!", {
-  //       position: "top-right",
-  //       autoClose: 3000,
-  //       className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
-  //       bodyClassName: "text-sm",
-  //       progressClassName: "bg-green-700",
   
-  //     });
-  //   };
 
     const [productName, setProductName] = useState("");
       const [description, setDescription] = useState("");
@@ -145,7 +136,7 @@ const AddProductForm = () => {
           onClose: () => navigate("/ProdReview"),
     
         });
-       // navigate("/ProdReview");
+       
 
        setTimeout(() => navigate("/ProdReview"), 2000);
 
