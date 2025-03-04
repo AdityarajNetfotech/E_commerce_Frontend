@@ -21,7 +21,6 @@ function AccountDetails() {
 
   const token = localStorage.getItem("authToken");
 
-  
   const fetchStudentDetails = async () => {
     if (!token) {
       setError("No authentication token found.");
@@ -35,10 +34,9 @@ function AccountDetails() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      console.log("API Response:", response.data); 
+      console.log("API Response:", response.data);
 
-      // ✅ Handle different response formats
-      let student = response.data.student || response.data; 
+      let student = response.data.student || response.data;
 
       if (!student || typeof student !== "object") {
         throw new Error("Invalid API response");
@@ -46,7 +44,7 @@ function AccountDetails() {
 
       setStudentData({
         name: student.name || "",
-        email: student.email || "",
+        email: student.email || "", // Email should remain static
         number: student.number || "",
         grade: student.grade || "",
         gender: student.gender || "",
@@ -63,17 +61,15 @@ function AccountDetails() {
     fetchStudentDetails();
   }, []);
 
-  
   const handleInputChange = (e) => {
     setStudentData({ ...studentData, [e.target.name]: e.target.value });
   };
 
- 
   const handleSaveClick = async () => {
     try {
       const response = await axios.put(
         "http://localhost:5000/api/student/update",
-        studentData,
+        { ...studentData, email: undefined }, // Remove email from update payload
         {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         }
@@ -104,11 +100,11 @@ function AccountDetails() {
           <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               { label: "Full Name", name: "name", type: "text" },
-              { label: "Email", name: "email", type: "email" },
+              { label: "Email", name: "email", type: "email", disabled: true }, // Email is always disabled
               { label: "Mobile Number", name: "number", type: "tel" },
               { label: "Grade", name: "grade", type: "text" },
               { label: "Gender", name: "gender", type: "text" },
-            ].map(({ label, name, type }) => (
+            ].map(({ label, name, type, disabled }) => (
               <div key={name}>
                 <label className="block text-md font-medium mb-1">{label}</label>
                 <input
@@ -116,13 +112,12 @@ function AccountDetails() {
                   name={name}
                   value={studentData[name]}
                   onChange={handleInputChange}
-                  disabled={!isEditing}
-                  className="w-full border rounded-md px-3 p-3 focus:ring-2 focus:ring-orange-400 outline-none focus:border-none"
+                  disabled={disabled || !isEditing} // Email stays disabled even in edit mode
+                  className="w-full border rounded-md px-3 p-3 focus:ring-2 focus:ring-orange-400 outline-none focus:border-none disabled:bg-white"
                 />
               </div>
             ))}
 
-           
             <div className="md:col-span-2 flex gap-4 p-3">
               {!isEditing ? (
                 <button

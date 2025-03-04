@@ -16,7 +16,6 @@ const AccountDetailsForm = () => {
 
   const token = localStorage.getItem("schoolToken");
 
- 
   const fetchSchoolDetails = async () => {
     setLoading(true);
     try {
@@ -43,7 +42,6 @@ const AccountDetailsForm = () => {
     }
   };
 
- 
   useEffect(() => {
     if (!token) {
       setError("No authentication token found.");
@@ -53,22 +51,19 @@ const AccountDetailsForm = () => {
     fetchSchoolDetails();
   }, [token, refresh]); 
 
- 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
- 
   const handleFileChange = (e) => {
     setFormData({ ...formData, affiliationCertificate: e.target.files[0] });
   };
 
-  
   const handleSaveClick = async () => {
     try {
       let updateData = {
         name: formData.schoolName,
-        email: formData.email,
+        email: formData.email, // Email will not be updated
         mobile: formData.mobileNumber,
         affiliationNumber: formData.affiliationNumber,
       };
@@ -98,7 +93,6 @@ const AccountDetailsForm = () => {
 
       console.log(" School details updated successfully:", response.data);
 
-      
       setIsEditing(false);
       setRefresh((prev) => !prev); 
 
@@ -117,9 +111,9 @@ const AccountDetailsForm = () => {
       <div className="bg-white p-6 sm:p-7 rounded-lg shadow-md w-full max-w-[1440px]">
         <form className="space-y-4 flex flex-col items-center">
        
-          {[
+          {[ 
             { label: "School Name", name: "schoolName", type: "text" },
-            { label: "Email", name: "email", type: "email" },
+            { label: "Email", name: "email", type: "email" }, // Email field added
             { label: "Mobile Number", name: "mobileNumber", type: "tel" },
             { label: "Affiliation Number", name: "affiliationNumber", type: "text" },
           ].map(({ label, name, type }) => (
@@ -130,7 +124,7 @@ const AccountDetailsForm = () => {
                 name={name}
                 value={formData[name]}
                 onChange={handleInputChange}
-                disabled={!isEditing}
+                disabled={name === "email" || !isEditing} // ✅ Email remains disabled
                 className="w-full px-4 py-2 sm:py-3 border rounded-lg bg-white focus:bg-white focus:outline-none"
               />
             </div>
@@ -154,19 +148,30 @@ const AccountDetailsForm = () => {
             )}
           </div>
 
-                 
           <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-lg">
             {!isEditing ? (
-              <button type="button" onClick={() => setIsEditing(true)} className="w-full sm:w-[250px] py-2 sm:py-3 bg-[#FF902A] text-white rounded-lg font-semibold hover:bg-orange-600 transition">
+              <button 
+                type="button" 
+                onClick={() => setIsEditing(true)} 
+                className="w-full sm:w-[250px] py-2 sm:py-3 bg-[#FF902A] text-white rounded-lg font-semibold hover:bg-orange-600 transition"
+              >
                 Edit
               </button>
             ) : (
-              <button type="button" onClick={handleSaveClick} className="w-full sm:w-[250px] py-2 sm:py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition">
+              <button 
+                type="button" 
+                onClick={handleSaveClick} 
+                className="w-full sm:w-[250px] py-2 sm:py-3 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition"
+              >
                 Save
               </button>
             )}
 
-            <button type="button" className="w-full sm:w-[250px] py-2 sm:py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition" onClick={() => setIsEditing(false)}>
+            <button 
+              type="button" 
+              className="w-full sm:w-[250px] py-2 sm:py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition" 
+              onClick={() => setIsEditing(false)}
+            >
               Cancel
             </button>
           </div>

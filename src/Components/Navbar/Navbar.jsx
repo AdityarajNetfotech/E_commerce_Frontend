@@ -110,7 +110,7 @@ function CustomNavbar() {
               <ul className="text-gray-700">
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/MyOrders")}>My Orders</li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/CustomerCare")}>Customer Care</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/AccountDetail")}>Account Details</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleNavigation("/AccountDetails")}>Account Details</li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>Logout</li>
               </ul>
             </div>
@@ -144,7 +144,7 @@ function CustomNavbar() {
           <ul className="text-gray-700 space-y-2">
             <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/MyOrders")}>My Orders</li>
             <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/CustomerCare")}>Customer Care</li>
-            <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/AccountDetail")}>Account Details</li>
+            <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={() => handleNavigation("/AccountDetails")}>Account Details</li>
             <li className="py-2 hover:bg-yellow-600 cursor-pointer" onClick={handleLogout}>Logout</li>
           </ul>
         </div>
