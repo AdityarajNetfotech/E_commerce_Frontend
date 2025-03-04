@@ -65,7 +65,7 @@ const AdminSidebar = () => {
               <NavLink to="/RegisterStudent">Register Student</NavLink>
             </li>
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              Account Details
+              <NavLink to="/AdminAccountDetail">Account Detail</NavLink>
             </li>
 
             {/* Logout Button */}

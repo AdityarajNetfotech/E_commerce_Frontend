@@ -45,6 +45,14 @@ import Dashboard from './Pages/School/Dashboard/Dashboard';
 import AccountDetail from "./Pages/School/AccountDetail/AccountDetail";
 import HomeLandingPage from "./Pages/Home/HomeLandingPage";
 import HomeSignUp from "./Pages/Home/HomeSignUp";
+import AdminAccountDetail from "./Pages/Admin/AccountDetails/AdminAccountDetail";
+import BankDetail from "./Pages/Admin/BankDetail/BankDetail";
+import OrderSuccessful from "./Components/Notifications/OrderSuccesful";
+import OrderFailed from "./Components/Notifications/OrderFailed";
+import ReturnRequest from "./Components/Notifications/ReturnRequest";
+import ReturnRequestSuccessful from "./Components/Notifications/ReturnRequestSuccesful";
+import ExchangeRequest from "./Components/Notifications/ExchangeRequest";
+import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeRequestSuccessful";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -110,6 +118,15 @@ function App() {
           <Route path="/stationery" element={<AddStationary />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
+          <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
+          <Route path="/BankDetail" element={<BankDetail />} />
+          {/* Notifications */}
+          <Route path="/OrderSuccessful" element={<OrderSuccessful />} />
+          <Route path="/OrderFailed" element={<OrderFailed />} />
+          <Route path="/ReturnRequest" element={<ReturnRequest />} />
+          <Route path="/ReturnRequestSuccessful" element={<ReturnRequestSuccessful />} />
+          <Route path="/ExchangeRequest" element={<ExchangeRequest />} />
+          <Route path="/ExchangeRequestSuccessful" element={<ExchangeRequestSuccessful />} />
         </Routes>
       </BrowserRouter>
     </>
