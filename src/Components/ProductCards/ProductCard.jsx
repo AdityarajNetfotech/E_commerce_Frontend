@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
         <img
           src={product.img}
           alt="ProductImg"
-          className="w-full h-full object-contain rounded-lg"
+          className="w-full h-[250px] object-contain rounded-lg"
         />
         <hr className="w-full border-gray-300" />
         <div className="flex justify-between items-center w-full p-2">

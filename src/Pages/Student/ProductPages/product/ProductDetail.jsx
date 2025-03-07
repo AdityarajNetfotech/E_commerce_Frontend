@@ -1,48 +1,171 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../../../Components/footer/Footer';
 import CustomNavbar from '../../../../Components/Navbar/Navbar';
-import ProductCard from '../../../../Components/ProductCards/ProductCard';
-import products from '../../../../data';
 import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import ProdDetailComp from './ProdDetailComp';
 
 function ProductDetail() {
-    const [selectedSize, setSelectedSize] = useState('32');
-    const [quantity, setQuantity] = useState(1);
+    // Combined state for all variation types
+    const [activeVariationType, setActiveVariationType] = useState(null); // "Color" or "Material"
+    const [selectedVariation, setSelectedVariation] = useState(null);
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedPrice, setSelectedPrice] = useState(null);
+    const [availableSizes, setAvailableSizes] = useState([]);
+    
     const [openAccordion, setOpenAccordion] = useState(null);
+    const [quantity, setQuantity] = useState(1);
     const location = useLocation();
+    const navigate = useNavigate();
 
+    // Extracting product details from location state
+    const product = location.state?.product || {};
+    const schoolName = location.state?.schoolName;
+    // console.log("Product data:", product, schoolName);
+
+    // Extracting product properties
     const {
-        img = '',
-        name = 'No Name',
-        price = 'N/A',
-        school = 'Unknown School',
-        sizes = [],
-        productInfo = '',
-        sellerInfo = {}
-    } = location.state || {};
+        image = [],
+        name = 'N/A',
+        school = 'N/A',
+        productDetail = 'N/A',
+        description = "NA",
+        uniformDetails = {},
+        category = 'N/A',
+        SKU = 'N/A',
+    } = product;
 
-    // Console log to check data
-    console.log("Product Details:", { img, name, price, school, sizes, productInfo, sellerInfo });
-
-
-
-    // const sizes = ['32', '34', '36', '38'];
-    const colors = ['maroon', 'navy'];
-
-
-    const images = [
-        "https://5.imimg.com/data5/RB/CD/GE/SELLER-16274515/school-uniform-blazer.jpg",
-        "https://tiimg.tistatic.com/fp/1/008/239/full-sleeves-cotton-formal-wear-college-blazer-for-boys-791.jpg",
-        "https://5.imimg.com/data5/NN/MK/MY-32264257/plain-school-uniform-blazer-250x250.jpg"
-    ];
-
+    // Extract variations from the product
+    const variations = product?.uniformDetails?.variations || [];
+    
+    // Get all color variations
+    const colorVariations = variations.filter(v => v.variationType === "Color");
+    
+    // Get all material variations
+    const materialVariations = variations.filter(v => v.variationType === "Material");
+    
+    // Image handling
+    const images = image.length > 0 ? image : ["https://via.placeholder.com/150"];
     const [mainImage, setMainImage] = useState(images[0]);
 
+    // Initialize selected variations on component mount
+    useEffect(() => {
+        // Set default variation type - prioritize color if available
+        if (colorVariations.length > 0) {
+            setActiveVariationType("Color");
+            
+            // Set default color if available
+            const firstVariation = colorVariations[0];
+            setSelectedVariation(firstVariation);
+
+            // Get sizes for the selected color
+            const sizes = firstVariation.subVariations || [];
+            setAvailableSizes(sizes);
+
+            // Set default size and price if available
+            if (sizes.length > 0) {
+                setSelectedSize(sizes[0]);
+                setSelectedPrice(sizes[0].price);
+            }
+        } 
+        else if (materialVariations.length > 0) {
+            setActiveVariationType("Material");
+            
+            // Set default material if available
+            const firstVariation = materialVariations[0];
+            setSelectedVariation(firstVariation);
+
+            // Get sizes for the selected material
+            const sizes = firstVariation.subVariations || [];
+            setAvailableSizes(sizes);
+
+            // Set default size and price if available
+            if (sizes.length > 0) {
+                setSelectedSize(sizes[0]);
+                setSelectedPrice(sizes[0].price);
+            }
+        }
+    }, [variations]);
+
+    // Handle variation type change (Color or Material)
+    const handleVariationTypeChange = (type) => {
+        setActiveVariationType(type);
+        
+        // Reset selection when switching between variation types
+        const variationsOfType = type === "Color" ? colorVariations : materialVariations;
+        
+        if (variationsOfType.length > 0) {
+            // Set the first variation of the selected type
+            const firstVariation = variationsOfType[0];
+            setSelectedVariation(firstVariation);
+            
+            // Get sizes for the selected variation
+            const sizes = firstVariation.subVariations || [];
+            setAvailableSizes(sizes);
+            
+            // Set default size and price if available
+            if (sizes.length > 0) {
+                setSelectedSize(sizes[0]);
+                setSelectedPrice(sizes[0].price);
+            } else {
+                setSelectedSize(null);
+                setSelectedPrice(null);
+            }
+        } else {
+            // Clear selections if no variations of this type exist
+            setSelectedVariation(null);
+            setAvailableSizes([]);
+            setSelectedSize(null);
+            setSelectedPrice(null);
+        }
+    };
+
+    const handleVariationClick = (variation) => {
+        setSelectedVariation(variation);
+
+        // Update available sizes based on selected variation
+        const sizes = variation.subVariations || [];
+        setAvailableSizes(sizes);
+
+        // Reset size selection
+        if (sizes.length > 0) {
+            setSelectedSize(sizes[0]);
+            setSelectedPrice(sizes[0].price);
+        } else {
+            setSelectedSize(null);
+            setSelectedPrice(null);
+        }
+    };
+
+    const handleSizeClick = (size) => {
+        setSelectedSize(size);
+        setSelectedPrice(size.price);
+    };
 
     const toggleAccordion = (section) => {
         setOpenAccordion(openAccordion === section ? null : section);
+    };
+
+    // Color name to CSS color conversion helper
+    const getColorStyle = (colorName) => {
+        const colorMap = {
+            "red": "#ff0000",
+            "green": "#00ff00",
+            "blue": "#0000ff",
+            "yellow": "#ffff00",
+            "black": "#000000",
+            "white": "#ffffff",
+            "purple": "#800080",
+            "orange": "#ffa500",
+            "pink": "#ffc0cb",
+            "brown": "#a52a2a",
+            "grey": "#808080",
+            "gray": "#808080"
+        };
+
+        const lowerCaseColor = colorName.toLowerCase();
+        return colorMap[lowerCaseColor] || lowerCaseColor;
     };
 
     return (
@@ -57,8 +180,9 @@ function ProductDetail() {
                             {images.map((img, index) => (
                                 <div
                                     key={index}
-                                    className={`h-24 w-24 border-2 ${mainImage === img ? "border-[#FF902B]" : "border-gray-200"
-                                        } cursor-pointer`}
+                                    className={`h-24 w-24 border-2 ${
+                                        mainImage === img ? "border-[#FF902B]" : "border-gray-200"
+                                    } cursor-pointer`}
                                     onClick={() => setMainImage(img)}
                                 >
                                     <img src={img} alt="Thumbnail" className="h-full w-full object-cover" />
@@ -67,71 +191,169 @@ function ProductDetail() {
                         </div>
 
                         <div className="flex-1">
-                            <img src={img} alt="Main Display" className="w-full h-[400px] object-contain border border-gray-300" />
+                            <img src={mainImage} alt="Main Display" className="w-full h-[400px] object-contain border border-gray-300" />
                         </div>
                     </div>
 
                     <div>
-                        <h1 className="text-2xl font-semibold mb-3">{name}</h1>
-                        <p className="text-gray-600 mb-2">{school}</p>
+                        <h1 className="text-2xl font-semibold mb-3">{name || "NA"}</h1>
+                        <p className="text-gray-600 mb-2">{schoolName || "NA"}</p>
                         <hr />
                         <p className="text-sm text-gray-500 mt-2">
-                            This set includes a blazer, skirt, white shirt and school brand
+                            {description || "NA"}
                         </p>
 
-                        <div className="text-2xl font-bold mt-2 mb-2">₹ {price}</div>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium">Select Size</label>
-                            <div className="flex space-x-2">
-                                {sizes.map((size, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => setSelectedSize(size)}
-                                        className={`h-10 w-10 rounded border ${selectedSize === size ? 'border-amber-400 bg-amber-50' : 'border-gray-200'}`}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-
-                        <div className="space-y-2 mt-3 mb-3">
-                            <label className="text-sm font-medium">Select Color</label>
-                            <div className="flex space-x-2">
-                                {colors.map((color) => (
-                                    <div
-                                        key={color}
-                                        className={`h-6 w-6 rounded-full border-2 border-white ring-2 ring-gray-200 ${color === 'maroon' ? 'bg-red-900' : 'bg-navy-900'
+                        {/* Only show variation sections if not a book */}
+                        {category !== "Books" && (colorVariations.length > 0 || materialVariations.length > 0) && (
+                            <div className="mt-6">
+                                {/* Variation Type Tabs */}
+                                <div className="flex mb-4">
+                                    {colorVariations.length > 0 && (
+                                        <button
+                                            className={`py-2 px-4 ${
+                                                activeVariationType === "Color" 
+                                                    ? "border-b-2 border-orange-500 font-medium text-orange-500" 
+                                                    : "text-gray-500"
                                             }`}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                                            onClick={() => handleVariationTypeChange("Color")}
+                                        >
+                                            Color Options
+                                        </button>
+                                    )}
+                                    
+                                    {materialVariations.length > 0 && (
+                                        <button
+                                            className={`py-2 px-4 ${
+                                                activeVariationType === "Material" 
+                                                    ? "border-b-2 border-orange-500 font-medium text-orange-500" 
+                                                    : "text-gray-500"
+                                            }`}
+                                            onClick={() => handleVariationTypeChange("Material")}
+                                        >
+                                            Material Options
+                                        </button>
+                                    )}
+                                </div>
+                                
+                                {/* Color Options */}
+                                {activeVariationType === "Color" && (
+                                    <div>
+                                        <div className="space-y-2 mb-4">
+                                            <label className="text-sm font-medium">Select Color</label>
+                                            <div className="flex flex-wrap gap-3">
+                                                {colorVariations.map((color, index) => (
+                                                    <div
+                                                        key={index}
+                                                        onClick={() => handleVariationClick(color)}
+                                                        className={`h-7 w-7 cursor-pointer flex items-center justify-center ${
+                                                            selectedVariation?._id === color._id
+                                                                ? 'ring-2 ring-offset-1 ring-[#FF902B]'
+                                                                : 'border border-gray-300'
+                                                        }`}
+                                                    >
+                                                        <div
+                                                            className="h-6 w-6"
+                                                            style={{ backgroundColor: getColorStyle(color.variationInfo) }}
+                                                            title={color.variationInfo}
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* Material Options */}
+                                {activeVariationType === "Material" && (
+                                    <div>
+                                        <div className="space-y-2 mb-4">
+                                            <label className="text-sm font-medium">Select Material</label>
+                                            <div className="flex flex-wrap gap-2">
+                                                {materialVariations.map((material, index) => (
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => handleVariationClick(material)}
+                                                        className={`px-3 py-2 rounded border font-medium ${
+                                                            selectedVariation?._id === material._id
+                                                                ? "bg-orange-500 text-white"
+                                                                : "bg-gray-100 text-gray-800"
+                                                        }`}
+                                                    >
+                                                        {material.variationInfo}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                                
+                                {/* Size Section - Only show if a variation is selected */}
+                                {selectedVariation && availableSizes.length > 0 && (
+                                    <div className="space-y-2 mb-3">
+                                        <label className="text-sm font-medium">
+                                            Select Size for {selectedVariation.variationInfo}
+                                        </label>
+                                        <div className="flex flex-wrap gap-2">
+                                            {availableSizes.map((size, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => handleSizeClick(size)}
+                                                    className={`h-9 px-3 min-w-20 rounded border font-medium ${
+                                                        selectedSize?._id === size._id
+                                                            ? "bg-orange-500 text-white"
+                                                            : "bg-gray-100 text-gray-800"
+                                                    }`}
+                                                >
+                                                    {size.subVariationType}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
 
-                        <div className="flex items-center space-x-4 mb-6">
-                            <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-3">
+                                {/* Price display */}
+                                {selectedPrice && (
+                                    <div className="mt-3">
+                                        <p className="font-medium">
+                                            Price: <span className="text-xl font-bold">₹ {selectedPrice}</span>
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        
+                        {/* Book price display */}
+                        {category === "Books" && (
+                            <div className="text-2xl font-bold mt-4 mb-4">
+                                ₹ {product?.bookDetails?.price || "NA"}
+                            </div>
+                        )}
+
+                        <div className="flex items-center space-x-4 mt-6 mb-6">
+                            <div className="flex items-center space-x-4 h-10 rounded border border-gray-300 px-3">
                                 <button
+                                    className="text-gray-500 hover:text-gray-700"
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                                 >
                                     -
                                 </button>
                                 <span>{quantity}</span>
                                 <button
+                                    className="text-gray-500 hover:text-gray-700"
                                     onClick={() => setQuantity(quantity + 1)}
                                 >
                                     +
                                 </button>
                             </div>
-                            <button className="w-full rounded-md bg-orange-500 h-8 text-white">
+                            <button
+                                className="w-full rounded-md bg-orange-500 h-10 text-white font-medium"
+                            >
                                 ADD TO CART
                             </button>
                         </div>
 
-
                         <div className="mt-6">
-                            <div className="border-b">
+                            <div className="border-b mt-2">
                                 <button
                                     className="w-full text-left py-4 font-bold flex justify-between cursor-pointer"
                                     onClick={() => toggleAccordion('details')}
@@ -143,81 +365,44 @@ function ProductDetail() {
                                 </button>
                                 <div className={`overflow-hidden transition-all duration-800 ease-in-out ${openAccordion === 'details' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                                     <div className="pb-3 bg-white">
-                                        {typeof productInfo === "string" ? (
-                                            <p className="text-gray-700">{productInfo}</p>
+                                        <p className="text-gray-700">{productDetail}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="border-b mt-2">
+                                <button
+                                    className="w-full text-left py-4 font-bold flex justify-between cursor-pointer"
+                                    onClick={() => toggleAccordion('dynamicDetails')}
+                                >
+                                    <span>{category === "Books" ? "Book Details" : "Uniform Details"}</span>
+                                    <span className={`rounded-full border border-blue-500 p-1 inline-flex items-center justify-center transition-transform duration-300 ${openAccordion === 'dynamicDetails' ? 'rotate-180' : ''}`}>
+                                        <i className="fa-solid fa-chevron-down text-blue-700"></i>
+                                    </span>
+                                </button>
+                                <div className={`overflow-hidden transition-all duration-800 ease-in-out ${openAccordion === 'dynamicDetails' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <div className="pb-3 bg-white">
+                                        {category === "Books" ? (
+                                            <>
+                                                <p><strong>Grade:</strong> {product?.bookDetails?.grade || "Not specified"}</p>
+                                                <p><strong>Subject:</strong> {product?.bookDetails?.subject || "Not specified"}</p>
+                                            </>
                                         ) : (
-                                            productInfo?.map((info, index) => <p key={index} className="text-gray-700">{info}</p>)
+                                            <>
+                                                <p><strong>Gender:</strong> {uniformDetails?.gender || "Not specified"}</p>
+                                                <p><strong>Sub Category:</strong> {uniformDetails?.subCategory || "Not specified"}</p>
+                                            </>
                                         )}
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Seller Information Accordion */}
-                            <div className="border-b mt-2">
-                                <button
-                                    className="w-full text-left py-4 font-bold flex justify-between cursor-pointer"
-                                    onClick={() => toggleAccordion('seller')}
-                                >
-                                    <span>Seller Information</span>
-                                    <span className={`rounded-full border border-blue-500 p-1 inline-flex items-center justify-center transition-transform duration-300 ${openAccordion === 'seller' ? 'rotate-180' : ''}`}>
-                                    <i className="fa-solid fa-chevron-down text-blue-700"></i>
-                                    </span>
-                                </button>
-                                <div className={`overflow-hidden transition-all duration-800 ease-in-out ${openAccordion === 'seller' ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                    <div className="pb-3 bg-white">
-                                        <p><strong>Seller:</strong> {sellerInfo?.name || "Unknown"}</p>
-                                        <p><strong>Location:</strong> {sellerInfo?.location || "Not Available"}</p>
-                                        <p><strong>Contact:</strong> {sellerInfo?.contact || "Not Provided"}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
 
-                <section className="my-12">
-                    <div className="h-[300px] bg-gray-300 transition-all duration-300 peer">
-                        <div className="relative z-1000 top-[50px] w-[85%] mx-auto main">
-                            <span className="text-3xl sm:text-4xl font-semibold pb-2 border-b-4 border-[#FF902B]">
-                                Often Bought Together
-                            </span>
-
-                            <div className="flex justify-between mt-7 gap-1.5 card-main">
-                                {products.slice(0, 3).map((product) => (
-                                    <ProductCard key={product.id} product={product} />
-                                ))}
-                            </div>
-                            <style>
-                                {`
-                                   @media (max-width: 768px) {
-                                        .peer {
-                                                height: 100%;
-                                            }
-                                        .main{
-                                            position: static;
-                                            padding: 20px 0px
-                                        }
-                                        .card-main{
-                                            gap: 10px;
-                                            justify-content: center;
-                                            flex-direction: column;
-                                            align-items: center
-                                        }
-                                        .main-hidden {
-                                            display: none;
-                                        }
-                                    }
-                                `}
-                            </style>
-                        </div>
-                    </div>
-
-                    <div className="h-[300px] bg-white transition-all duration-300 main-hidden"></div>
-
-                </section>
+                <ProdDetailComp />
 
                 <Footer />
-
             </div>
         </>
     )
