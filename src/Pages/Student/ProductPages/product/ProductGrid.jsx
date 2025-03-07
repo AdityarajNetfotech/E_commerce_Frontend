@@ -1,11 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import products from "../../../../data";
+import axios from "axios";
 
 const itemsPerPage = 9;
 
 const ProductGrid = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+
+        const response = await axios.get("http://localhost:5000/api/student/products", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+        // console.log("Product Grid", response.data);
+
+        setProducts(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.response?.data?.message || "Failed to fetch products");
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -16,8 +44,8 @@ const ProductGrid = () => {
 
       <div className="w-full max-w-[1200px] px-4 flex justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-18 justify-center">
-          {selectedProducts.map((product, index) => (
-            <ProductCard key={index} {...product} />
+          {selectedProducts.map((product) => (
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       </div>
