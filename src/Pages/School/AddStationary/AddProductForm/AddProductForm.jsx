@@ -126,19 +126,39 @@ const AddProductForm = () => {
         withCredentials: true,
       });
 
+      console.log("Backend Response:", response.data); 
+
       if (response.status >= 200 && response.status < 300) {
+
+        const uploadedImages = response.data?.image || []; 
+
+        console.log("Uploaded Images from Backend:", uploadedImages); 
+
+        const updatedProductData = {
+          name: productName,
+          description,
+          category: "Stationary",
+          productDetail,
+          SKU,
+          stationaryDetails: stationaryDetails,
+          image: uploadedImages, 
+        };
+
+        console.log("Final Product Data Before Navigation:", updatedProductData); 
+
+
         toast.success("Product added successfully!", {
           position: "top-right",
           autoClose: 3000,
           className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
           bodyClassName: "text-sm",
           progressClassName: "bg-green-700",
-          onClose: () => navigate("/ProdReview"),
+          onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
     
         });
        
 
-       setTimeout(() => navigate("/ProdReview"), 2000);
+       setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData }}), 2000);
 
       
       } else {

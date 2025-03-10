@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 const AddProductForm = () => {
   const navigate = useNavigate();
 
-  
+
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [productDetail, setProductDetail] = useState("");
@@ -102,24 +102,24 @@ const AddProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
 
 
-    let bookDetails = {}; 
 
-    
+    let bookDetails = {};
+
+
     rows.forEach((row) => {
       if (row.type === "grade") {
         bookDetails = {
           grade: row.grade.trim(),
           subject: row.subject.trim(),
-          stockQty: null,  
-          price: null,      
+          stockQty: null,
+          price: null,
         };
       }
     });
 
-    
+
     rows.forEach((row) => {
       if (row.type === "stock") {
         bookDetails.stockQty = row.stockQty ? Number(row.stockQty) : null;
@@ -127,7 +127,7 @@ const AddProductForm = () => {
       }
     });
 
-    
+
     if (bookDetails.grade && bookDetails.subject && bookDetails.stockQty !== null && bookDetails.price !== null) {
       console.log("Final Book Details Before Sending:", bookDetails);
     } else {
@@ -169,23 +169,42 @@ const AddProductForm = () => {
         withCredentials: true,
       });
 
+      console.log("Backend Response:", response.data);
+
       if (response.status >= 200 && response.status < 300) {
-        
+
+        const uploadedImages = response.data?.image || [];
+
+        console.log("Uploaded Images from Backend:", uploadedImages);
+
+
+        const updatedProductData = {
+          name: productName,
+          description,
+          category: "Books",
+          productDetail,
+          SKU,
+          bookDetails: bookDetails,
+          image: uploadedImages,
+        };
+
+        console.log("Final Product Data Before Navigation:", updatedProductData);
+
         toast.success("Product added successfully!", {
-                  position: "top-right",
-                  autoClose: 3000,
-                  className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
-                  bodyClassName: "text-sm",
-                  progressClassName: "bg-green-700",
-                  onClose: () => navigate("/ProdReview"),
-            
-                });
-        
-                setTimeout(() => navigate("/ProdReview"), 2000);
+          position: "top-right",
+          autoClose: 3000,
+          className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
+          bodyClassName: "text-sm",
+          progressClassName: "bg-green-700",
+          onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
+
+        });
+
+        setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData }}), 2000);
 
       } else {
-              toast.error(data.message || "Something went wrong!");
-            }
+        toast.error(data.message || "Something went wrong!");
+      }
     } catch (err) {
       console.error("Error adding product:", err);
       toast.error("Error submitting form!");
@@ -201,7 +220,7 @@ const AddProductForm = () => {
           <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">General Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-             
+
 
               <div className="col-span-1">
                 <div className=" h-[286px] border-2 border-dashed border-gray-300 p-6 rounded-lg flex flex-col items-center justify-center">
@@ -340,7 +359,7 @@ const AddProductForm = () => {
                         id={`grade-${row.id}`}
                         value={row.grade || ""}
                         onChange={(e) => handleInputChange(row.id, "grade", e.target.value)}
-                        
+
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
                       >
@@ -363,7 +382,7 @@ const AddProductForm = () => {
                         id={`subject-${row.id}`}
                         value={row.subject || ""}
                         onChange={(e) => handleInputChange(row.id, "subject", e.target.value)}
-                        
+
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 
                       >
@@ -390,7 +409,7 @@ const AddProductForm = () => {
                         id={`stockQty-${row.id}`}
                         value={row.stockQty || ""}
                         onChange={(e) => handleInputChange(row.id, "stockQty", e.target.value)}
-                        
+
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
                         <option value="">Select…</option>
@@ -413,7 +432,7 @@ const AddProductForm = () => {
                         id={`price-${row.id}`}
                         value={row.price || ""}
                         onChange={(e) => handleInputChange(row.id, "price", e.target.value)}
-                        
+
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         placeholder="Price"
                       />
@@ -436,7 +455,7 @@ const AddProductForm = () => {
 
 
         <div className="bg-gray-100 p-6">
-         
+
 
           <div className="flex justify-end space-x-2 mt-4  max-w-4xl mx-auto mb-3">
             <button
@@ -445,7 +464,7 @@ const AddProductForm = () => {
               className="bg-black text-white px-3 py-1 rounded-lg">
               Cancel
             </button>
-            <button type="submit"  className="bg-orange-500 text-white px-3 py-1 rounded-lg"
+            <button type="submit" className="bg-orange-500 text-white px-3 py-1 rounded-lg"
             >
               Done
             </button>

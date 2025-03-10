@@ -187,6 +187,16 @@ const AddProductForm = () => {
 
     if (!validateForm()) return;
 
+    // const productData = {
+    //   name: productName,
+    //   description,
+    //   category: "Uniform",
+    //   productDetail,
+    //   SKU,
+    //   uniformDetails: { subCategory, gender, variations },
+    //   image: images.map((img) => img.url || img.previewURL || "")
+    // };
+
     const formData = new FormData();
     formData.append("name", productName);
     formData.append("description", description);
@@ -208,6 +218,9 @@ const AddProductForm = () => {
       console.log(pair[0] + ": " + pair[1]);
     }
 
+    console.log("Images Before Mapping:", images);
+
+
     try {
       const response = await axios.post("http://localhost:5000/api/product/add", formData, {
         headers: {
@@ -218,7 +231,26 @@ const AddProductForm = () => {
         withCredentials: true,
       });
 
+      console.log("Backend Response:", response.data); 
+
       if (response.status >= 200 && response.status < 300) {
+
+        const uploadedImages = response.data?.image || []; 
+
+        console.log("Uploaded Images from Backend:", uploadedImages); 
+
+
+        const updatedProductData = {
+          name: productName,
+          description,
+          category: "Uniform",
+          productDetail,
+          SKU,
+          uniformDetails: { subCategory, gender, variations },
+          image: uploadedImages, 
+        };
+
+    console.log("Final Product Data Before Navigation:", updatedProductData); 
         
         toast.success("Product added successfully!", {
                   position: "top-right",
@@ -226,11 +258,11 @@ const AddProductForm = () => {
                   className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
                   bodyClassName: "text-sm",
                   progressClassName: "bg-green-700",
-                  onClose: () => navigate("/ProdReview"),
+                  onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
             
                 });
 
-                setTimeout(() => navigate("/ProdReview"), 2000);
+                setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData } }), 2000);
 
       
       } else {
@@ -477,8 +509,8 @@ const AddProductForm = () => {
 
                       >
                         <option>Size</option>
-                        <option value="small">S</option>
-                        <option value="medium">M</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
 
                       </select>
                     </div>
