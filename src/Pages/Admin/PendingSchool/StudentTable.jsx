@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Prev from "../../../Components/Images/PrevArrow.png";
-import Next from "../../../Components/Images/NextArrow.png";
+import Pagination from "../../../Components/Pagination/pagination";
 import search from "../../../Components/Images/SearchOutline.png";
 
 const PendingSchoolsTable = () => {
@@ -9,7 +8,7 @@ const PendingSchoolsTable = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [status, setStatus] = useState({}); 
+    const [status, setStatus] = useState({});
     const itemsPerPage = 4;
 
     useEffect(() => {
@@ -17,16 +16,13 @@ const PendingSchoolsTable = () => {
             setLoading(true);
             setError(null);
             try {
-                const token = localStorage.getItem("adminAuthToken"); 
-                console.log("Token is:", token);
-
+                const token = localStorage.getItem("adminAuthToken");
                 const response = await fetch("http://localhost:5000/api/admin/pending-schools", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                 });
-                console.log("Response Object:", response);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch pending schools");
@@ -35,10 +31,9 @@ const PendingSchoolsTable = () => {
                 const data = await response.json();
                 setPendingSchools(data);
 
-                // Initialize status state for each school
                 const initialStatus = {};
                 data.forEach((school) => {
-                    initialStatus[school._id] = "Not Accepted"; // Default value
+                    initialStatus[school._id] = "Not Accepted";
                 });
                 setStatus(initialStatus);
             } catch (error) {
@@ -65,7 +60,7 @@ const PendingSchoolsTable = () => {
             try {
                 const token = localStorage.getItem("adminAuthToken");
                 const response = await fetch(`http://localhost:5000/api/admin/approve-school/${schoolId}`, {
-                    method: 'PUT',
+                    method: "PUT",
                     headers: {
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
@@ -76,14 +71,11 @@ const PendingSchoolsTable = () => {
                     throw new Error("Failed to approve the school");
                 }
 
-                const data = await response.json();
-                console.log("School approved successfully:", data);
-            alert("School approved successfully!");
+                console.log("School approved successfully!");
+                alert("School approved successfully!");
             } catch (error) {
                 console.error("Error approving school:", error.message);
             }
-        } else {
-            console.log(`School ${schoolId} status changed to: ${newStatus}`);
         }
     };
 
@@ -92,10 +84,8 @@ const PendingSchoolsTable = () => {
         school.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const paginatedSchools = filteredSchools.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
+    const totalPages = Math.max(1, Math.ceil(filteredSchools.length / itemsPerPage));
+    const paginatedSchools = filteredSchools.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className="mx-auto bg-[#ECECEC] p-4">
@@ -189,31 +179,8 @@ const PendingSchoolsTable = () => {
                                 </table>
                             </div>
 
-                            <div className="mt-4 flex flex-wrap items-center gap-4 justify-center">
-                                <button
-                                    className="text-gray-500 flex items-center gap-2"
-                                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                                    disabled={currentPage === 1}
-                                >
-                                    <img src={Prev} alt="Previous" className="w-4 h-4" />
-                                    <span>Prev</span>
-                                </button>
-                                <div>
-                                    Page {currentPage} of {Math.max(1, Math.ceil(filteredSchools.length / itemsPerPage))}
-                                </div>
-                                <button
-                                    className="text-gray-500 flex items-center gap-2"
-                                    onClick={() =>
-                                        setCurrentPage((prev) =>
-                                            Math.min(prev + 1, Math.ceil(filteredSchools.length / itemsPerPage))
-                                        )
-                                    }
-                                    disabled={currentPage >= Math.ceil(filteredSchools.length / itemsPerPage)}
-                                >
-                                    <span>Next</span>
-                                    <img src={Next} alt="Next" className="w-4 h-4" />
-                                </button>
-                            </div>
+                            {/* Use Pagination Component */}
+                            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
                         </>
                     )}
                 </div>
