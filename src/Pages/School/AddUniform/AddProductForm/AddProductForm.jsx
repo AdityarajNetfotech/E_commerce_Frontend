@@ -6,14 +6,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { toast, ToastContainer } from "react-toastify";
- 
+
 
 const AddProductForm = () => {
   const navigate = useNavigate();
-
-  
-
- 
 
   const [productName, setProductName] = useState("");
   const [subCategory, setSubCategory] = useState("");
@@ -27,6 +23,8 @@ const AddProductForm = () => {
   const [variations, setVariations] = useState([{
     variationType: "",
     variationInfo: "",
+    secondVariationType: "",
+    secondVariationInfo: "",
     subVariations: [
       {
         subVariationType: "",
@@ -52,7 +50,7 @@ const AddProductForm = () => {
         const newImages = [...prevImages];
         newImages[index] = { file, previewURL: reader.result };
 
-        if (selectedIndex === null) setSelectedIndex(index); 
+        if (selectedIndex === null) setSelectedIndex(index);
         return newImages;
       });
     };
@@ -63,9 +61,9 @@ const AddProductForm = () => {
   const handleRemoveImage = (index) => {
     setImages((prevImages) => {
       const newImages = [...prevImages];
-      newImages[index] = null; 
+      newImages[index] = null;
 
-      
+
       if (selectedIndex === index) {
         const firstAvailable = newImages.findIndex((img) => img !== null);
         setSelectedIndex(firstAvailable !== -1 ? firstAvailable : null);
@@ -76,7 +74,6 @@ const AddProductForm = () => {
   };
 
   const handleCancel = () => {
-
     setProductName("");
     setSubCategory("");
     setProductDetail("");
@@ -89,6 +86,8 @@ const AddProductForm = () => {
       {
         variationType: "",
         variationInfo: "",
+        secondVariationType: "",
+        secondVariationInfo: "",
         subVariations: [
           {
             subVariationType: "",
@@ -108,6 +107,8 @@ const AddProductForm = () => {
       {
         variationType: "",
         variationInfo: "",
+        secondVariationType: "",
+        secondVariationInfo: "",
         subVariations: [
           {
             subVariationType: "",
@@ -153,13 +154,16 @@ const AddProductForm = () => {
     } else {
       updatedVariations[variantIndex][name] = value;
 
-      
+      // Reset info when variation type changes
       if (name === "variationType") {
         updatedVariations[variantIndex].variationInfo = "";
       }
+
+      // Reset info when second variation type changes
+      if (name === "secondVariationType") {
+        updatedVariations[variantIndex].secondVariationInfo = "";
+      }
     }
-
-
 
     setVariations(updatedVariations);
   };
@@ -184,61 +188,48 @@ const AddProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!validateForm()) return;
-
-    // const productData = {
-    //   name: productName,
-    //   description,
-    //   category: "Uniform",
-    //   productDetail,
-    //   SKU,
-    //   uniformDetails: { subCategory, gender, variations },
-    //   image: images.map((img) => img.url || img.previewURL || "")
-    // };
-
+  
+    // Log the exact structure of variations for debugging
+    console.log("Variations:", JSON.stringify(variations, null, 2));
+  
     const formData = new FormData();
     formData.append("name", productName);
     formData.append("description", description);
     formData.append("category", "Uniform");
     formData.append("productDetail", productDetail);
     formData.append("SKU", SKU);
+    
+    // Try sending the data in a format the server may expect
     formData.append("uniformDetails", JSON.stringify({ subCategory, gender, variations }));
 
-
-    images.forEach((imageObj) => {
+  
+    // Only append valid images
+    images.forEach((imageObj, index) => {
       if (imageObj?.file) {
-        console.log("Appending file:", imageObj.file);
-        formData.append("image", imageObj.file);
+        console.log(`Appending image ${index}:`, imageObj.file.name, imageObj.file.type, imageObj.file.size);
+        formData.append('image', imageObj.file);
       }
     });
-
-    console.log("Form Data:");
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
-
-    console.log("Images Before Mapping:", images);
-
-
+  
     try {
+      // Add debugging logs
+      // console.log("Sending request to:", "http://localhost:5000/api/product/add");
+      console.log("With token:", token ? "Token present" : "No token");
+      
       const response = await axios.post("http://localhost:5000/api/product/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
-
         },
         withCredentials: true,
       });
-
-      console.log("Backend Response:", response.data); 
-
+  
       if (response.status >= 200 && response.status < 300) {
+        const uploadedImages = response.data?.image || [];
 
-        const uploadedImages = response.data?.image || []; 
-
-        console.log("Uploaded Images from Backend:", uploadedImages); 
-
+        console.log("Uploaded Images from Backend:", uploadedImages);
 
         const updatedProductData = {
           name: productName,
@@ -246,35 +237,41 @@ const AddProductForm = () => {
           category: "Uniform",
           productDetail,
           SKU,
-          uniformDetails: { subCategory, gender, variations },
+          subCategory,
+          gender,
+          variations,
           image: uploadedImages, 
         };
 
-    console.log("Final Product Data Before Navigation:", updatedProductData); 
-        
+        console.log("Final Product Data Before Navigation:", updatedProductData);
+
         toast.success("Product added successfully!", {
-                  position: "top-right",
-                  autoClose: 3000,
-                  className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
-                  bodyClassName: "text-sm",
-                  progressClassName: "bg-green-700",
-                  onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
-            
-                });
+          position: "top-right",
+          autoClose: 3000,
+          className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
+          bodyClassName: "text-sm",
+          progressClassName: "bg-green-700",
+          onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
+        });
 
-                setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData } }), 2000);
-
-      
+        setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData } }), 2000);
       } else {
-              toast.error(data.message || "Something went wrong!");
-            }
+        toast.error(response.data?.message || "Something went wrong!");
+      }
     } catch (err) {
       console.error("Error adding product:", err);
+      
+      // Log more details about the error response
+      if (err.response) {
+        console.error("Error response data:", err.response.data);
+        console.error("Error response status:", err.response.status);
+        console.error("Error response headers:", err.response.headers);
+      }
+      
       toast.error("Error submitting form!");
       setError("Failed to add product. Please try again.");
     }
   };
-
 
   return (
     <>
@@ -292,12 +289,9 @@ const AddProductForm = () => {
                     alt="Placeholder for main product image"
                     className="mb-4 w-[120px] h-[120px] object-cover"
                   />) : (
-
                     <p className="text-gray-500 mb-4">
                       Drag and drop image here, or click add image
                     </p>
-
-
                   )}
                   <input
                     type="file"
@@ -327,7 +321,7 @@ const AddProductForm = () => {
                           <button
                             className="absolute top-1 right-1 bg-gray-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                             onClick={(e) => {
-                              e.stopPropagation(); 
+                              e.stopPropagation();
                               handleRemoveImage(index);
                             }}
                           >
@@ -419,13 +413,11 @@ const AddProductForm = () => {
                       className="w-full border border-gray-300 p-2 rounded mt-1"
                     />
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
         </div>
-
 
         <div className="bg-gray-100 p-6">
           <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
@@ -458,10 +450,8 @@ const AddProductForm = () => {
                         value={variant.variationInfo}
                         onChange={(e) => handleInputChange(e, variantIndex)}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        disabled={!variant.variationType} 
+                        disabled={!variant.variationType}
                       >
-                        
-
                         <option value="">Select {variant.variationType || "Variation"}</option>
                         {variant.variationType === "Color" && (
                           <>
@@ -482,11 +472,60 @@ const AddProductForm = () => {
                       </select>
                     </div>
                     <button
+                      type="button"
                       className="ml-2 text-red-500"
                       onClick={() => handleDeleteVariant(variantIndex)}
                     >
                       <img src={dltbtn} alt="Delete" className="h-[40px] w-[40px]" />
                     </button>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Second Variation Type
+                    </label>
+                    <select
+                      name="secondVariationType"
+                      value={variant.secondVariationType || ""}
+                      onChange={(e) => handleInputChange(e, variantIndex)}
+                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    >
+                      <option value="">Select Type (e.g., color)</option>
+                      <option value="Color">Color</option>
+                      <option value="Material">Material</option>
+                    </select>
+                  </div>
+                  <div className="relative flex items-end">
+                    <div className="flex-grow">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Second Variation Info
+                      </label>
+                      <select
+                        name="secondVariationInfo"
+                        value={variant.secondVariationInfo || ""}
+                        onChange={(e) => handleInputChange(e, variantIndex)}
+                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        disabled={!variant.secondVariationType}
+                      >
+                        <option value="">Select {variant.secondVariationType || "Variation"}</option>
+                        {variant.secondVariationType === "Color" && (
+                          <>
+                            <option value="Red">Red</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Green">Green</option>
+                            <option value="Blue">Blue</option>
+                          </>
+                        )}
+                        {variant.secondVariationType === "Material" && (
+                          <>
+                            <option value="Cotton">Cotton</option>
+                            <option value="Polyester">Polyester</option>
+                            <option value="Leather">Leather</option>
+                            <option value="Silk">Silk</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
                   </div>
                 </div>
 
@@ -506,12 +545,10 @@ const AddProductForm = () => {
                           handleInputChange(e, variantIndex, subVariantIndex)
                         }
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-
                       >
-                        <option>Size</option>
+                        <option value="">Size</option>
                         <option value="S">S</option>
                         <option value="M">M</option>
-
                       </select>
                     </div>
                     <div>
@@ -519,15 +556,14 @@ const AddProductForm = () => {
                         Sub Variant Info
                       </label>
                       <select
-
                         name="subVariationInfo"
                         value={subVariant.subVariationInfo}
                         onChange={(e) =>
                           handleInputChange(e, variantIndex, subVariantIndex)
                         }
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-
                       >
+                        <option value="">Select Size</option>
                         <option value="5">05</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
@@ -565,6 +601,7 @@ const AddProductForm = () => {
                       </div>
                       <div className="ml-2 flex items-center">
                         <button
+                          type="button"
                           className="shadow-md flex items-center justify-center h-[40px] w-[40px]"
                           onClick={() =>
                             handleDeleteSubVariant(variantIndex, subVariantIndex)
@@ -579,20 +616,21 @@ const AddProductForm = () => {
 
                 <div className="flex items-center mb-4 border-b border-gray-300 pb-4">
                   <button
+                    type="button"
                     className="w-48 bg-yellow-100 text-yellow-600 py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
                     onClick={() => handleAddSubVariant(variantIndex)}
                   >
                     Add Sub Variant +
                   </button>
-                  <button className="ml-4 text-gray-500 flex items-center">
-                    <img src={attach}></img> Attach Image
+                  <button type="button" className="ml-4 text-gray-500 flex items-center">
+                    <img src={attach} alt="Attach" /> Attach Image
                   </button>
                 </div>
-
               </div>
             ))}
 
             <button
+              type="button"
               className="w-48 bg-black text-white py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
               onClick={handleAddVariant}
             >
@@ -601,19 +639,17 @@ const AddProductForm = () => {
           </div>
         </div>
 
-
-
         <div className="bg-gray-100 p-6">
-          
-
-          <div className="flex justify-end space-x-2 mt-4  max-w-4xl mx-auto mb-3">
+          <div className="flex justify-end space-x-2 mt-4 max-w-4xl mx-auto mb-3">
             <button
               type="button"
               onClick={handleCancel}
               className="bg-black text-white px-3 py-1 rounded-lg">
               Cancel
             </button>
-            <button type="submit"  className="bg-orange-500 text-white px-3 py-1 rounded-lg"
+            <button
+              type="submit"
+              className="bg-orange-500 text-white px-3 py-1 rounded-lg"
             >
               Done
             </button>
@@ -621,9 +657,7 @@ const AddProductForm = () => {
           </div>
         </div>
       </form>
-
     </>
-
   );
 };
 
