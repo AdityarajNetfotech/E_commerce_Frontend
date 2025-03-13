@@ -2,10 +2,10 @@ import React from 'react'
 import AdminSidebar from "../../../Components/SideBar/AdminSideBar";
 import Header from '../../School/ProductCatalogue/header/Header'
 import Footer from "../../../Components/Footer/Footer";
-import RegisterSchoolTable from './RegisterSchoolTable';
+import RegisterAdminTable from './RegisterAdminTable';
 
 
-function RegisterSchool() {
+function RegisterAdmin() {
   return (
     <div>
       <div className="flex flex-col lg:flex-row min-h-screen ">
@@ -17,7 +17,7 @@ function RegisterSchool() {
           <Header />
 
           <div className="flex-1 overflow-auto">
-            <RegisterSchoolTable/>
+          <RegisterAdminTable />
 
           </div>
 
@@ -30,4 +30,4 @@ function RegisterSchool() {
   )
 }
 
-export default RegisterSchool
+export default RegisterAdmin ;

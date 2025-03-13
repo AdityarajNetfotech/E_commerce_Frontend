@@ -53,6 +53,8 @@ import ReturnRequest from "./Components/Notifications/ReturnRequest";
 import ReturnRequestSuccessful from "./Components/Notifications/ReturnRequestSuccesful";
 import ExchangeRequest from "./Components/Notifications/ExchangeRequest";
 import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeRequestSuccessful";
+import AdminRegister from "./Components/User Management/Admin/AdminRegister";
+import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin"
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -109,6 +111,7 @@ function App() {
             element={<SchoolChangePassword/>}
           />
           {/* Admin */}
+          <Route path="/AdminRegister" element={<AdminRegister />} />
           <Route path="/Adminlogin" element={<Adminlogin />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
           <Route path="/add-product" element={<AddNewProduct />} />
@@ -118,6 +121,7 @@ function App() {
           <Route path="/stationery" element={<AddStationary />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
+          <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
           <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
           <Route path="/BankDetail" element={<BankDetail />} />
           {/* Notifications */}
