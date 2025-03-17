@@ -68,6 +68,9 @@ const AdminSidebar = () => {
               <NavLink to="/RegisterAdmin">Register Admin</NavLink>
             </li>
             <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
+              <NavLink to="/AdminRegister">Register Admin Form</NavLink>
+            </li>
+            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
               <NavLink to="/AdminAccountDetail">Account Detail</NavLink>
             </li>
 

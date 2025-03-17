@@ -44,10 +44,10 @@ function SchoolRegister() {
       console.log(response.data);
   
       // Check for success condition based on the message
-      if (response.data && response.data.message) {
+      if (response.data) {
         // Show success alert and navigate
         alert(response.data.message); // Use the message from the backend
-        // navigate("/schoolLogin"); 
+        navigate("/RegistrationApprovePage"); 
       } else {
         setError("Registration failed. Please try again.");
       }

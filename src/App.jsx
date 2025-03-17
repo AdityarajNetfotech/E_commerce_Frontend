@@ -54,7 +54,9 @@ import ReturnRequestSuccessful from "./Components/Notifications/ReturnRequestSuc
 import ExchangeRequest from "./Components/Notifications/ExchangeRequest";
 import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeRequestSuccessful";
 import AdminRegister from "./Components/User Management/Admin/AdminRegister";
-import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin"
+import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin";
+import RegistrationApprovePage from "./Pages/Home/RegistrationApprovePage";
+import RegistrationRejectedPage from "./Pages/Home/RegistrationRejectedPage";
 // import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   // const [count, setCount] = useState(0)
@@ -66,6 +68,8 @@ function App() {
           {/* Home */}
           <Route path="/" element={<HomeLandingPage />} />
           <Route path="/Register" element={<HomeSignUp />} />
+          <Route path="/RegistrationApprovePage" element={<RegistrationApprovePage />} />
+          <Route path="/RegistrationRejectedPage" element={<RegistrationRejectedPage />} />
           {/* Student */}
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/UserRegister" element={<UserRegister />} />
