@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const TableList = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    
+
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -70,22 +70,55 @@ const TableList = () => {
 
     const handleResetFilters = () => {
         setFilters({
-            color: 'Red',
-            category: 'Uniform',
-            grade: 'Fourth',
+            color: '',
+            category: '',
+            grade: '',
             gender: '',
         });
     };
 
     const handleDeleteProduct = (id) => {
-        setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+        setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
     };
 
     const filteredData = products.filter((product) => {
-        return (
-            product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-            (filters.category === '' || product.category === filters.category)
-        );
+       
+        if (searchTerm) {
+            if (!product.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                return false;
+            }
+        }
+        
+        if (filters.category) {
+            if (filters.category === "Uniform" && !product.uniformDetails) return false;
+            if (filters.category === "Books" && !product.bookDetails) return false;
+            if (filters.category === "Stationary" && !product.stationaryDetails) return false;
+        }
+
+        
+        if (filters.color) {
+            if (!product.uniformDetails?.variations) return false;
+            return product.uniformDetails.variations.some(
+                (variation) =>
+                    variation.variationInfo === filters.color || 
+                    variation.secondVariationInfo === filters.color 
+            );
+        }
+
+        if (filters.grade) {
+            if (!product.bookDetails || product.bookDetails.grade !== filters.grade) {
+                return false;
+            }
+        }
+
+        if(filters.gender) {
+            if(!product.uniformDetails || product.uniformDetails.gender !== filters.gender) {
+                return false;
+            }
+        }
+
+
+        return true; 
     });
 
 
@@ -111,7 +144,7 @@ const TableList = () => {
                                 <input
                                     className="p-2 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-yellow-500 w-full sm:w-auto"
                                     type="text"
-                                    placeholder="Search something"
+                                    placeholder="Search by Product name"
                                     value={searchTerm}
                                     onChange={handleSearchChange}
                                 />
@@ -126,11 +159,15 @@ const TableList = () => {
                                 <span>Color: </span>
                                 <select
                                     className="p-2 border-0"
+                                    name="color"
                                     value={filters.color}
-                                    onChange={(e) => handleFilterChange("color", e.target.value)}
+                                    onChange={handleFilterChange}
                                 >
                                     <option value="">Color</option>
                                     <option value="Red">Red</option>
+                                    <option value="Green">Green</option>
+                                    <option value="Yellow">Yellow</option>
+                                    <option value="Blue">Blue</option>
                                 </select>
                             </div>
                             <div className="bg-white p-1 rounded-lg">
@@ -151,21 +188,37 @@ const TableList = () => {
                                 <span>Grade: </span>
                                 <select
                                     className="p-2 border-0"
+                                    name="grade"
                                     value={filters.grade}
-                                    onChange={(e) => handleFilterChange("grade", e.target.value)}
+                                    onChange={handleFilterChange}
                                 >
                                     <option value="">Grade</option>
-                                    <option value="Fourth">Fourth</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
                                 </select>
                             </div>
                             <div className="bg-white p-1 rounded-lg">
                                 <span>Gender: </span>
                                 <select
                                     className="p-2 border-0"
+                                    name="gender"
                                     value={filters.gender}
-                                    onChange={(e) => handleFilterChange("gender", e.target.value)}
+                                    onChange={handleFilterChange}
                                 >
                                     <option value="">Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Unisex">Unisex</option>
                                 </select>
                             </div>
 
