@@ -5,6 +5,7 @@ import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ProdDetailComp from './ProdDetailComp';
+import axios from 'axios';
 
 function ProductDetail() {
     const [openAccordion, setOpenAccordion] = useState(null);
@@ -32,7 +33,6 @@ function ProductDetail() {
         SKU = 'N/A',
     } = product;
 
-    // Image handling
     const images = image.length > 0 ? image : ["https://via.placeholder.com/150"];
     const [mainImage, setMainImage] = useState(images[0]);
 
@@ -74,6 +74,37 @@ function ProductDetail() {
     // console.log("Variations path 1:", product.variations);
     // console.log("Variations path 2:", product.uniformDetails?.variations);
 
+    const handleAddToCart = async () => {
+        if (!selectedSize || !selectedColor || !selectedMaterial) {
+            alert("Please select all product options.");
+            return;
+        }
+
+        const cartData = {
+            productId: product._id,
+            quantity: quantity,
+            selectedSize,
+            selectedColor,
+            selectedMaterial,
+            price: getPriceForSize(),
+            image: mainImage 
+        };
+
+        try {
+            const response = await axios.post('http://localhost:5000/api/cart/add', cartData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+                }
+            });
+            console.log("Added to Cart:", response.data);
+            alert("Product added to cart!");
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+            alert("Failed to add product to cart.");
+        }
+    };
+
     return (
         <>
             <div className="min-h-screen bg-gray-50">
@@ -113,21 +144,21 @@ function ProductDetail() {
                             <h1 className="text-lg font-semibold">Select Material</h1>
                             <div className='flex flex-wrap gap-3 mt-3'>
                                 {product?.uniformDetails?.variations?.length > 0 ? (
-                                    product.uniformDetails.variations.map((variation, index) => (
+                                    [...new Set(product.uniformDetails.variations.map(variation => variation.variationInfo))].map((material, index) => (
                                         <span
                                             key={index}
                                             className={`px-4 py-2 border rounded-lg cursor-pointer transition-all 
-                                                ${selectedMaterial === variation.variationInfo
+                                                ${selectedMaterial === material
                                                     ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                     : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                 `}
                                             onClick={() => {
-                                                setSelectedMaterial(variation.variationInfo);
+                                                setSelectedMaterial(material);
                                                 setSelectedColor(null);
                                                 setSelectedSize(null);
                                             }}
                                         >
-                                            {variation.variationInfo || "Unknown"}
+                                            {material || "Unknown"}
                                         </span>
                                     ))
                                 ) : (
@@ -143,11 +174,10 @@ function ProductDetail() {
                                         {getColorsForMaterial().length > 0 ? (
                                             getColorsForMaterial().map((color, index) => (
                                                 <div key={index} className="flex items-center gap-3">
-                                                    {/* Color Button */}
                                                     <span
                                                         className={`px-4 py-2 border rounded-lg cursor-pointer transition-all`}
                                                         style={{
-                                                            backgroundColor: color, 
+                                                            backgroundColor: color,
                                                             color: "#fff",
                                                             border: selectedColor === color ? "2px solid black" : "1px solid gray"
                                                         }}
@@ -159,7 +189,6 @@ function ProductDetail() {
                                                         {color}
                                                     </span>
 
-                                                    {/* Size Selection - Right side of Color */}
                                                     {selectedColor === color && (
                                                         <div className='flex flex-wrap gap-2'>
                                                             {getSizesForMaterialAndColor().length > 0 ? (
@@ -190,7 +219,6 @@ function ProductDetail() {
                                 </>
                             )}
 
-                            {/* Price Display */}
                             {selectedSize && (
                                 <>
                                     <h1 className="text-lg font-semibold mt-4">Price</h1>
@@ -203,7 +231,6 @@ function ProductDetail() {
 
 
 
-                        {/* Book price display */}
                         {category === "Books" && (
                             <div className="text-2xl font-bold mt-4 mb-4">
                                 ₹ {product?.bookDetails?.price || "NA"}
@@ -226,11 +253,12 @@ function ProductDetail() {
                                     +
                                 </button>
                             </div>
-                            <button
-                                className="w-full rounded-md bg-orange-500 h-10 text-white font-medium"
-                            >
+                            <button className='w-full rounded-md bg-orange-500 h-10 text-white font-medium cursor-pointer'
+                                onClick={handleAddToCart}>
                                 ADD TO CART
                             </button>
+
+
                         </div>
 
                         <div className="mt-6">

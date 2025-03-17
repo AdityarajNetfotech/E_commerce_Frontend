@@ -21,9 +21,9 @@ const AddProductForm = () => {
   const [images, setImages] = useState([null, null, null]);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [variations, setVariations] = useState([{
-    variationType: "",
+    variationType: "Material",
     variationInfo: "",
-    secondVariationType: "",
+    secondVariationType: "Color",
     secondVariationInfo: "",
     subVariations: [
       {
@@ -105,9 +105,9 @@ const AddProductForm = () => {
     setVariations([
       ...variations,
       {
-        variationType: "",
+        variationType: "Material",
         variationInfo: "",
-        secondVariationType: "",
+        secondVariationType: "Color",
         secondVariationInfo: "",
         subVariations: [
           {
@@ -188,23 +188,23 @@ const AddProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) return;
-  
+
     // Log the exact structure of variations for debugging
     console.log("Variations:", JSON.stringify(variations, null, 2));
-  
+
     const formData = new FormData();
     formData.append("name", productName);
     formData.append("description", description);
     formData.append("category", "Uniform");
     formData.append("productDetail", productDetail);
     formData.append("SKU", SKU);
-    
+
     // Try sending the data in a format the server may expect
     formData.append("uniformDetails", JSON.stringify({ subCategory, gender, variations }));
 
-  
+
     // Only append valid images
     images.forEach((imageObj, index) => {
       if (imageObj?.file) {
@@ -212,12 +212,12 @@ const AddProductForm = () => {
         formData.append('image', imageObj.file);
       }
     });
-  
+
     try {
       // Add debugging logs
       // console.log("Sending request to:", "http://localhost:5000/api/product/add");
       console.log("With token:", token ? "Token present" : "No token");
-      
+
       const response = await axios.post("http://localhost:5000/api/product/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -225,7 +225,7 @@ const AddProductForm = () => {
         },
         withCredentials: true,
       });
-  
+
       if (response.status >= 200 && response.status < 300) {
         const uploadedImages = response.data?.image || [];
 
@@ -240,7 +240,7 @@ const AddProductForm = () => {
           subCategory,
           gender,
           variations,
-          image: uploadedImages, 
+          image: uploadedImages,
         };
 
         console.log("Final Product Data Before Navigation:", updatedProductData);
@@ -251,7 +251,7 @@ const AddProductForm = () => {
           className: "bg-green-500 text-white font-semibold p-4 rounded-md shadow-md",
           bodyClassName: "text-sm",
           progressClassName: "bg-green-700",
-          onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData }}),
+          onClose: () => navigate("/ProdReview", { state: { productData: updatedProductData } }),
         });
 
         setTimeout(() => navigate("/ProdReview", { state: { productData: updatedProductData } }), 2000);
@@ -260,14 +260,14 @@ const AddProductForm = () => {
       }
     } catch (err) {
       console.error("Error adding product:", err);
-      
+
       // Log more details about the error response
       if (err.response) {
         console.error("Error response data:", err.response.data);
         console.error("Error response status:", err.response.status);
         console.error("Error response headers:", err.response.headers);
       }
-      
+
       toast.error("Error submitting form!");
       setError("Failed to add product. Please try again.");
     }
@@ -427,48 +427,34 @@ const AddProductForm = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Variation Type
+                      Select Material
                     </label>
                     <select
                       name="variationType"
-                      value={variant.variationType}
-                      onChange={(e) => handleInputChange(e, variantIndex)}
+                      value="Material"
+                      disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <option>Select Type (e.g., color)</option>
-                      <option value="Color">Color</option>
                       <option value="Material">Material</option>
                     </select>
                   </div>
+
                   <div className="relative flex items-end">
                     <div className="flex-grow">
                       <label className="block text-sm font-medium text-gray-700">
-                        Variation Info
+                        Material
                       </label>
                       <select
                         name="variationInfo"
                         value={variant.variationInfo}
                         onChange={(e) => handleInputChange(e, variantIndex)}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        disabled={!variant.variationType}
                       >
-                        <option value="">Select {variant.variationType || "Variation"}</option>
-                        {variant.variationType === "Color" && (
-                          <>
-                            <option value="Red">Red</option>
-                            <option value="Yellow">Yellow</option>
-                            <option value="Green">Green</option>
-                            <option value="Blue">Blue</option>
-                          </>
-                        )}
-                        {variant.variationType === "Material" && (
-                          <>
-                            <option value="Cotton">Cotton</option>
-                            <option value="Polyester">Polyester</option>
-                            <option value="Leather">Leather</option>
-                            <option value="Silk">Silk</option>
-                          </>
-                        )}
+                        <option value="">Select Material</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Polyester">Polyester</option>
+                        <option value="Leather">Leather</option>
+                        <option value="Silk">Silk</option>
                       </select>
                     </div>
                     <button
@@ -482,48 +468,33 @@ const AddProductForm = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
-                      Second Variation Type
+                      Select Color
                     </label>
                     <select
                       name="secondVariationType"
-                      value={variant.secondVariationType || ""}
-                      onChange={(e) => handleInputChange(e, variantIndex)}
+                      value="Color"
+                      disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <option value="">Select Type (e.g., color)</option>
                       <option value="Color">Color</option>
-                      <option value="Material">Material</option>
                     </select>
                   </div>
                   <div className="relative flex items-end">
                     <div className="flex-grow">
                       <label className="block text-sm font-medium text-gray-700">
-                        Second Variation Info
+                        Color
                       </label>
                       <select
                         name="secondVariationInfo"
                         value={variant.secondVariationInfo || ""}
                         onChange={(e) => handleInputChange(e, variantIndex)}
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        disabled={!variant.secondVariationType}
                       >
-                        <option value="">Select {variant.secondVariationType || "Variation"}</option>
-                        {variant.secondVariationType === "Color" && (
-                          <>
-                            <option value="Red">Red</option>
-                            <option value="Yellow">Yellow</option>
-                            <option value="Green">Green</option>
-                            <option value="Blue">Blue</option>
-                          </>
-                        )}
-                        {variant.secondVariationType === "Material" && (
-                          <>
-                            <option value="Cotton">Cotton</option>
-                            <option value="Polyester">Polyester</option>
-                            <option value="Leather">Leather</option>
-                            <option value="Silk">Silk</option>
-                          </>
-                        )}
+                        <option value="">Select Color</option>
+                        <option value="Red">Red</option>
+                        <option value="Yellow">Yellow</option>
+                        <option value="Green">Green</option>
+                        <option value="Blue">Blue</option>
                       </select>
                     </div>
                   </div>
