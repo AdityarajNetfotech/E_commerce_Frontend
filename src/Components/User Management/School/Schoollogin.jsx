@@ -33,7 +33,7 @@ export default function SchoolLogin() {
 
       alert("Login successful!");
       // Navigate to Student Main Landing Page
-      navigate("/SchoolDashboard"); 
+      navigate("/Dashboard"); 
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || "Login failed");

@@ -30,7 +30,7 @@ function AdminRegister() {
   
       if (response.data && response.status === 201) { // ✅ Check status code
         alert("Admin registered successfully");
-        navigate("/AdminLogin"); 
+        navigate("/AdminDashboard"); 
       } else if (response.data && response.data.message === "User already exists") {
         alert("User already exists");
         setError("User already exists. Please use a different email.");
