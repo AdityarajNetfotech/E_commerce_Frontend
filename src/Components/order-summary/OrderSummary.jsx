@@ -1,6 +1,14 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
-const OrderSummary = () => {
+const OrderSummary = ({totalPrice}) => {
+
+  const [updatedTotalPrice, setUpdatedTotalPrice] = useState(totalPrice);
+
+  useEffect(() => {
+    setUpdatedTotalPrice(totalPrice);
+  }, [totalPrice]);
+
   return (
     <div className="bg-peach-custom p-5 rounded-lg shadow-lg w-full lg:w-1/3 flex flex-col items-center space-y-4">
     
@@ -12,24 +20,24 @@ const OrderSummary = () => {
         <div className="space-y-4">
           <div className="flex justify-between text-lg">
             <span className="text-gray-700">Subtotal</span>
-            <span className="text-gray-800 font-medium">₹ 2000</span>
+            <span className="text-gray-800 font-medium">₹ {updatedTotalPrice}</span>
           </div>
 
           <div className="flex justify-between text-lg text-red-500">
             <span>Discount (-20%)</span>
-            <span>- ₹ 600</span>
+            <span>- ₹ 0</span>
           </div>
 
           <div className="flex justify-between text-lg">
             <span className="text-gray-700">Shipping Charges</span>
-            <span className="text-gray-800">₹ 50</span>
+            <span className="text-gray-800">₹ 0</span>
           </div>
 
           <hr className="border-gray-300" />
 
           <div className="flex justify-between text-xl font-bold text-green-600">
             <span>Total</span>
-            <span>₹ 1450</span>
+            <span>₹ {updatedTotalPrice}</span>
           </div>
         </div>
 
