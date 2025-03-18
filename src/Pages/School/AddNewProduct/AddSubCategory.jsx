@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Header from './header/Header'
+import Header from "../Dashboard/header/header";
 import { Link } from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer'
 
@@ -17,6 +17,9 @@ function AddSubCategory() {
             reader.readAsDataURL(file);
         }
     };
+
+    const AddSubCategory = "Add Sub-Category"
+    
     return (
         <>
             <div>
@@ -25,7 +28,7 @@ function AddSubCategory() {
                         <Sidebar />
                     </div>
                     <div className=" flex flex-col flex-1 ">
-                        <Header />
+                        <Header heading={AddSubCategory} />
                         <section className="flex-1 overflow-auto">
                             <div className="bg-white shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] rounded-xl p-6 w-full max-w-3xl mx-auto mt-8">
                                 <h1 className='text-gray-800 text-[22px] font-medium text-center mb-4'>Select Category</h1>

@@ -6,6 +6,7 @@ import photo from "../../Components/Images/photo.png";
 import schoolRegister from "../../Components/Images/schoolRegister.png";
 import userRegister from "../../Components/Images/userRegister.png";
 import reverseAeroplane from "../../Components/Images/reverseAeroplane.png";
+import strip from "../../Components/Images/strip.png"; // Import strip.png
 
 function HomeSignUp() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1028);
@@ -27,7 +28,7 @@ function HomeSignUp() {
         </div>
       )}
 
-       {/* Reverse Aeroplane  */}
+      {/* Reverse Aeroplane  */}
       <div className="hidden lg:block absolute top-36 right-200">
         <img
           src={reverseAeroplane}
@@ -38,12 +39,22 @@ function HomeSignUp() {
 
       {/* School Image (Visible on Large Screens) */}
       {!isMobile && (
-        <div className="hidden lg:flex justify-center w-full max-w-[600px] relative right-55 top-29">
-          <img
-            src={photo}
-            alt="School Environment"
-            className="w-full h-auto max-h-[500px] object-contain"
-          />
+        <div className="hidden lg:flex justify-center w-full max-w-[600px] relative right-60 top-30">
+          <div className="relative w-full flex justify-center">
+            
+            <img
+              src={strip}
+              alt="Strip"
+              className="w-full max-w-[595px] object-contain"
+            />
+
+  
+            <img
+              src={photo}
+              alt="School Environment"
+              className="absolute bottom-[0px] left-[0px] w-[100%] max-w-[575px] object-contain"
+            />
+          </div>
         </div>
       )}
 

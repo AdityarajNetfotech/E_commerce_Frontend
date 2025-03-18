@@ -1,13 +1,16 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/Footer/Footer'
-import Header from './header/Header'
+import Header from "../Dashboard/header/header";
 import AddProduct from './AddProduct/AddProduct'
 
 
 
 
 function AddNewProduct() {
+
+  const addNewProduct = "Add New Product"
+  
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:h-screen min-h-screen">
@@ -16,7 +19,7 @@ function AddNewProduct() {
         </div>
         <div className=" flex flex-col flex-1 ">
 
-          <Header />
+        <Header heading={addNewProduct} />
           
           <div className="flex-1 overflow-auto">
             <AddProduct />
