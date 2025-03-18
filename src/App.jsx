@@ -2,12 +2,14 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  Navigate,
   Link,
-  BrowserRouter,
 } from "react-router-dom";
+import ProtectedRoute from "./Components/protected-routes/ProtectedRoute";
+
 import AdminDashboard from "./Components/User Management/Admin/AdminDashboard";
 import OtpVerification from "./Components/User Management/Users/OtpVerification";
-import SchoolDashboard from "./Components/User Management/School/SchoolDashboard";
+//import SchoolDashboard from "./Components/User Management/School/SchoolDashboard";
 import UserRegister from "./Components/User Management/Users/UserRegister";
 import Userlogin from "./Components/User Management/Users/Userlogin";
 import EmailResetPage from "./Components/User Management/Users/EmailResetPage";
@@ -55,54 +57,26 @@ import ExchangeRequest from "./Components/Notifications/ExchangeRequest";
 import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeRequestSuccessful";
 import AdminRegister from "./Components/User Management/Admin/AdminRegister";
 import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin";
-import RegistrationApprovePage from "./Pages/Home/RegistrationApprovePage";
-import RegistrationRejectedPage from "./Pages/Home/RegistrationRejectedPage";
 // import "bootstrap/dist/css/bootstrap.min.css";
+
+
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          {/* Home */}
-          <Route path="/" element={<HomeLandingPage />} />
-          <Route path="/Register" element={<HomeSignUp />} />
-          <Route path="/RegistrationApprovePage" element={<RegistrationApprovePage />} />
-          <Route path="/RegistrationRejectedPage" element={<RegistrationRejectedPage />} />
-          {/* Student */}
-          <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          <Route path="/UserRegister" element={<UserRegister />} />
-          <Route path="/otp-verification" element={<OtpVerification />} />
-          <Route path="/SchoolDashboard" element={<SchoolDashboard />} />
-          <Route path="/Userlogin" element={<Userlogin />} />
-          <Route path="/EmailResetPage" element={<EmailResetPage />} />
-          <Route path="/EmailOtpPage" element={<EmailOtpPage />} />
-          <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
-          <Route
-            path="/StudentMainLandingPage"
-            element={<StudentMainLandingPage />}
-          />
-          <Route path="/Product" element={<Product />} />
-          <Route path="/ShoppingCart" element={<ShoppingCart />} />
-          <Route path="/MyOrders" element={<MyOrders />} />
-          <Route path="/CustomerCare" element={<CustomerCare />} />
-          <Route path="/AccountDetails" element={<AccountDetails />} />
-          <Route path="/ProductDetail" element={<ProductDetail />} />
-          <Route path="/DeliveryAddress" element={<DeliveryAddress />} />
-          {/* School */}
-          <Route path="/ProdCatalogue" element={<ProductCatlogue />} />
-          <Route path="/ManageOrders" element={<ManageOrders />} />
-          <Route path="/ProdReview" element={<ProductReview />} />
-          <Route path="/SchoolLogin" element={<SchoolLogin />} />
-          <Route path="/SchoolRegister" element={<SchoolRegister />} />
-          <Route path="/OrderDetails" element={<OrderDetails />} />
-          <Route path="/AccountDetail" element={<AccountDetail />} />
-          <Route path='/ManageStudent' element={<ManageStudent />} />
-          <Route path='/AllOrders' element={<AllOrderDetails />} />
-          <Route path='/Dashboard' element={<Dashboard />} />
+    <Router>
+      <Routes>
 
-          <Route
+        {/* Public Routes */}
+        <Route path="/" element={<HomeLandingPage />} />
+        <Route path="/Register" element={<HomeSignUp />} />
+        <Route path="/UserRegister" element={<UserRegister />} />
+        <Route path="/otp-verification" element={<OtpVerification />} />
+        <Route path="/Userlogin" element={<Userlogin />} />
+        <Route path="/EmailResetPage" element={<EmailResetPage />} />
+        <Route path="/EmailOtpPage" element={<EmailOtpPage />} />
+        <Route path="/ChangePasswordPage" element={<ChangePasswordPage />} />
+        <Route path="/SchoolRegister" element={<SchoolRegister />} />
+        <Route path="/SchoolLogin" element={<SchoolLogin />} />
+        <Route
             path="/schoolemailresetpage"
             element={<SchoolEmailResetPage />}
           />
@@ -114,9 +88,45 @@ function App() {
             path="/schoolchangepasswordpage"
             element={<SchoolChangePassword/>}
           />
-          {/* Admin */}
+
+        <Route path="/Adminlogin" element={<Adminlogin />} />
+
+        {/* Student Protected Routes */}
+        <Route element={<ProtectedRoute role="student" />}>
+          <Route path="/StudentMainLandingPage" element={<StudentMainLandingPage />} />
+          <Route path="/Product" element={<Product />} />
+          <Route path="/ShoppingCart" element={<ShoppingCart />} />
+          <Route path="/MyOrders" element={<MyOrders />} />
+          <Route path="/CustomerCare" element={<CustomerCare />} />
+          <Route path="/AccountDetails" element={<AccountDetails />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
+          <Route path="/DeliveryAddress" element={<DeliveryAddress />} />
+          
+           {/* Notifications */}
+           <Route path="/OrderSuccessful" element={<OrderSuccessful />} />
+          <Route path="/OrderFailed" element={<OrderFailed />} />
+          <Route path="/ReturnRequest" element={<ReturnRequest />} />
+          <Route path="/ReturnRequestSuccessful" element={<ReturnRequestSuccessful />} />
+          <Route path="/ExchangeRequest" element={<ExchangeRequest />} />
+          <Route path="/ExchangeRequestSuccessful" element={<ExchangeRequestSuccessful />} />
+        </Route>
+
+        {/* School Protected Routes */}
+        <Route element={<ProtectedRoute role="school" />}>
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/ProdCatalogue" element={<ProductCatlogue />} />
+          <Route path="/ManageOrders" element={<ManageOrders />} />
+          <Route path="/ProdReview" element={<ProductReview />} />
+          <Route path="/OrderDetails" element={<OrderDetails />} />
+          <Route path="/AccountDetail" element={<AccountDetail />} />
+          <Route path='/ManageStudent' element={<ManageStudent />} />
+          <Route path='/AllOrders' element={<AllOrderDetails />} />
+        </Route>
+
+        {/* Admin Protected Routes */}
+        <Route element={<ProtectedRoute role="admin" />}>
           <Route path="/AdminRegister" element={<AdminRegister />} />
-          <Route path="/Adminlogin" element={<Adminlogin />} />
+          <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
           <Route path="/add-product" element={<AddNewProduct />} />
           <Route path="/add-subcategory" element={<AddSubCategory />} />
@@ -128,16 +138,12 @@ function App() {
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
           <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
           <Route path="/BankDetail" element={<BankDetail />} />
-          {/* Notifications */}
-          <Route path="/OrderSuccessful" element={<OrderSuccessful />} />
-          <Route path="/OrderFailed" element={<OrderFailed />} />
-          <Route path="/ReturnRequest" element={<ReturnRequest />} />
-          <Route path="/ReturnRequestSuccessful" element={<ReturnRequestSuccessful />} />
-          <Route path="/ExchangeRequest" element={<ExchangeRequest />} />
-          <Route path="/ExchangeRequestSuccessful" element={<ExchangeRequestSuccessful />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+        </Route>
+      
+        {/* Redirect Unknown Routes to Home */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 }
 

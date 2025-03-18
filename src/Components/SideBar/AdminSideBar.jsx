@@ -9,7 +9,7 @@ const AdminSidebar = () => {
     try {
       const response = await fetch("http://localhost:5000/api/admin/logout", {
         method: "POST",
-        credentials: "include", // Ensures cookies are sent
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -20,11 +20,7 @@ const AdminSidebar = () => {
 
       if (response.ok) {
         console.log("Logout successful");
-
-        // Remove auth token from localStorage
         localStorage.removeItem("adminAuthToken");
-
-        // Redirect to login page
         navigate("/Adminlogin");
       } else {
         console.error("Logout failed", data);
@@ -52,26 +48,55 @@ const AdminSidebar = () => {
         {/* Navigation Menu */}
         <nav className="mt-4">
           <ul className="space-y-4 px-4">
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              Dashboard
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/AdminDashboard" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/AdminDashboard">Dashboard</NavLink>
             </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/PendingSchool" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
               <NavLink to="/PendingSchool">Pending Schools</NavLink>
             </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              <NavLink to="/RegisterSchool">Register School</NavLink>
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/RegisterSchool" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/RegisterSchool">Registered School</NavLink>
             </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              <NavLink to="/RegisterStudent">Register Student</NavLink>
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/RegisterStudent" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/RegisterStudent">Registered Student</NavLink>
             </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              <NavLink to="/RegisterAdmin">Register Admin</NavLink>
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/RegisterAdmin" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/RegisterAdmin">Registered Admin</NavLink>
             </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
-              <NavLink to="/AdminRegister">Register Admin Form</NavLink>
-            </li>
-            <li className="px-6 py-2 hover:bg-black text-white rounded-md cursor-pointer">
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/AdminAccountDetail" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
               <NavLink to="/AdminAccountDetail">Account Detail</NavLink>
+            </li>
+
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/AdminRegister" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/AdminRegister">Register an Admin</NavLink>
             </li>
 
             {/* Logout Button */}
