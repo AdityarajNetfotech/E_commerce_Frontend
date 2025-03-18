@@ -1,13 +1,16 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/footer/Footer'
-import Header from './header/Header'
+import Header from "../Dashboard/header/header";
 import AddProductForm from './AddProductForm/AddProductForm'
 
 
 
 
 function AddStationary() {
+
+  const AddStationary = "Add Stationary"
+  
   return (
     <div>
       <div className="flex flex-col lg:flex-row lg:h-screen min-h-screen ">
@@ -16,7 +19,7 @@ function AddStationary() {
         </div>
         <div className=" flex flex-col flex-1 ">
 
-          <Header />
+        <Header heading={AddStationary} />
           
           <div className="flex-1 overflow-auto">
             <AddProductForm />

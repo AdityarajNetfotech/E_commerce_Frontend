@@ -121,6 +121,11 @@ function App() {
           <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />
+          <Route path="/add-product" element={<AddNewProduct />} />
+          <Route path="/add-subcategory" element={<AddSubCategory />} />
+          <Route path="/uniform" element={<AddUniform />} />
+          <Route path="/books" element={<AddBook />} />
+          <Route path="/stationery" element={<AddStationary />} />
         </Route>
 
         {/* Admin Protected Routes */}
@@ -128,11 +133,6 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
-          <Route path="/add-product" element={<AddNewProduct />} />
-          <Route path="/add-subcategory" element={<AddSubCategory />} />
-          <Route path="/uniform" element={<AddUniform />} />
-          <Route path="/books" element={<AddBook />} />
-          <Route path="/stationery" element={<AddStationary />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
