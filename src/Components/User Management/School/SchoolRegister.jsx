@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../../Components/Images/Logo.png"; 
 import axios from "axios";
@@ -16,6 +16,20 @@ function SchoolRegister() {
 
   const navigate = useNavigate(); // Uncommented navigate
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0); // Progress state
+
+  // useEffect(() => {
+  //   if (loading) {
+  //     document.body.style.overflow = "hidden"; // Disable scroll
+  //   } else {
+  //     document.body.style.overflow = "auto"; // Enable scroll
+  //   }
+
+  //   return () => {
+  //     document.body.style.overflow = "auto"; // Cleanup on unmount
+  //   };
+  // }, [loading]);
 
   const handleChange = (e) => {
     if (e.target.name === "affiliationCertificate") {
@@ -28,6 +42,9 @@ function SchoolRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Reset previous errors
+    setLoading(true);
+    setUploadProgress(0); // Reset progress
+
     const formDataToSend = new FormData();
     
     // Append all form fields to FormData
@@ -38,6 +55,11 @@ function SchoolRegister() {
     try {
       const response = await axios.post("http://localhost:5000/api/school/register", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
+        onUploadProgress: (progressEvent) => {
+          // Calculate progress percentage
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        },
       });
   
       // Log response data for debugging
@@ -55,13 +77,29 @@ function SchoolRegister() {
       // Log the error for debugging
       console.error("Error registering school:", error.response || error);
       setError("Registration failed. Please try again.");
+    }finally {
+      setLoading(false);
     }
   };
   
 
   return (
     <section className="bg-[#F7C322] min-h-screen flex flex-col items-center justify-center px-6 py-8">
-       <div className="flex items-center gap-60">
+       {loading && (
+        <div className="absolute w-full inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-sm z-50">
+          <div className="flex flex-col items-center w-80 bg-white p-5 rounded-lg shadow-lg">
+            <p className="text-gray-700 text-lg font-semibold mb-2">Uploading...</p>
+            <div className="w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="h-full bg-blue-500 rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <p className="text-gray-600 text-sm mt-2">{uploadProgress}%</p>
+          </div>
+        </div>
+      )}
+       <div className={`flex items-center gap-60 transition-all duration-300 ${loading ? "blur-sm pointer-events-none" : ""}`}>
                   <div className="hidden md:block">
                     <img src={Logo} alt="Company Logo" className="w-100 h-auto" />
                   </div>

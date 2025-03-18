@@ -30,6 +30,8 @@ function UserRegister() {
     "XII",
   ];
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0); // Progress state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,6 +60,8 @@ function UserRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
+    setUploadProgress(0); // Reset progress
 
     if (
       !formData.name ||
@@ -75,8 +79,16 @@ function UserRegister() {
     try {
       const response = await axios.post(
         "http://localhost:5000/api/student/register",
-        formData
+        formData,{
+          onUploadProgress: (progressEvent) => {
+            // Calculate progress percentage
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            setUploadProgress(percentCompleted);
+          },
+        }
+        
       );
+      
 
       if (response.status === 201) {
         alert("Registration successful! Please verify OTP.");
@@ -88,12 +100,28 @@ function UserRegister() {
         error.response?.data?.message ||
           "Registration failed. Please try again."
       );
+    }finally {
+      setLoading(false);
     }
   };
 
   return (
     <section className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
-      <div className="flex items-center gap-60">
+      {loading && (
+        <div className="absolute w-full inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-sm z-50">
+          <div className="flex flex-col items-center w-80 bg-white p-5 rounded-lg shadow-lg">
+            <p className="text-gray-700 text-lg font-semibold mb-2">Uploading...</p>
+            <div className="w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="h-full bg-blue-500 rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+            <p className="text-gray-600 text-sm mt-2">{uploadProgress}%</p>
+          </div>
+        </div>
+      )}
+       <div className={`flex items-center gap-60 transition-all duration-300 ${loading ? "blur-sm pointer-events-none" : ""}`}>
         <div className="hidden md:block">
           <img src={Logo} alt="Company Logo" className="w-150 h-auto" />
         </div>
