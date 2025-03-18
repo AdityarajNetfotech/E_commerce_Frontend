@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Footer from '../../../../Components/footer/Footer';
+import Footer from '../../../../Components/Footer/Footer';
 import CustomNavbar from '../../../../Components/Navbar/Navbar';
 import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
@@ -8,10 +8,11 @@ import ProdDetailComp from './ProdDetailComp';
 import axios from 'axios';
 
 function ProductDetail() {
+    const navigate = useNavigate();
     const [openAccordion, setOpenAccordion] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
-    const navigate = useNavigate();
+   
     const [selectedMaterial, setSelectedMaterial] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
@@ -87,7 +88,7 @@ function ProductDetail() {
             selectedColor,
             selectedMaterial,
             price: getPriceForSize(),
-            image: mainImage 
+            image: mainImage
         };
 
         try {
@@ -99,6 +100,8 @@ function ProductDetail() {
             });
             console.log("Added to Cart:", response.data);
             alert("Product added to cart!");
+            // Navigate to Delivery Address Page
+            navigate("/DeliveryAddress");
         } catch (error) {
             console.error("Error adding to cart:", error);
             alert("Failed to add product to cart.");

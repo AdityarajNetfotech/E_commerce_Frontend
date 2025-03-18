@@ -1,9 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const OrderSummary = ({totalPrice}) => {
 
+  const navigate = useNavigate();
+
+  const handlePlaceOrder = () => {
+    navigate("/DeliveryAddress");  // Navigates to Delivery Address Page
+  };
+
+
   const [updatedTotalPrice, setUpdatedTotalPrice] = useState(totalPrice);
+
+  
+  
 
   useEffect(() => {
     setUpdatedTotalPrice(totalPrice);
@@ -42,7 +53,9 @@ const OrderSummary = ({totalPrice}) => {
         </div>
 
       
-        <button className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition">
+        <button className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition"
+         onClick={handlePlaceOrder}
+        >
           Place Order
         </button>
       </div>
