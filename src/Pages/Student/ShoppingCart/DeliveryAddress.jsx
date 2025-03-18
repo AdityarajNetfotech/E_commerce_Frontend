@@ -1,6 +1,6 @@
 import React from 'react'
 import CustomNavbar from '../../../Components/Navbar/Navbar'
-import Footer from '../../../Components/footer/Footer'
+import Footer from '../../../Components/Footer/Footer'
 import OrderSummary from '../../../Components/order-summary/OrderSummary'
 import Header from './header/CartHeader'
 
@@ -15,8 +15,8 @@ function DeliveryAddress() {
             <p className='text-3xl font-bold text-center my-6'>Enter Delivery Address</p>
 
             <section className='mb-12'>
-                <div className='flex flex-col lg:flex-row justify-center items-start p-4 gap-8'>
-                    <div className="text-[#635D5A] w-full lg:w-[1000px] mx-auto bg-white shadow-lg p-6 rounded-lg">
+                <div className='flex flex-col lg:flex-row justify-center items-start p-4 lg:px-16 lg:space-x-35'>
+                    <div className="text-[#635D5A] w-full lg:w-[1000px]  bg-white shadow-lg p-8 rounded-lg">
                         <h2 className="text-xl font-bold text-center">Contact Details</h2>
 
                         <form>
