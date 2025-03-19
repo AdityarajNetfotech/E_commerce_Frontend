@@ -1,11 +1,14 @@
 import React from "react";
 import AdminSidebar from "../../../Components/SideBar/AdminSideBar";
-import Header from "../../School/ProductCatalogue/header/Header";
+import Header from "../PendingSchool/header/Header";
 import PrimaryUserForm from "./form/PrimaryUserForm";
 import SecondaryUserForm from "./form/SecondaryUserForm";
 import Footer from "../../../Components/Footer/Footer";
 
 function AdminAccountDetail() {
+
+  const AdminAccountDetail = "Account Details"
+
   return (
     <div className="flex flex-col min-h-screen">
       
@@ -15,7 +18,7 @@ function AdminAccountDetail() {
 
         
         <div className="flex flex-col flex-1 bg-[#ECECEC]">
-          <Header />
+          <Header heading={AdminAccountDetail} />
 
           
           <div className="flex-1 overflow-auto p-6">
