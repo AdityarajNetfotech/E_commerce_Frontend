@@ -1,11 +1,14 @@
 import React from 'react'
 import AdminSidebar from "../../../Components/SideBar/AdminSideBar";
-import Header from '../../School/ProductCatalogue/header/Header'
+import Header from '../PendingSchool/header/Header';
 import Footer from "../../../Components/Footer/Footer";
 import RegisterSchoolTable from './RegisterSchoolTable';
 
 
 function RegisterSchool() {
+
+  const RegisterSchool = "Registered Schools"
+
   return (
     <div>
       <div className="flex flex-col lg:flex-row min-h-screen ">
@@ -14,7 +17,7 @@ function RegisterSchool() {
         </div>
         <div className=" flex flex-col flex-1 ">
 
-          <Header />
+          <Header heading={RegisterSchool} />
 
           <div className="flex-1 overflow-auto">
             <RegisterSchoolTable/>

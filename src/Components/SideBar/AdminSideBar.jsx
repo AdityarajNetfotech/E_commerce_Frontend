@@ -67,21 +67,21 @@ const AdminSidebar = () => {
                 location.pathname === "/RegisterSchool" ? "bg-black text-white" : "hover:bg-black hover:text-white"
               }`}
             >
-              <NavLink to="/RegisterSchool">Registered School</NavLink>
+              <NavLink to="/RegisterSchool">Registered Schools</NavLink>
             </li>
             <li
               className={`px-6 py-2 rounded-md cursor-pointer ${
                 location.pathname === "/RegisterStudent" ? "bg-black text-white" : "hover:bg-black hover:text-white"
               }`}
             >
-              <NavLink to="/RegisterStudent">Registered Student</NavLink>
+              <NavLink to="/RegisterStudent">Registered Students</NavLink>
             </li>
             <li
               className={`px-6 py-2 rounded-md cursor-pointer ${
                 location.pathname === "/RegisterAdmin" ? "bg-black text-white" : "hover:bg-black hover:text-white"
               }`}
             >
-              <NavLink to="/RegisterAdmin">Registered Admin</NavLink>
+              <NavLink to="/RegisterAdmin">Registered Admins</NavLink>
             </li>
             <li
               className={`px-6 py-2 rounded-md cursor-pointer ${
