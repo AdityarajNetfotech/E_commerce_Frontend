@@ -520,6 +520,8 @@ const AddProductForm = () => {
                         <option value="">Size</option>
                         <option value="S">S</option>
                         <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
                       </select>
                     </div>
                     <div>
@@ -535,9 +537,11 @@ const AddProductForm = () => {
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
                         <option value="">Select Size</option>
-                        <option value="5">05</option>
+                        <option value="5">Size</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
                       </select>
                     </div>
                     <div>
