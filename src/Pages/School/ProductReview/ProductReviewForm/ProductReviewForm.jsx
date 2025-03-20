@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation , useNavigate} from "react-router-dom";
 
 
 function ProductReviewForm() {
 
   const location = useLocation();
+  const navigate = useNavigate(); // Initialize useNavigate
 
 
   const [product, setProduct] = useState(null);
@@ -19,6 +20,8 @@ function ProductReviewForm() {
   const toggleAccordion = (section) => {
     setOpenAccordion(openAccordion === section ? null : section);
   };
+
+  
 
   useEffect(() => {
     console.log("Location State:", location.state);
@@ -94,109 +97,97 @@ function ProductReviewForm() {
 
       <div>
 
-        {category === "Uniform" && (
-          <>
-            <h1 className="text-2xl font-semibold mb-3">{product.name}</h1>  {/* product name */}
-            <p className="text-gray-600 mb-2">Sub Category - {product.uniformDetails?.subCategory}</p> {/* sub category */}
-            <hr />
-            <p className="text-sm text-gray-500 mt-2">
-              {product.description} {/* product description */}
-            </p>
-            <div className='flex gap-10'>
-              <div className="text-gray-600 font-medium text-sm flex gap-2 mt-4 mb-3">
-                <button
 
+     {category === "Uniform" && (
+       <>
+      {/* Product Name, Category, Description */}
+      <h1 className="text-2xl font-semibold mb-4">{product.name}</h1>
+      <p className="text-gray-600 mb-3">Sub Category - {product.subCategory}</p>
+      <hr />
+      <p className="text-md text-gray-500 mt-2">{product.description}</p>
 
-                  className="h-7 w-25 rounded border  border-red-400 bg-red-50"
-                >
-                  SKU : {product.SKU}
-                </button></div>
-              <div className="text-gray-600 text-sm font-medium flex gap-2 mt-4 mb-3">Gender
-                <button
+      {/* SKU & Gender */}
+      <div className="flex gap-10">
+        <div className="text-gray-600 font-medium text-sm flex gap-2 mt-4 mb-3">
+          <button className="h-13 w-25 rounded border border-red-400 bg-red-50">
+            SKU : {product.SKU}
+          </button>
+        </div>
+        <div className="text-gray-600 text-sm font-medium flex gap-2 mt-4 mb-3">
+          Gender
+          <button className="h-6 w-15 rounded border border-yellow-400 bg-yellow-50">
+            {product.gender}
+          </button>
+        </div>
+      </div>
 
-
-                  className="h-6 w-15 rounded border  border-yellow-400 bg-yellow-50"
-                >
-                  {product.uniformDetails?.gender}
-                </button>
+      {/* Mapping Variations (Color, Material, etc.) */}
+      {product.variations?.map((variation, index) => (
+        <div key={index} className="p-4 border-t border-gray-300">
+          <div className="space-y-2 mb-3">
+            <label className="text-sm font-medium flex gap-3">
+              {variation.variationType}
+              <div className="flex space-x-2">
+                {variation.variationType === "Color" ? (
+                  <div
+                    className="h-5 w-5 rounded-full border-2 border-white ring-2 ring-gray-200"
+                    style={{ backgroundColor: variation.variationInfo }}
+                  />
+                ) : (
+                  <div className="flex space-x-2">{variation.variationInfo}</div>
+                )}
               </div>
-            </div>
+            </label>
+          </div>
 
-            {product.uniformDetails?.variations.map((variation, index) => (
-              <div key={index} className="p-4  border-t border-gray-300">
-                <div className="space-y-2 mb-3 ">
-                  <label className="text-sm font-medium flex gap-3"> {variation.variationType} <div className="flex space-x-2">
-                    {/* {variation.variationInfo} */}
-                    {variation.variationType === "Color" ? (
-                      <div
-                        className="h-5 w-5 rounded-full border-2 border-white ring-2 ring-gray-200"
-                        style={{ backgroundColor: variation.variationInfo }}
-                      />
-                    ) : (
-                      <div className="flex space-x-2">
-                        {variation.variationInfo}
-                      </div>
-                    )}
-                  </div>
-                  </label>{/*variationType and Info- color,material */}
+          {/* Mapping SubVariations (Size, Info, Stock, Price) */}
+          {variation.subVariations?.map((subVar, subIndex) => (
+            <div key={subIndex}>
+              <div className="text-2xl font-bold mt-1 mb-3">₹ {subVar.price}</div>
 
+              <div className="flex gap-10 space-y-2 mt-1 mb-2">
+                {/* Size */}
+                <div className="text-gray-600 text-sm flex gap-2">
+                  Size
+                  <button className="h-6 w-6 rounded border border-amber-400 bg-amber-50">
+                    {subVar.subVariationType}
+                  </button>
                 </div>
 
+                {/* Info */}
+                <div className="text-gray-600 text-sm flex gap-2">
+                  Info
+                  <button className="h-6 w-6 rounded border border-amber-400 bg-amber-50">
+                    {subVar.subVariationInfo}
+                  </button>
+                </div>
 
-                {variation.subVariations.map((subVar, subIndex) => (
-                  <div key={subIndex}>
-
-                    <div className="text-2xl font-bold mt-1 mb-3">₹ {subVar.price}</div>  {/* Subvariation-price */}
-
-
-
-                    <div className="flex gap-10 space-y-2 mt-1 mb-2">
-
-                      <div className="text-gray-600 text-sm flex gap-2 mt-1 mb-">Size
-                        <button
-
-
-                          className="h-6 w-6 rounded border  border-amber-400 bg-amber-50"
-                        >
-                          {subVar.subVariationType}
-                        </button>
-                      </div> {/* SubvariationType- size */}
-                      <div className="text-gray-600 text-sm flex gap-2  mt-1 mb-1">Info
-                        <button
-
-
-                          className="h-6 w-6 rounded border  border-amber-400 bg-amber-50"
-                        >
-                          {subVar.subVariationInfo}
-                        </button>
-                      </div> {/* SubvariationInfo */}
-                      <div className="text-gray-600 text-sm flex gap-2 mt-1 mb-1">Stock
-                        <button
-
-
-                          className="h-6 w-8 rounded border  border-amber-400 bg-amber-50"
-                        >
-                          {subVar.stockQty}
-                        </button>
-                      </div> {/* Subvariation-stock */}
-                    </div>
-
-
-                  </div>
-                ))}
+                {/* Stock */}
+                <div className="text-gray-600 text-sm flex gap-2">
+                  Stock
+                  <button className="h-6 w-8 rounded border border-amber-400 bg-amber-50">
+                    {subVar.stockQty}
+                  </button>
+                </div>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      ))}
 
 
             <div className="flex items-center space-x-4 mb-6">
-              <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-3">
+              <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-5">
                 <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
                 <span>{quantity}</span>
                 <button onClick={() => setQuantity(quantity + 1)}>+</button>
               </div>
-              <button className="w-full rounded-md bg-orange-500 h-8 text-white">
-                ADD TO CART
-              </button>
+              <button
+            className="w-full rounded-md bg-orange-500 h-8 text-white"
+            onClick={() => navigate("/add-product")} // Navigate on button click
+          >
+            Add Product
+          </button>
             </div>
 
             <div className="mt-6">
@@ -310,7 +301,7 @@ function ProductReviewForm() {
                 <button onClick={() => setQuantity(quantity + 1)}>+</button>
               </div>
               <button className="w-full rounded-md bg-orange-500 h-8 text-white">
-                ADD TO CART
+                Add Product
               </button>
             </div>
 
@@ -408,7 +399,7 @@ function ProductReviewForm() {
                 <button onClick={() => setQuantity(quantity + 1)}>+</button>
               </div>
               <button className="w-full rounded-md bg-orange-500 h-8 text-white">
-                ADD TO CART
+                Add Product
               </button>
             </div>
 
