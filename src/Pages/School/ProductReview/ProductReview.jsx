@@ -5,6 +5,9 @@ import Header from "../Dashboard/header/header";
 import ProductReviewForm from './ProductReviewForm/ProductReviewForm'
 
 function ProductReview() {
+
+    const ProductReview = "Product Review"
+
     return (
         <>
             <div>
@@ -13,7 +16,7 @@ function ProductReview() {
                         <Sidebar />
                     </div>
                     <div className=" flex flex-col flex-1 ">
-                        <Header />
+                        <Header heading={ProductReview} />
                         <div className="flex-1 overflow-auto">
                             <ProductReviewForm />
                         </div>
