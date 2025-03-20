@@ -53,11 +53,11 @@ const OrderSummary = ({totalPrice}) => {
         </div>
 
       
-        <button className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition"
+        {/* <button className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition"
          onClick={handlePlaceOrder}
         >
           Place Order
-        </button>
+        </button> */}
       </div>
     </div>
   );
