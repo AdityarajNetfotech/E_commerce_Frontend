@@ -101,7 +101,7 @@ function ProductDetail() {
             console.log("Added to Cart:", response.data);
             alert("Product added to cart!");
             // Navigate to Delivery Address Page
-            navigate("/DeliveryAddress");
+            navigate("/ShoppingCart");
         } catch (error) {
             console.error("Error adding to cart:", error);
             alert("Failed to add product to cart.");

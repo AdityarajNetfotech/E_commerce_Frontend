@@ -1,16 +1,128 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomNavbar from '../../../Components/Navbar/Navbar'
 import Footer from '../../../Components/Footer/Footer'
-import OrderSummary from '../../../Components/order-summary/OrderSummary'
 import Header from './header/CartHeader'
+import { useLocation, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function DeliveryAddress() {
-    
+    const location = useLocation();
+    const navigate = useNavigate();
+    const cartData = location.state;
+    const [studentId, setStudentId] = useState(null);
+    const [schoolId, setSchoolId] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        emailId: '',
+        phoneNumber: '',
+        addressLine1: '',
+        addressLine2: '',
+        pincode: '',
+        town: '',
+        city: '',
+        state: ''
+    });
+
+    const calculateTotalPrice = () => {
+        if (!cartData || !Array.isArray(cartData)) {
+            return 0;
+        }
+
+        return cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    };
+
+    const totalPrice = calculateTotalPrice();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const fetchStudentProfile = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            const response = await axios.get("http://localhost:5000/api/student/profile", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const studentProfile = response.data;
+            setStudentId(studentProfile._id);
+            setSchoolId(studentProfile.school._id);
+        } catch (error) {
+            console.error("Error fetching profile:", error.response?.data?.message || error.message);
+        }
+    };
+
+    useEffect(() => {
+        fetchStudentProfile();
+    }, []);
+    // console.log("student id", studentId);
+    // console.log("school id", schoolId);
+
+
+    useEffect(() => {
+        console.log("Cart Data from Navigation:", cartData);
+    }, [cartData]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            if (!cartData || !studentId || !schoolId) {
+                console.log("Missing required information. Please try again.");
+                setIsLoading(false);
+                return;
+            }
+
+            const orderItems = cartData.map(item => ({
+                product: item.product,
+                quantity: item.quantity,
+                selectedSize: item.selectedSize,
+                selectedColor: item.selectedColor,
+                selectedMaterial: item.selectedMaterial,
+            }));
+
+            const orderData = {
+                school: schoolId,
+                orderItems: orderItems,
+                address: {
+                    ...formData
+                },
+                totalPrice: totalPrice
+            };
+
+            const token = localStorage.getItem("authToken");
+            const response = await axios.post(
+                "http://localhost:5000/api/order/add-order",
+                orderData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                }
+            );
+
+            console.log("Order placed successfully:", response.data);
+            alert("Order placed successfully!");
+        } catch (error) {
+            console.error("Error placing order:", error.response?.data?.message || error.message);
+            alert("Failed to place order: " + (error.response?.data?.message || error.message));
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
             <CustomNavbar />
-            <Header/>
-
+            <Header />
 
             <p className='text-3xl font-bold text-center my-6'>Enter Delivery Address</p>
 
@@ -19,26 +131,32 @@ function DeliveryAddress() {
                     <div className="text-[#635D5A] w-full lg:w-[1000px]  bg-white shadow-lg p-8 rounded-lg">
                         <h2 className="text-xl font-bold text-center">Contact Details</h2>
 
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="space-y-4">
                                 <div className="relative">
-                                    <label htmlFor="" className='pl-0.5'>Email ID*</label>
+                                    <label htmlFor="emailId" className='pl-0.5'>Email ID*</label>
                                     <input
                                         type="email"
-                                        name="email"
+                                        name="emailId"
+                                        id="emailId"
                                         placeholder="abc@xyz.com"
                                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        value={formData.emailId}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </div>
 
                                 <div className="relative">
-                                    <label htmlFor="" className='pl-0.5'>Phone Number*</label>
+                                    <label htmlFor="phoneNumber" className='pl-0.5'>Phone Number*</label>
                                     <input
                                         type="tel"
-                                        name="phone"
+                                        name="phoneNumber"
+                                        id="phoneNumber"
                                         placeholder="+91 0000000000"
                                         className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        value={formData.phoneNumber}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </div>
@@ -48,45 +166,57 @@ function DeliveryAddress() {
                                 <h3 className="text-xl font-semibold mb-4 text-center">Address</h3>
                                 <div className="space-y-4">
                                     <div className="relative">
-                                        <label htmlFor="" className='pl-0.5'>Address Line 1*</label>
+                                        <label htmlFor="addressLine1" className='pl-0.5'>Address Line 1*</label>
                                         <input
                                             type="text"
                                             name="addressLine1"
+                                            id="addressLine1"
                                             placeholder="Address (House no, Building, Street, Area)"
                                             className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            value={formData.addressLine1}
+                                            onChange={handleChange}
                                             required
                                         />
                                     </div>
 
                                     <div className="relative">
-                                        <label htmlFor="" className='pl-0.5'>Address Line 2*</label>
+                                        <label htmlFor="addressLine2" className='pl-0.5'>Address Line 2</label>
                                         <input
                                             type="text"
                                             name="addressLine2"
+                                            id="addressLine2"
                                             placeholder="Address (House no, Building, Street, Area)"
                                             className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            value={formData.addressLine2}
+                                            onChange={handleChange}
                                         />
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="relative">
-                                            <label htmlFor="" className='pl-0.5'>Pin Code*</label>
+                                            <label htmlFor="pincode" className='pl-0.5'>Pin Code*</label>
                                             <input
                                                 type="text"
-                                                name="pinCode"
+                                                name="pincode"
+                                                id="pincode"
                                                 placeholder="0000"
                                                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={formData.pincode}
+                                                onChange={handleChange}
                                                 required
                                             />
                                         </div>
 
                                         <div className="relative">
-                                            <label htmlFor="" className='pl-0.5'>Locality/Town*</label>
+                                            <label htmlFor="town" className='pl-0.5'>Locality/Town*</label>
                                             <input
                                                 type="text"
-                                                name="locality"
+                                                name="town"
+                                                id="town"
                                                 placeholder="Locality/Town"
                                                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={formData.town}
+                                                onChange={handleChange}
                                                 required
                                             />
                                         </div>
@@ -94,38 +224,81 @@ function DeliveryAddress() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div className="relative">
-                                            <label htmlFor="" className='pl-0.5'>City/District*</label>
+                                            <label htmlFor="city" className='pl-0.5'>City/District*</label>
                                             <input
                                                 type="text"
                                                 name="city"
+                                                id="city"
                                                 placeholder="City Name"
                                                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={formData.city}
+                                                onChange={handleChange}
                                                 required
                                             />
                                         </div>
 
                                         <div className="relative">
-                                            <label htmlFor="" className='pl-0.5'>State*</label>
+                                            <label htmlFor="state" className='pl-0.5'>State*</label>
                                             <input
                                                 type="text"
                                                 name="state"
+                                                id="state"
                                                 placeholder="State Name"
                                                 className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={formData.state}
+                                                onChange={handleChange}
                                                 required
                                             />
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition"
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? "Processing..." : "Place Order"}
+                                </button>
+                            </div>
                         </form>
                     </div>
 
+                    <div className="bg-peach-custom p-5 rounded-lg shadow-lg w-full lg:w-1/3 flex flex-col items-center space-y-4">
 
-                    <OrderSummary />
+                        <h2 className="text-3xl font-semibold text-black">Order Summary</h2>
+
+
+                        <div className="bg-white shadow-md p-5 w-full  rounded-lg">
+
+                            <div className="space-y-4">
+                                <div className="flex justify-between text-lg">
+                                    <span className="text-gray-700">Subtotal</span>
+                                    <span className="text-gray-800 font-medium">₹ {totalPrice}</span>
+                                </div>
+
+                                <div className="flex justify-between text-lg text-red-500">
+                                    <span>Discount (-20%)</span>
+                                    <span>- ₹ 0</span>
+                                </div>
+
+                                <div className="flex justify-between text-lg">
+                                    <span className="text-gray-700">Shipping Charges</span>
+                                    <span className="text-gray-800">₹ 0</span>
+                                </div>
+
+                                <hr className="border-gray-300" />
+
+                                <div className="flex justify-between text-xl font-bold text-green-600">
+                                    <span>Total</span>
+                                    <span>₹ {totalPrice}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
-
-
 
             <Footer />
         </>

@@ -32,7 +32,7 @@ function CustomNavbar() {
         },
       });
       setStudent(response.data);
-      console.log("Student Profile:", response.data);
+      // console.log("Student Profile:", response.data);
     } catch (error) {
       console.error("Error fetching profile:", error.response?.data?.message || error.message);
     }
