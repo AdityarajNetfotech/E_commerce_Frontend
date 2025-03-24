@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 import axios from "axios";
+import { useFilter } from "../FilterContext";
 
 const itemsPerPage = 9;
 
 const ProductGrid = () => {
+  const { filters } = useFilter();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [products, setProducts] = useState([]);
+
+
 
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const ProductGrid = () => {
           },
           withCredentials: true,
         });
-        // console.log("Product Grid", response.data);
+        console.log("Product Grid", response.data);
 
         setProducts(response.data);
         setLoading(false);
@@ -35,44 +39,89 @@ const ProductGrid = () => {
     fetchProducts();
   }, []);
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+
+
+
+  const filteredData = products.filter((product) => {
+
+    if (filters.searchTerm) {
+      if (!product.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) {
+        return false;
+      }
+    }
+
+    if (filters.color) {
+      if (!product.uniformDetails?.variations) return false;
+      return product.uniformDetails.variations.some(
+        (variation) =>
+          variation.variationInfo === filters.color ||
+          variation.secondVariationInfo === filters.color
+      );
+    }
+
+    if (filters.grade) {
+      if (!product.bookDetails || product.bookDetails.grade !== filters.grade) {
+        return false;
+      }
+    }
+
+    if (filters.gender) {
+      if (!product.uniformDetails || product.uniformDetails.gender !== filters.gender) {
+        return false;
+      }
+    }
+
+
+    return true;
+  });
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const selectedProducts = products.slice(startIndex, startIndex + itemsPerPage);
+  const selectedProducts = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <div className="mx-auto mt-30 flex flex-col items-center">
 
       <div className="w-full max-w-[1200px] px-4 flex justify-center items-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-18 justify-center">
-          {selectedProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
+        {selectedProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-18 justify-center">
+            {selectedProducts.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-64">
+            <p className="text-center text-xl text-gray-500 font-medium">⚠️ Oops! No products 🛒 found.</p>
+          </div>
+        )}
       </div>
 
-      <div className="flex justify-center items-center mt-6 py-8 gap-2">
+
+      <div className="flex justify-center items-center mt-6 py-8 gap-4">
         <button
-          className={`px-5 py-4 rounded-full border transition ${currentPage === 1
-            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-            : "bg-white text-blue-600 hover:bg-blue-100"
+          className={`px-4 py-2 rounded-xl text-md font-semibold border shadow-md transition-all duration-300 
+      ${currentPage === 1
+              ? "bg-orange-100 text-orange-500 cursor-not-allowed opacity-60"
+              : "bg-gradient-to-r from-orange-300 to-yellow-400 text-white hover:shadow-lg hover:scale-105 active:scale-95"
             }`}
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
         >
-          1
+          ◀ Prev
         </button>
 
-        <span className="text-lg font-medium text-blue-600">{currentPage}</span>
+        <span className="text-xl font-bold text-orange-600 px-4">{currentPage}</span>
 
         <button
-          className={`px-5 py-4 rounded-full border transition ${currentPage === totalPages
-            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-            : "bg-white text-blue-600 hover:bg-blue-100"
+          className={`px-4 py-2 rounded-xl text-md font-semibold border shadow-md transition-all duration-300 
+      ${currentPage === totalPages
+              ? "bg-orange-100 text-orange-500 cursor-not-allowed opacity-60"
+              : "bg-gradient-to-r from-orange-300 to-yellow-400 text-white hover:shadow-lg hover:scale-105 active:scale-95"
             }`}
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
-          2
+          Next ▶
         </button>
       </div>
     </div>

@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import search from "../../../../components/images/search.png";
+import { useFilter } from "../FilterContext";
 
 const SearchBar = () => {
-  const [filters, setFilters] = useState({
-    color: "Red",
-    grade: "Fourth",
-    gender: "Girl",
-  });
 
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const { filters, updateFilters } = useFilter();
+
+  const handleSearchChange = (e) => {
+    updateFilters({ searchTerm: e.target.value });
+  }
 
   const handleFilterChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+    updateFilters({ [e.target.name]: e.target.value });
   };
 
   const resetFilters = () => {
-    setFilters({ color: "Red", grade: "Fourth", gender: "Girl" });
+    updateFilters({ searchTerm: "", color: "", grade: "", gender: "" });
   };
+
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -65,6 +67,8 @@ const SearchBar = () => {
           <input
             type="text"
             placeholder="Search something"
+            value={filters.searchTerm}
+            onChange={handleSearchChange}
             className="outline-none w-full text-lg text-[18px] text-gray-custom font-[Poppins]"
           />
           <button className="text-orange-500 text-xl text-[18px] absolute right-3">
@@ -81,6 +85,7 @@ const SearchBar = () => {
               onChange={handleFilterChange}
               className="border p-1 md:p-2 rounded-md font-semibold text-gray-700 text-[18px] outline-none border-none"
             >
+              <option value="">Color</option>
               <option value="Red">Red</option>
               <option value="Blue">Blue</option>
               <option value="Green">Green</option>
@@ -95,10 +100,19 @@ const SearchBar = () => {
               onChange={handleFilterChange}
               className="border p-1 md:p-2 rounded-md font-semibold text-gray-700 text-[18px] outline-none border-none"
             >
-              <option value="First">First</option>
-              <option value="Second">Second</option>
-              <option value="Third">Third</option>
-              <option value="Fourth">Fourth</option>
+              <option value="">Grade</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
             </select>
           </label>
 
@@ -110,8 +124,10 @@ const SearchBar = () => {
               onChange={handleFilterChange}
               className="border p-1 md:p-2 rounded-md font-semibold text-gray-700 text-[18px] outline-none border-none"
             >
-              <option value="Boy">Boy</option>
-              <option value="Girl">Girl</option>
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Unisex">Unisex</option>
             </select>
           </label>
         </div>

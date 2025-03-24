@@ -82,26 +82,26 @@ const TableList = () => {
     };
 
     const filteredData = products.filter((product) => {
-       
+
         if (searchTerm) {
             if (!product.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                 return false;
             }
         }
-        
+
         if (filters.category) {
             if (filters.category === "Uniform" && !product.uniformDetails) return false;
             if (filters.category === "Books" && !product.bookDetails) return false;
             if (filters.category === "Stationary" && !product.stationaryDetails) return false;
         }
 
-        
+
         if (filters.color) {
             if (!product.uniformDetails?.variations) return false;
             return product.uniformDetails.variations.some(
                 (variation) =>
-                    variation.variationInfo === filters.color || 
-                    variation.secondVariationInfo === filters.color 
+                    variation.variationInfo === filters.color ||
+                    variation.secondVariationInfo === filters.color
             );
         }
 
@@ -111,14 +111,14 @@ const TableList = () => {
             }
         }
 
-        if(filters.gender) {
-            if(!product.uniformDetails || product.uniformDetails.gender !== filters.gender) {
+        if (filters.gender) {
+            if (!product.uniformDetails || product.uniformDetails.gender !== filters.gender) {
                 return false;
             }
         }
 
 
-        return true; 
+        return true;
     });
 
 
@@ -258,18 +258,26 @@ const TableList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-
                                 {loading ? (
-                                    <p>Loading products...</p>
-                                ) : products.length > 0 ? (
+                                    <tr>
+                                        <td colSpan="100%" className="text-center py-10">
+                                        <p className="text-center text-xl text-gray-500 font-medium">⏳ Loading products...</p>
+                                        </td>
+                                    </tr>
+                                    
+                                   
+                                ) : paginatedProducts.length > 0 ? (
                                     paginatedProducts.map((product, index) => (
-
                                         <TableRow key={product._id} product={product} index={index} onDelete={handleDeleteProduct} />
-
                                     ))
                                 ) : (
-                                    <p>No products found</p>
+                                    <tr>
+                                        <td colSpan="100%" className="text-center py-10">
+                                            <p className="text-xl text-gray-500 font-medium">⚠️ Oops! No products 🛒 found.</p>
+                                        </td>
+                                    </tr>
                                 )}
+
 
                             </tbody>
                         </table>

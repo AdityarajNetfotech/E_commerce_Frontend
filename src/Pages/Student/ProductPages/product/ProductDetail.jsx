@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Footer from '../../../../Components/Footer/Footer';
+import Footer from '../../../../Components/footer/Footer';
 import CustomNavbar from '../../../../Components/Navbar/Navbar';
 import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
@@ -12,10 +12,13 @@ function ProductDetail() {
     const [openAccordion, setOpenAccordion] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const location = useLocation();
-   
+
     const [selectedMaterial, setSelectedMaterial] = useState(null);
     const [selectedColor, setSelectedColor] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
+    const [warningMessage, setWarningMessage] = useState("");
+
+
     // Extracting product details from location state
     const product = location.state?.product || {};
     console.log("product detail", product);
@@ -108,11 +111,53 @@ function ProductDetail() {
         }
     };
 
+    // handling size selection
+    const handleSizeChange = (sizeType) => {
+        if (quantity > 1) {
+            setWarningMessage("Please add to cart your first selected item. To change size, color, or material, decrease product quantity to 1.");
+            return;
+        }
+        setSelectedSize(sizeType);
+        setWarningMessage(""); 
+    };
+
+    // handling color selection
+    const handleColorChange = (color) => {
+        if (quantity > 1) {
+            setWarningMessage("Please add to cart your first selected item. To change size, color, or material, decrease product quantity to 1.");
+            return;
+        }
+        setSelectedColor(color);
+        setSelectedSize(null);
+        setWarningMessage("");
+    };
+
+    // handling material selection
+    const handleMaterialChange = (material) => {
+        if (quantity > 1) {
+            setWarningMessage("Please add to cart your first selected item. To change size, color, or material, decrease product quantity to 1.");
+            return;
+        }
+        setSelectedMaterial(material);
+        setSelectedColor(null);
+        setSelectedSize(null);
+        setWarningMessage("");
+    };
+
+    // handling quantity change
+    const handleQuantityChange = (newQuantity) => {
+        setQuantity(newQuantity);
+        if (newQuantity === 1) {
+            setWarningMessage(""); 
+        }
+    };
+
     return (
         <>
             <div className="min-h-screen bg-gray-50">
                 <CustomNavbar />
                 <Header />
+
 
                 <section className="grid grid-cols-1 gap-8 md:grid-cols-2 py-8 px-4">
                     <div className="flex space-x-4">
@@ -135,6 +180,17 @@ function ProductDetail() {
                     </div>
 
                     <div>
+
+                        
+                {warningMessage && (
+                            <div className="bg-red-100 border border-red-500 text-red-700 px-4 py-3 rounded-md text-center font-semibold mb-4 flex justify-between items-center">
+                                <span>⚠️ {warningMessage}</span>
+                                <button onClick={() => setWarningMessage("")} className="text-red-700 font-bold text-lg hover:text-red-900">
+                                    ✖
+                                </button>
+                            </div>
+                        )}
+
                         <h1 className="text-2xl font-semibold mb-3">{name || "NA"}</h1>
                         <p className="text-gray-600 mb-2">{schoolName || "NA"}</p>
                         <hr />
@@ -155,11 +211,8 @@ function ProductDetail() {
                                                     ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                     : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                 `}
-                                            onClick={() => {
-                                                setSelectedMaterial(material);
-                                                setSelectedColor(null);
-                                                setSelectedSize(null);
-                                            }}
+                                        
+                                            onClick={() => handleMaterialChange(material)}
                                         >
                                             {material || "Unknown"}
                                         </span>
@@ -184,10 +237,8 @@ function ProductDetail() {
                                                             color: "#fff",
                                                             border: selectedColor === color ? "2px solid black" : "1px solid gray"
                                                         }}
-                                                        onClick={() => {
-                                                            setSelectedColor(color);
-                                                            setSelectedSize(null);
-                                                        }}
+                                                        
+                                                        onClick={() => handleColorChange(color)}
                                                     >
                                                         {color}
                                                     </span>
@@ -203,7 +254,8 @@ function ProductDetail() {
                                                                                 ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                                                 : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                                             `}
-                                                                        onClick={() => setSelectedSize(size.subVariationType)}
+                                                                        
+                                                                        onClick={() => handleSizeChange(size.subVariationType)}
                                                                     >
                                                                         {size.subVariationType}
                                                                     </span>
@@ -244,18 +296,20 @@ function ProductDetail() {
                             <div className="flex items-center space-x-4 h-10 rounded border border-gray-300 px-3">
                                 <button
                                     className="text-gray-500 hover:text-gray-700"
-                                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                    onClick={() => handleQuantityChange(Math.max(1, quantity - 1))}
                                 >
                                     -
                                 </button>
                                 <span>{quantity}</span>
                                 <button
                                     className="text-gray-500 hover:text-gray-700"
-                                    onClick={() => setQuantity(quantity + 1)}
+                                    onClick={() => handleQuantityChange(quantity + 1)}
                                 >
                                     +
                                 </button>
+                                
                             </div>
+
                             <button className='w-full rounded-md bg-orange-500 h-10 text-white font-medium cursor-pointer'
                                 onClick={handleAddToCart}>
                                 ADD TO CART

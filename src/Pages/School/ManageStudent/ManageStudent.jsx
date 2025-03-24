@@ -30,7 +30,7 @@ function ManageStudent() {
                 },
             });
 
-            // console.log("Students Data:", response.data.students);
+            console.log("Students Data:", response.data.students);
             const allStudents = response.data.students;
             setStudents(allStudents);
 
@@ -126,14 +126,10 @@ function ManageStudent() {
                                     <div>
                                         <div className="flex flex-wrap gap-4 items-center">
                                             <div className="flex items-baseline gap-2">
-                                                <span className="text-2xl font-bold">100</span>
+                                                <span className="text-2xl font-bold">{filteredStudents.length}</span>
                                                 <span className="text-gray-600">Total Students</span>
                                             </div>
                                             <div className="w-px h-6 bg-amber-200" />
-                                            <div className="flex items-baseline gap-2">
-                                                <span className="text-2xl font-bold">40</span>
-                                                <span className="text-gray-600">Fourth Grade students</span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
