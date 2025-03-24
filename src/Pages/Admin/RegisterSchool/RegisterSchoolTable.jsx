@@ -8,6 +8,8 @@ const RegisterSchoolTable = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCertificate, setSelectedCertificate] = useState(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [schoolToDelete, setSchoolToDelete] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
   const schoolsPerPage = 3; // Adjust the number of schools per page
 
@@ -34,18 +36,25 @@ const RegisterSchoolTable = () => {
     fetchSchools();
   }, []);
 
-  const deleteSchool = async (id) => {
+  const confirmDelete = (id) => {
+    setSchoolToDelete(id);
+    setDeleteConfirmation(true);
+  };
+
+  const deleteSchool = async () => {
+    if (!schoolToDelete) return;
+
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/deleteSchool/${id}`,
-        {
-          method: "DELETE",
-        }
+        `http://localhost:5000/api/admin/deleteSchool/${schoolToDelete}`,
+        { method: "DELETE" }
       );
       if (!response.ok) {
         throw new Error("Failed to delete school");
       }
-      setSchools(schools.filter((school) => school._id !== id));
+      setSchools(schools.filter((school) => school._id !== schoolToDelete));
+      setDeleteConfirmation(false);
+      setSchoolToDelete(null);
     } catch (error) {
       setError(error.message);
     }
@@ -163,7 +172,7 @@ const RegisterSchoolTable = () => {
                       </td>
                       <td className="py-2 px-4">
                         <button
-                          onClick={() => deleteSchool(school._id)}
+                          onClick={() => confirmDelete(school._id)}
                           className="text-red-500"
                         >
                           🗑️
@@ -221,6 +230,18 @@ const RegisterSchoolTable = () => {
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+{deleteConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
+            <div className="flex justify-center gap-4">
+              <button onClick={deleteSchool} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
+              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
             </div>
           </div>
         </div>

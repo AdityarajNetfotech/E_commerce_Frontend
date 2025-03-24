@@ -5,6 +5,8 @@ const RegisterStudentTable = () => {
     const [schools, setSchools] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+      const [studentToDelete, setStudentToDelete] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
@@ -41,15 +43,23 @@ const RegisterStudentTable = () => {
         fetchData();
     }, []);
 
-    const deleteStudent = async (id) => {
+    const confirmDelete = (id) => {
+        setStudentToDelete(id);
+        setDeleteConfirmation(true);
+      };
+
+    const deleteStudent = async () => {
+        if (!studentToDelete) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/deleteStudent/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/deleteStudent/${studentToDelete}`, {
                 method: "DELETE",
             });
             if (!response.ok) {
                 throw new Error("Failed to delete student");
             }
-            setStudents(students.filter(student => student._id !== id));
+            setStudents(students.filter((student) => student._id !== studentToDelete));
+            setDeleteConfirmation(false);
+      setStudentToDelete(null);
         } catch (error) {
             setError(error.message);
         }
@@ -110,7 +120,7 @@ const RegisterStudentTable = () => {
                                                 <td className="py-2 px-4">{new Date(student.createdAt).toLocaleDateString()}</td>
                                                 <td className="py-2 px-4">
                                                     <button
-                                                        onClick={() => deleteStudent(student._id)}
+                                                        onClick={() => confirmDelete(student._id)}
                                                         className="text-red-500"
                                                     >
                                                         🗑️
@@ -130,7 +140,19 @@ const RegisterStudentTable = () => {
                         </div>
                     )}
                 </div>
+                {deleteConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
+            <div className="flex justify-center gap-4">
+              <button onClick={deleteStudent} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
+              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
             </div>
+          </div>
+        </div>
+      )}
+            </div>
+        
         </div>
     );
 };

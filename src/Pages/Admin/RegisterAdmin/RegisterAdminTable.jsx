@@ -4,6 +4,8 @@ const RegisterAdminTable = () => {
     const [admins, setAdmins] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+      const [adminToDelete, setAdminToDelete] = useState(null)
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
@@ -24,15 +26,23 @@ const RegisterAdminTable = () => {
         fetchAdmins();
     }, []);
 
-    const deleteAdmin = async (id) => {
+    const confirmDelete = (id) => {
+        setAdminToDelete(id);
+        setDeleteConfirmation(true);
+      };
+
+    const deleteAdmin = async () => {
+        if (!adminToDelete) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/deleteAdmin/${id}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/deleteAdmin/${adminToDelete}`, {
                 method: "DELETE",
             });
             if (!response.ok) {
                 throw new Error("Failed to delete admin");
             }
-            setAdmins(admins.filter(admin => admin._id !== id));
+            setAdmins(admins.filter((admin) => admin._id !== adminToDelete));
+            setDeleteConfirmation(false);
+      setAdminToDelete(null);
         } catch (error) {
             setError(error.message);
         }
@@ -91,7 +101,7 @@ const RegisterAdminTable = () => {
                                                 <td className="py-2 px-4">{admin.email || "N/A"}</td>
                                                 <td className="py-2 px-4">{admin.mobile || "N/A"}</td>
                                                 <td className="py-2 px-4">{admin.address || "N/A"}</td>
-                                                <td onClick={() => deleteAdmin(admin._id)} className="py-2 px-4">
+                                                <td onClick={() => confirmDelete(admin._id)} className="py-2 px-4">
                                                     <button className="text-red-500">🗑️</button>
                                                 </td>
                                             </tr>
@@ -109,6 +119,17 @@ const RegisterAdminTable = () => {
                     )}
                 </div>
             </div>
+            {deleteConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
+            <div className="flex justify-center gap-4">
+              <button onClick={deleteAdmin} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
+              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
+            </div>
+          </div>
+        </div>
+      )}
         </div>
     );
 };
