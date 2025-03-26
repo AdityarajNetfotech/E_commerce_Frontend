@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "../../../Components/Images/Logo.png"; 
+import OAuth from "../../GoogleFirebase/OAuth";
 
 export default function UserLogin() {
   const [email, setEmail] = useState("");
@@ -109,12 +110,7 @@ export default function UserLogin() {
           <span className="px-2 text-gray-500 text-sm">Or continue with</span>
           <hr className="flex-grow border-gray-300" />
         </div>
-        <div className="flex justify-center space-x-4">
-          <button className="flex items-center px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100">
-            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-full h-5 mr-2" />
-            Google
-          </button>
-        </div>
+        <OAuth/>
       </div>
 
   
