@@ -60,7 +60,7 @@ function HomeSignUp() {
 
       {/* Registration Options */}
       <div className="bg-white py-8 px-10 text-center rounded-lg w-full max-w-md shadow-2xl">
-        <h1 className="mb-6 text-2xl font-bold text-gray-800">Register as</h1>
+        <h1 className="mb-6 text-2xl font-bold text-gray-800">Register / Login as</h1>
         <Link to="/SchoolRegister">
           <img src={schoolRegister} alt="School Register" className="w-[300px] md:w-[450px] h-auto mx-auto mb-4" />
         </Link>
