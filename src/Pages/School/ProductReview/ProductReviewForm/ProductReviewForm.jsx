@@ -177,11 +177,6 @@ function ProductReviewForm() {
 
 
             <div className="flex items-center space-x-4 mb-6">
-              <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-5">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
-              </div>
               <button
             className="w-full rounded-md bg-orange-500 h-8 text-white"
             onClick={() => navigate("/add-product")} // Navigate on button click
@@ -243,7 +238,7 @@ function ProductReviewForm() {
                 <button
 
 
-                  className="h-7 w-25 rounded border  border-red-400 bg-red-50"
+                  className="h-10 w-25 rounded border  border-red-400 bg-red-50"
                 >
                   SKU : {product.SKU}
                 </button></div>
@@ -295,14 +290,13 @@ function ProductReviewForm() {
 
 
             <div className="flex items-center space-x-4 mb-6">
-              <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-3">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
-              </div>
-              <button className="w-full rounded-md bg-orange-500 h-8 text-white">
-                Add Product
-              </button>
+              
+            <button
+            className="w-full rounded-md bg-orange-500 h-8 text-white"
+            onClick={() => navigate("/add-product")} // Navigate on button click
+              >
+            Add Product
+            </button>
             </div>
 
             <div className="mt-6">
@@ -358,7 +352,7 @@ function ProductReviewForm() {
                 <button
 
 
-                  className="h-7 w-25 rounded border  border-red-400 bg-red-50"
+                  className="h-10 w-25 rounded border  border-red-400 bg-red-50"
                 >
                   SKU : {product.SKU}
                 </button></div>
@@ -393,14 +387,13 @@ function ProductReviewForm() {
 
 
             <div className="flex items-center space-x-4 mb-6">
-              <div className="flex items-center space-x-4 h-8 rounded border border-gray-200 px-3">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                <span>{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
-              </div>
-              <button className="w-full rounded-md bg-orange-500 h-8 text-white">
-                Add Product
-              </button>
+             
+            <button
+            className="w-full rounded-md bg-orange-500 h-8 text-white"
+            onClick={() => navigate("/add-product")} // Navigate on button click
+              >
+            Add Product
+            </button>
             </div>
 
             <div className="mt-6">
