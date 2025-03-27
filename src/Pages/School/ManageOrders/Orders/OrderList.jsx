@@ -1,115 +1,183 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OrderRow from "./OrderRow";
 import searchIcon from "../../../../Components/Images/SearchOutline.png";
 import resetIcon from "../../../../Components/Images/ReplayIcon.png";
 import Prev from "../../../../Components/Images/PrevArrow.png";
 import Next from "../../../../Components/Images/NextArrow.png";
+import axios from 'axios';
 
-const orders = [
-  {
-    id: "#302012",
-    product: "Blue Uniform Regular",
-    items: "+03 items",
-    customer: { name: "John Bushmill", email: "Johnb@mail.com" },
-    total: "₹ 700",
-    status: "Delivered",
-    date: "29 Dec'24",
-  },
-  {
-    id: "#302013",
-    product: "Red Uniform Regular",
-    items: "+02 items",
-    customer: { name: "Alice Green", email: "aliceg@mail.com" },
-    total: "₹ 500",
-    status: "Processing",
-    date: "30 Dec'24",
-  },
-  {
-    id: "#302014",
-    product: "Yellow Uniform Regular",
-    items: "+04 items",
-    customer: { name: "Michael Scott", email: "michaels@mail.com" },
-    total: "₹ 800",
-    status: "Cancelled",
-    date: "31 Dec'24",
-  },
-  {
-    id: "#302015",
-    product: "Green Uniform Regular",
-    items: "+01 items",
-    customer: { name: "Emily White", email: "emilyw@mail.com" },
-    total: "₹ 450",
-    status: "Processing",
-    date: "1 Jan'25",
-  },
-  {
-    id: "#302015",
-    product: "Green Uniform Regular",
-    items: "+01 items",
-    customer: { name: "Emily White", email: "emilyw@mail.com" },
-    total: "₹ 450",
-    status: "Processing",
-    date: "1 Jan'25",
-  },
-];
 
 const OrderList = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOrders, setFilteredOrders] = useState(orders);
+
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const token = localStorage.getItem("schoolToken");
+
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:5000/api/order/school-orders", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+        console.log("Backend Response:", data);
+        setOrders(data);
+        setFilteredOrders(data);
+        console.log("Orders State:", orders);
+        setLoading(false);
+
+
+
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    console.log("Updated orders State:", orders);
+  }, [orders]);
+
+  const [filters, setFilters] = useState({
+    color: '',
+    sortBy: '',
+    orderType: '',
+  });
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleResetFilters = () => {
+    setFilters({
+      color: '',
+      sortBy: '',
+      orderType: '',
+
+    });
+  };
+
+  const filteredData = orders
+  .filter((order) => {
+   
+    if (searchTerm) {
+      const matchesSearch = order.orderItems.some((item) =>
+        item.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      if (!matchesSearch) return false;
+    }
+
+    
+    if (filters.color) {
+      const matchesColor = order.orderItems.some((item) => item.color === filters.color);
+      if (!matchesColor) return false;
+    }
+
+    
+    if (filters.orderType && filters.orderType !== "Uniform") {
+      if (order.orderStatus !== filters.orderType) {
+        return false;
+      }
+    }
+
+    return true;
+  })
+  .sort((a, b) => {
+   
+    if (filters.sortBy === "Latest") {
+      return new Date(b.createdAt) - new Date(a.createdAt); 
+    }
+    if (filters.sortBy === "Oldest") {
+      return new Date(a.createdAt) - new Date(b.createdAt); 
+    }
+    return 0; 
+  });
+
+
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 4;
+  const itemsPerPage = 4;
 
-  
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-    setFilteredOrders(
-      orders.filter(
-        (order) =>
-          order.product.toLowerCase().includes(term) ||
-          order.customer.name.toLowerCase().includes(term)
-      )
-    );
-    setCurrentPage(1);
-  };
+  const paginatedProducts = filteredData.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+);
 
-  const resetFilters = () => {
-    setSearchTerm("");
-    setFilteredOrders(orders);
-    setCurrentPage(1);
-  };
-
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+const completedOrders = filteredData.filter(order => order.orderStatus === "Delivered").length;
+const processingOrders = filteredData.filter(order => order.orderStatus === "Processing").length;
+const cancelledOrders = filteredData.filter(order => order.orderStatus === "Cancelled").length;
 
   return (
     <div className="mx-auto bg-[#ECECEC] p-4">
       <div className="p-3 md:p-7 bg-white rounded-lg shadow-md">
-        
+
         <div className="bg-peach-custom p-4  flex flex-col md:flex-row justify-between items-center shadow-md  gap-4">
           <div className="relative w-full md:w-1/3">
             <input
               type="text"
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={handleSearchChange}
               placeholder="Search orders..."
               className="border p-3 rounded w-full bg-white pl-10 focus:ring focus:ring-blue-200"
             />
             <img src={searchIcon} alt="Search" className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5" />
           </div>
 
-          <div className="flex flex-wrap gap-10 justify-center">
-            <select className="border p-2 rounded bg-white">
-              <option>Color: Red</option>
+          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="border bg-white p-1 rounded">
+            <span>Color: </span>
+            <select
+              className=" p-2  border-0 focus:ring-0 focus:border-transparent outline-none"
+              name="color"
+              value={filters.color}
+              onChange={handleFilterChange}>
+              <option value="">All</option>
+              <option value="Red">Red</option>
+              <option value="Green">Green</option>
+              <option value="Yellow">Yellow</option>
+              <option value="Blue">Blue</option>
             </select>
-            <select className="border p-2 rounded bg-white">
-              <option>Sort by: Latest</option>
+            </div>
+            <div className="border bg-white p-1 rounded">
+            <span>Sort By: </span>
+            <select className=" p-2  border-0 focus:ring-0 focus:border-transparent outline-none"
+              name="sortBy"
+              value={filters.sortBy}
+              onChange={handleFilterChange}
+            >
+              <option value="">Sort by</option>
+              <option value="Latest">Latest</option>
+              <option value="Oldest">Oldest</option>
             </select>
-            <select className="border p-2 rounded bg-white">
-              <option>Order Type: All</option>
+            </div>
+            <div className="border bg-white p-1 rounded">
+            <span>Order Type: </span>
+            <select className=" p-2  border-0 focus:ring-0 focus:border-transparent outline-none"
+              name="orderType"
+              value={filters.orderType}
+              onChange={handleFilterChange}>
+              <option value="">All</option>
+              <option value="Processing">Processing</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
             </select>
-            <button onClick={resetFilters} className="flex items-center text-grey-600 underline">
+            </div>
+            <button onClick={handleResetFilters} className="flex items-center text-grey-600 underline">
               <img src={resetIcon} alt="Reset" className="w-6 h-6 mr-2" />
               Reset Filter
             </button>
@@ -118,19 +186,19 @@ const OrderList = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-peach-custom p-2  text-center">
           <div>
-            <p className="text-[20px] sm:text-[28px] font-bold">₹ 126.50k</p>
+            <p className="text-[20px] sm:text-[28px] font-bold">{filteredData.length}</p>
             <p className="text-sm sm:text-base">Total Orders</p>
           </div>
           <div>
-            <p className="text-[20px] sm:text-[28px] font-bold">10</p>
+            <p className="text-[20px] sm:text-[28px] font-bold">{completedOrders}</p>
             <p className="text-sm sm:text-base">Complete Orders</p>
           </div>
           <div>
-            <p className="text-[20px] sm:text-[28px] font-bold">10</p>
+            <p className="text-[20px] sm:text-[28px] font-bold">{processingOrders}</p>
             <p className="text-sm sm:text-base">In Process</p>
           </div>
           <div>
-            <p className="text-[20px] sm:text-[28px] font-bold">10</p>
+            <p className="text-[20px] sm:text-[28px] font-bold">{cancelledOrders}</p>
             <p className="text-sm sm:text-base">Return/Cancel Orders</p>
           </div>
         </div>
@@ -150,14 +218,23 @@ const OrderList = () => {
               </tr>
             </thead>
             <tbody>
-              {currentOrders.length > 0 ? (
-                currentOrders.map((order, index) => (
-                  <OrderRow key={index} order={order} index={index} />
+             
+              {loading ? (
+                <tr>
+                  <td colSpan="100%" className="text-center py-10">
+                    <p className="text-center text-xl text-gray-500 font-medium">⏳ Loading Orders...</p>
+                  </td>
+                </tr>
+
+
+              ) : paginatedProducts.length > 0 ? (
+                paginatedProducts.map((order, index) => (
+                  <OrderRow key={order._id} order={order} index={index} />
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="text-center p-4 text-gray-500">
-                    No orders found.
+                  <td colSpan="100%" className="text-center py-10">
+                    <p className="text-xl text-gray-500 font-medium">⚠️ Oops! No products 🛒 found.</p>
                   </td>
                 </tr>
               )}
@@ -169,16 +246,17 @@ const OrderList = () => {
           <button
             className="flex items-center text-grey-500 disabled:opacity-50"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
             <img src={Prev} alt="Previous" className="w-6 h-6 mr-2" />
             Prev
           </button>
-          <span>Page {currentPage}</span>
+          <span>Page {currentPage}of {Math.ceil(filteredData.length / itemsPerPage)}</span>
           <button
             className="flex items-center text-grey-500 disabled:opacity-50"
-            disabled={indexOfLastOrder >= filteredOrders.length}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === Math.ceil(filteredData.length / itemsPerPage)}
+            onClick={() => setCurrentPage((prev) =>
+              Math.min(prev + 1, Math.ceil(filteredData.length / itemsPerPage)))}
           >
             Next
             <img src={Next} alt="Next" className="w-5 h-5 ml-2" />
