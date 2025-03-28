@@ -1,14 +1,43 @@
-import React from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function OrderSuccessful() {
   const navigate = useNavigate();
+  const [orderId, setOrderId] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchLatestOrder = async () => {
+      try {
+        const authToken = localStorage.getItem("authToken");
+        const latestOrderId = localStorage.getItem("latestOrderId"); // Retrieve the latest order ID
+
+        if (!authToken) throw new Error("Unauthorized. Please login again.");
+        if (!latestOrderId) throw new Error("No recent orders found.");
+
+        // Fetch details of the latest order using its ID
+        const response = await axios.get(`http://localhost:5000/api/order/${latestOrderId}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
+        setOrderId(response.data._id);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestOrder();
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-200">
-      {/* Card Container */}
       <div className="bg-white rounded-lg shadow-lg p-8 text-center w-[350px]">
-        {/* Success Icon */}
         <div className="flex justify-center">
           <div className="w-16 h-16 flex items-center justify-center rounded-full border-4 border-green-500">
             <svg
@@ -23,16 +52,19 @@ function OrderSuccessful() {
           </div>
         </div>
 
-        {/* Success Message */}
-        <h2 className="text-xl font-bold text-blue-600 mt-4">Thank you !</h2>
+        <h2 className="text-xl font-bold text-blue-600 mt-4">Thank you!</h2>
         <p className="text-gray-700 mt-2">Order Placed Successfully</p>
 
-        {/* Order ID */}
-        <p className="text-gray-700 mt-2">
-          <span className="font-semibold text-blue-500">Order ID :</span> 2039535
-        </p>
+        {loading ? (
+          <p className="text-gray-500 mt-2">Fetching Order ID...</p>
+        ) : error ? (
+          <p className="text-red-500 mt-2">{error}</p>
+        ) : (
+          <p className="text-gray-700 mt-2">
+            <span className="font-semibold text-blue-500">Order ID:</span> {orderId}
+          </p>
+        )}
 
-        {/* Continue Shopping Button */}
         <button
           onClick={() => navigate("/StudentMainLandingPage")}
           className="mt-4 bg-[#FF902A] text-white px-4 py-2 rounded-md hover:bg-orange-600"

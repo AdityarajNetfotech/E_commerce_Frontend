@@ -5,6 +5,7 @@ import Header from './header/CartHeader'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
+
 function DeliveryAddress() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -69,17 +70,18 @@ function DeliveryAddress() {
         console.log("Cart Data from Navigation:", cartData);
     }, [cartData]);
 
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
+    
         try {
             if (!cartData || !studentId || !schoolId) {
-                console.log("Missing required information. Please try again.");
+                alert("Missing required information. Please try again.");
                 setIsLoading(false);
                 return;
             }
-
+    
             const orderItems = cartData.map(item => ({
                 product: item.product,
                 quantity: item.quantity,
@@ -87,38 +89,84 @@ function DeliveryAddress() {
                 selectedColor: item.selectedColor,
                 selectedMaterial: item.selectedMaterial,
             }));
-
+    
             const orderData = {
                 school: schoolId,
-                orderItems: orderItems,
-                address: {
-                    ...formData
-                },
-                totalPrice: totalPrice
+                orderItems,
+                address: { ...formData },
+                totalPrice,
             };
-
+    
             const token = localStorage.getItem("authToken");
-            const response = await axios.post(
-                "http://localhost:5000/api/order/add-order",
-                orderData,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json"
+    
+            
+            const orderResponse = await axios.post("http://localhost:5000/api/order/add-order", orderData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            const { _id: orderId } = orderResponse.data;
+            console.log("Order created successfully:", orderId);
+            localStorage.setItem("latestOrderId", orderId); // Store the latest order ID
+    
+           
+            const paymentResponse = await axios.post("http://localhost:5000/api/payment/create-order", {
+                amount: totalPrice,  
+                currency: "INR",
+            });
+    
+            const { id: razorpayOrderId, amount, currency } = paymentResponse.data;
+    
+    
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+                amount: amount,
+                currency: currency,
+                name: "EduKart",
+                description: "Purchase Order",
+                order_id: razorpayOrderId,
+                handler: async function (response) {
+                    try {
+                        console.log("Payment success:", response);
+                        await axios.post("http://localhost:5000/api/payment/verify-payment", response);
+                        alert("Payment Successful!");
+    
+                        navigate("/OrderSuccessful");
+                    } catch (error) {
+                        console.error("Payment verification failed:", error);
+                        alert("Payment verification failed. Contact support.");
                     }
-                }
-            );
-
-            console.log("Order placed successfully:", response.data);
-            alert("Order placed successfully!");
+                },
+                prefill: {
+                    name: formData.name || "Customer",
+                    email: formData.emailId,
+                    contact: formData.phoneNumber,
+                },
+                theme: {
+                    color: "#F37254",
+                },
+            };
+    
+            // Load Razorpay dynamically (in case script is missing)
+            const script = document.createElement("script");
+            script.src = "https://checkout.razorpay.com/v1/checkout.js";
+            script.async = true;
+            script.onload = () => {
+                const razorpay = new window.Razorpay(options);
+                razorpay.open();
+            };
+            document.body.appendChild(script);
         } catch (error) {
             console.error("Error placing order:", error.response?.data?.message || error.message);
-            alert("Failed to place order: " + (error.response?.data?.message || error.message));
+            alert("Failed to place order. Try again.");
         } finally {
             setIsLoading(false);
         }
     };
-
+    
+    
     return (
         <>
             <CustomNavbar />
