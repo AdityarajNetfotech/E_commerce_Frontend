@@ -77,8 +77,28 @@ const TableList = () => {
         });
     };
 
-    const handleDeleteProduct = (id) => {
-        setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
+    const handleDeleteProduct = async (id) => {
+        try {
+            const token = localStorage.getItem("schoolToken"); // Get the token from localStorage
+    
+            if (!token) {
+                console.error("No authentication token found.");
+                return;
+            }
+    
+            await axios.delete(`http://localhost:5000/api/product/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            // Remove product from state after successful deletion
+            setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id));
+    
+            console.log("Product deleted successfully");
+        } catch (error) {
+            console.error("Error deleting product:", error.response ? error.response.data : error);
+        }
     };
 
     const filteredData = products.filter((product) => {

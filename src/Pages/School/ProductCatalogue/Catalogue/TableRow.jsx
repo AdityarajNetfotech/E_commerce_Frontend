@@ -9,6 +9,28 @@ const TableRow = ({ product, index, onDelete }) => {
   const productImage =
     product.image?.length > 0 ? product.image[0] : "/default-image.jpg";
 
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
+  const handleDeleteClick = (product) => {
+    setSelectedProduct(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedProduct) {
+      onDelete(selectedProduct._id);
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+
   const getStockStatus = (product) => {
     let stock = 0;
     if (product.uniformDetails) {
@@ -116,15 +138,43 @@ const TableRow = ({ product, index, onDelete }) => {
 
         <td className="py-2 px-4 max-w-[150px]">
           <div className="flex space-x-2">
-            <button className="text-gray-500">
+            {/* <button className="text-gray-500">
               <img src={Ebtn} alt="Edit" />
-            </button>
-            <button className="text-gray-500 " onClick={() => onDelete(product._id)}>
+            </button> */}
+            <button className="text-gray-500 " onClick={() => handleDeleteClick(product)}>
               <img src={Dbtn} alt="Delete" />
             </button>
           </div>
         </td>
       </tr>
+
+      {isDeleteModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-semibold">Are you sure?</h2>
+            <p className="mt-2 text-gray-700">
+              Do you really want to delete this product? <br />
+              <strong>Order ID: {selectedProduct ? selectedProduct._id : ""}</strong>
+            </p>
+            <div className="mt-4 flex justify-end space-x-3">
+              <button
+                className="bg-gray-300 px-4 py-2 rounded-lg"
+                onClick={closeDeleteModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                onClick={confirmDelete}
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+          
+
       {isModalOpen && (
         <UniformModal
           isOpen={isModalOpen}
