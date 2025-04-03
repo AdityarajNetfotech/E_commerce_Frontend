@@ -17,8 +17,9 @@ const ProductCard = ({ product }) => {
   // console.log("card", product);
   const productUniformPrice = product?.uniformDetails?.variations?.[0]?.subVariations?.[0]?.price;
   const productBookPrice = product?.bookDetails?.price;
+  const productStationaryPrice = product?.stationaryDetails?.price;
 
-  const finalPrice = productUniformPrice ?? productBookPrice ?? 'NA';
+  const finalPrice = productUniformPrice ?? productBookPrice ?? productStationaryPrice ?? 'NA';
 
   // console.log("Product Price:", finalPrice);
 
