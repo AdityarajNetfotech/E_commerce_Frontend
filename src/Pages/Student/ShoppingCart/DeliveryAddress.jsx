@@ -85,10 +85,11 @@ function DeliveryAddress() {
             const orderItems = cartData.map(item => ({
                 product: item.product,
                 quantity: item.quantity,
-                selectedSize: item.selectedSize,
-                selectedColor: item.selectedColor,
-                selectedMaterial: item.selectedMaterial,
+                ...(item.selectedSize && { selectedSize: item.selectedSize }),
+                ...(item.selectedColor && { selectedColor: item.selectedColor }),
+                ...(item.selectedMaterial && { selectedMaterial: item.selectedMaterial }),
             }));
+            
     
             const orderData = {
                 school: schoolId,
