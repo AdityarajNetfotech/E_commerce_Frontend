@@ -57,6 +57,7 @@ import ExchangeRequest from "./Components/Notifications/ExchangeRequest";
 import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeRequestSuccessful";
 import AdminRegister from "./Components/User Management/Admin/AdminRegister";
 import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin";
+import ManageOrder from "./Pages/Admin/ManageOrders/ManageOrders";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -133,6 +134,7 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
+          <Route path="/ManageOrder" element={<ManageOrder />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
