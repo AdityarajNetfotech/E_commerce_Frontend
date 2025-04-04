@@ -5,6 +5,7 @@ import resetIcon from "../../../../Components/Images/ReplayIcon.png";
 import Prev from "../../../../Components/Images/PrevArrow.png";
 import Next from "../../../../Components/Images/NextArrow.png";
 import axios from 'axios';
+import { data } from "react-router-dom";
 
 
 const OrderList = () => {
@@ -19,7 +20,7 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/order/school-orders", {
+        const { data } = await axios.get("http://localhost:5000/api/order/school-orders/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

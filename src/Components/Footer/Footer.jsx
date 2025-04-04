@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="flex items-center">
             <img src={book} alt="Brand Logo" className="w-12 h-12 mr-3" />
             <h2 className="text-2xl sm:text-3xl font-bold">
-              Brand<span className="text-yellow-400">Name</span>
+              Edu<span className="text-yellow-400">Cart</span>
             </h2>
           </div>
 
