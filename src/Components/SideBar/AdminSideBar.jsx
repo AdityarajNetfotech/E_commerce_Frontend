@@ -64,6 +64,13 @@ const AdminSidebar = () => {
             </li>
             <li
               className={`px-6 py-2 rounded-md cursor-pointer ${
+                location.pathname === "/ManageOrder" ? "bg-black text-white" : "hover:bg-black hover:text-white"
+              }`}
+            >
+              <NavLink to="/ManageOrder">Manage Orders</NavLink>
+            </li>
+            <li
+              className={`px-6 py-2 rounded-md cursor-pointer ${
                 location.pathname === "/RegisterSchool" ? "bg-black text-white" : "hover:bg-black hover:text-white"
               }`}
             >
