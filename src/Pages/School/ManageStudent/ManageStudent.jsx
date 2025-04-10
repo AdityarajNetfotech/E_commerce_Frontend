@@ -5,8 +5,11 @@ import Footer from '../../../Components/footer/Footer'
 import icon from '../../../Components/Images/goThrough.png'
 import Header from '../Dashboard/header/header';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function ManageStudent() {
+    const navigate = useNavigate();
+    
     const [students, setStudents] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,6 +61,11 @@ function ManageStudent() {
     const indexOfLastStudent = currentPage * studentsPerPage;
     const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
     const currentStudents = filteredStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+
+    const handleViewDetails = (student) => {
+        navigate("/AllOrders", { state: student });
+        console.log("AllOrders:", student);
+      };
 
 
     return (
@@ -169,8 +177,8 @@ function ManageStudent() {
                                                             <td className="py-4 text-center">{student.gender || "N/A"}</td>
                                                             <td className="py-4 text-center">{student.lastactive || "N/A"}</td>
                                                             <td className="py-4 text-center rounded-r-xl">
-                                                                <button className="w-full flex justify-center items-center gap-2 hover:text-blue-600 cursor-pointer border py-1 rounded-lg bg-white text-black">
-                                                                    {student.orders || 0}
+                                                                <button onClick={() => handleViewDetails(student)} className="w-full flex justify-center items-center gap-2 hover:text-blue-600 cursor-pointer border py-1 rounded-lg bg-white text-black">
+                                                                    {student.orders.length || 0}
                                                                     <img src={icon} alt="" className="w-5 h-5" />
                                                                 </button>
                                                             </td>
