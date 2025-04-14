@@ -10,6 +10,7 @@ const AccountDetailsForm = () => {
     schoolName: "",
     email: "",
     mobileNumber: "",
+    state: "",
     affiliationNumber: "",
     affiliationCertificate: null,
   });
@@ -29,6 +30,7 @@ const AccountDetailsForm = () => {
           schoolName: school.name || "",
           email: school.email || "",
           mobileNumber: school.mobile || "",
+          state: school.state || "",
           affiliationNumber: school.affiliationNumber || "",
           affiliationCertificate: school.affiliationCertificate || null,
         });
@@ -65,6 +67,7 @@ const AccountDetailsForm = () => {
         name: formData.schoolName,
         email: formData.email, // Email will not be updated
         mobile: formData.mobileNumber,
+        state: formData.state,
         affiliationNumber: formData.affiliationNumber,
       };
 
@@ -78,6 +81,7 @@ const AccountDetailsForm = () => {
         formDataToSend.append("name", formData.schoolName);
         formDataToSend.append("email", formData.email);
         formDataToSend.append("mobile", formData.mobileNumber);
+        formDataToSend.append("state", formData.state);
         formDataToSend.append("affiliationNumber", formData.affiliationNumber);
         formDataToSend.append("affiliationCertificate", formData.affiliationCertificate);
 
@@ -115,6 +119,7 @@ const AccountDetailsForm = () => {
             { label: "School Name", name: "schoolName", type: "text" },
             { label: "Email", name: "email", type: "email" }, // Email field added
             { label: "Mobile Number", name: "mobileNumber", type: "tel" },
+            { label: "State", name: "state", type: "text" },
             { label: "Affiliation Number", name: "affiliationNumber", type: "text" },
           ].map(({ label, name, type }) => (
             <div key={name} className="w-full max-w-lg">

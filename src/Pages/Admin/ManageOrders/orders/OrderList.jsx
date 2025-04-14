@@ -181,7 +181,7 @@ const OrderList = () => {
                   onChange={handleFilterChange}>
                   <option value="">All</option>
                   <option value="Processing">Processing</option>
-                  <option value="Delivered">Delivered</option>
+                  <option value="Delivered">Completed</option>
                   <option value="Cancelled">Cancelled</option>
                 </select>
               </div>
