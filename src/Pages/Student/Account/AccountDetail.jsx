@@ -112,7 +112,7 @@ function AccountDetails() {
                   name={name}
                   value={studentData[name]}
                   onChange={handleInputChange}
-                  disabled={disabled || !isEditing} // Email stays disabled even in edit mode
+                  disabled={disabled || !isEditing} 
                   className="w-full border rounded-md px-3 p-3 focus:ring-2 focus:ring-orange-400 outline-none focus:border-none disabled:bg-white"
                 />
               </div>

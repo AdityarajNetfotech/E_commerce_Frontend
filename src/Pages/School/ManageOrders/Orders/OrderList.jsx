@@ -5,7 +5,7 @@ import resetIcon from "../../../../Components/Images/ReplayIcon.png";
 import Prev from "../../../../Components/Images/PrevArrow.png";
 import Next from "../../../../Components/Images/NextArrow.png";
 import axios from 'axios';
-import { data } from "react-router-dom";
+//import { data } from "react-router-dom";
 
 
 const OrderList = () => {

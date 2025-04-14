@@ -43,6 +43,7 @@ const OrderCard = ({ order }) => {
 
       <td className="p-3">{new Date(order.createdAt).toLocaleDateString()}</td>
 
+  
       <td className="p-3">
         <button>
           <img src={PrimaryIcon} alt="Details" className="w-10 h-10" />
