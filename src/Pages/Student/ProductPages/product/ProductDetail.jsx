@@ -47,18 +47,33 @@ function ProductDetail() {
 
     const getColorsForMaterial = () => {
         if (!selectedMaterial) return [];
-        return product.uniformDetails.variations
-            .filter(variation => variation.variationInfo === selectedMaterial)
+
+        const matchingVariations = product.uniformDetails.variations
+            .filter(variation => variation.variationInfo === selectedMaterial);
+
+        return matchingVariations
+            .filter(variation => {
+                return variation.subVariations.some(subVar => subVar.stockQty > 0);
+            })
             .map(variation => variation.secondVariationInfo);
     };
 
-    // Function to get sizes for selected material & color
     const getSizesForMaterialAndColor = () => {
         if (!selectedMaterial || !selectedColor) return [];
-        return product.uniformDetails.variations
-            .filter(variation => variation.variationInfo === selectedMaterial && variation.secondVariationInfo === selectedColor)
-            .flatMap(variation => variation.subVariations);
+
+        const selectedVariation = product.uniformDetails.variations
+            .find(variation =>
+                variation.variationInfo === selectedMaterial &&
+                variation.secondVariationInfo === selectedColor
+            );
+
+        if (selectedVariation) {
+            return selectedVariation.subVariations.filter(subVar => subVar.stockQty > 0);
+        }
+
+        return [];
     };
+
 
     // Function to get price for selected size
     const getPriceForSize = () => {
@@ -118,7 +133,7 @@ function ProductDetail() {
             return;
         }
         setSelectedSize(sizeType);
-        setWarningMessage(""); 
+        setWarningMessage("");
     };
 
     // handling color selection
@@ -148,7 +163,7 @@ function ProductDetail() {
     const handleQuantityChange = (newQuantity) => {
         setQuantity(newQuantity);
         if (newQuantity === 1) {
-            setWarningMessage(""); 
+            setWarningMessage("");
         }
     };
 
@@ -202,7 +217,7 @@ function ProductDetail() {
                                 <div>
                                     <h1 className="text-lg font-semibold mt-4">Price</h1>
                                     <p className="font-bold text-xl text-green-600">
-                                        ₹ {product?.bookDetails?.price ||  product?.stationaryDetails?.price || "N/A"}
+                                        ₹ {product?.bookDetails?.price || product?.stationaryDetails?.price || "N/A"}
                                     </p>
                                 </div>
                             ) : (
@@ -219,7 +234,7 @@ function ProductDetail() {
                                                             ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                             : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                         `}
-                                                
+
                                                     onClick={() => handleMaterialChange(material)}
                                                 >
                                                     {material || "Unknown"}
@@ -245,7 +260,7 @@ function ProductDetail() {
                                                                     color: "#fff",
                                                                     border: selectedColor === color ? "2px solid black" : "1px solid gray"
                                                                 }}
-                                                                
+
                                                                 onClick={() => handleColorChange(color)}
                                                             >
                                                                 {color}
@@ -262,7 +277,7 @@ function ProductDetail() {
                                                                                         ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                                                         : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                                                     `}
-                                                                                
+
                                                                                 onClick={() => handleSizeChange(size.subVariationType)}
                                                                             >
                                                                                 {size.subVariationType}
@@ -307,7 +322,7 @@ function ProductDetail() {
                                 >
                                     +
                                 </button>
-                                
+
                             </div>
 
                             <button className='w-full rounded-md bg-orange-500 h-10 text-white font-medium cursor-pointer'
