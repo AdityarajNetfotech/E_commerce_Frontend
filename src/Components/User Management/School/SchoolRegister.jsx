@@ -9,6 +9,7 @@ function SchoolRegister() {
     email: "",
     mobile: "",
     password: "",
+    state: "",
     address: "",
     affiliationNumber: "",
     affiliationCertificate: null,
@@ -126,6 +127,10 @@ function SchoolRegister() {
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-700">Password</label>
               <input type="password" name="password" value={formData.password} onChange={handleChange} required className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-700">State</label>
+              <input type="text" name="state" value={formData.state} onChange={handleChange} required className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" />
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-700">Address</label>

@@ -166,6 +166,7 @@ const PendingSchoolsTable = () => {
                       <th className="py-2 px-4 text-left">Name</th>
                       <th className="py-2 px-4 text-left">Email</th>
                       <th className="py-2 px-4 text-left">Mobile</th>
+                      <th className="py-2 px-4 text-left">State</th>
                       <th className="py-2 px-4 text-left">Address</th>
                       <th className="py-2 px-4 text-left">
                         Affiliation Number
@@ -184,6 +185,9 @@ const PendingSchoolsTable = () => {
                           <td className="py-2 px-4">{school.email || "N/A"}</td>
                           <td className="py-2 px-4">
                             {school.mobile || "N/A"}
+                          </td>
+                          <td className="py-2 px-4">
+                            {school.state || "N/A"}
                           </td>
                           <td className="py-2 px-4">
                             {school.address || "N/A"}
