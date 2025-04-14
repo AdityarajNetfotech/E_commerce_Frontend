@@ -27,22 +27,25 @@ const OrderCard = ({ order }) => {
         })}
       </div>
 
-      {/* Order Details */}
-      <div className="flex-1 flex flex-col">
-        <div className="flex-1 text-center sm:text-left">
-          <p
-            className={`text-[15px] font-medium ${
-              order.orderStatus === "Delivered"
-                ? "text-green-600"
-                : "text-blue-600"
-            }`}
-          >
-            {order.orderStatus} on{" "}
-            <span className="text-gray-500">
-              {new Date(order.createdAt).toDateString()}
-            </span>
-          </p>
-        </div>
+     {/* Order Details */}
+     <div className="flex-1 flex flex-col">
+             <div className="flex-1 text-center sm:text-left">
+             <p
+             className={`inline-block px-3 py-1 text-[15px] font-medium rounded-full ${
+           {
+             Delivered: " text-green-600",
+             Processing: " text-yellow-600",
+             Shipped: " text-blue-600",
+             Cancelled: " text-red-600",
+           }[order.orderStatus] || "bg-gray-100 text-gray-600"
+           }`}
+           >
+             {order.orderStatus} on{" "}
+             <span className="text-gray-500 font-normal">
+             {new Date(order.createdAt).toDateString()}
+        </span>
+       </p>
+    </div>
 
         <div className="border-b border-gray-300 my-2"></div>
 

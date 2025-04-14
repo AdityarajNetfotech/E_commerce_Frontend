@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PrimaryIcon from "../../../../Components/Images/PrimaryIcon.png";
 
 const statusColors = {
@@ -10,6 +11,12 @@ const statusColors = {
 };
 
 const OrderCard = ({ order }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate("/OrderDetails", { state: { order } });
+  };
+
   return (
     <tr className="border-b bg-[#FDF6E4]">
       <td className="p-3">#{order._id.slice(-6)}</td>
@@ -22,13 +29,13 @@ const OrderCard = ({ order }) => {
         />
         <div>
           <p>{order.orderItems[0]?.name}</p>
-          <p className="text-gray-500 text-sm">+{order.orderItems.length } items</p>
+          <p className="text-gray-500 text-sm">+{order.orderItems.length} items</p>
         </div>
       </td>
 
       <td className="p-3">
-          <p className="font-semibold">{order.student?.name || "N/A"}</p>
-          <p className="text-gray-500 text-sm">{order.student?.email || "N/A"}</p>
+        <p className="font-semibold">{order.student?.name || "N/A"}</p>
+        <p className="text-gray-500 text-sm">{order.student?.email || "N/A"}</p>
       </td>
 
       <td className="p-3">{order.school?.name || "N/A"}</td>
@@ -36,16 +43,19 @@ const OrderCard = ({ order }) => {
       <td className="p-3">₹{order.totalAmount}</td>
 
       <td className="p-3">
-        <span className={`px-3 py-1 text-sm rounded-full ${statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"}`}>
+        <span
+          className={`px-3 py-1 text-sm rounded-full ${
+            statusColors[order.orderStatus] || "bg-gray-100 text-gray-600"
+          }`}
+        >
           {order.orderStatus}
         </span>
       </td>
 
       <td className="p-3">{new Date(order.createdAt).toLocaleDateString()}</td>
 
-  
       <td className="p-3">
-        <button>
+        <button onClick={handleViewDetails} className="hover:scale-105 transition">
           <img src={PrimaryIcon} alt="Details" className="w-10 h-10" />
         </button>
       </td>
