@@ -23,6 +23,8 @@ const RegisterSchoolTable = () => {
           throw new Error("Failed to fetch schools");
         }
         const data = await response.json();
+        console.log(data);
+        
         const approvedSchools = data.schools.filter(
           (school) => school.isApproved
         );
@@ -84,7 +86,8 @@ const RegisterSchoolTable = () => {
   const filteredSchools = schools.filter(
     (school) =>
       school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      school.email.toLowerCase().includes(searchTerm.toLowerCase())
+      school.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      school.affiliationNumber.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // **Pagination Logic**

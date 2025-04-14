@@ -54,6 +54,14 @@ const PendingSchoolsTable = () => {
     setSearchTerm(e.target.value);
   };
 
+  
+  const filteredSchools = pendingSchools.filter(
+    (school) =>
+      school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      school.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      school.affiliationNumber.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const downloadCertificate = async () => {
     if (!selectedCertificate) return;
 
@@ -106,12 +114,7 @@ const PendingSchoolsTable = () => {
       }
     }
   };
-
-  const filteredSchools = pendingSchools.filter(
-    (school) =>
-      school.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      school.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  
 
   const totalPages = Math.max(
     1,

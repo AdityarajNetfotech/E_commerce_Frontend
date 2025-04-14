@@ -44,6 +44,13 @@ const ProductGrid = () => {
 
   const filteredData = products.filter((product) => {
 
+    if (product.category === "Books" && product.bookDetails && product.bookDetails.stockQty <= 0) {
+      return false;
+    }
+    if (product.category === "Stationary" && product.stationaryDetails && product.stationaryDetails.stockQty <= 0) {
+      return false;
+    }
+
     if (filters.searchTerm) {
       if (!product.name.toLowerCase().includes(filters.searchTerm.toLowerCase())) {
         return false;

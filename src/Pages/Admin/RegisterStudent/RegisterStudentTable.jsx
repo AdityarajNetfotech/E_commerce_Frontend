@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import search from "../../../Components/Images/SearchOutline.png";
 
 const RegisterStudentTable = () => {
     const [students, setStudents] = useState([]);
     const [schools, setSchools] = useState({});
+    const [schoolsList, setSchoolsList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-      const [studentToDelete, setStudentToDelete] = useState(null)
+    const [studentToDelete, setStudentToDelete] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
+    const [selectedSchool, setSelectedSchool] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -24,15 +27,28 @@ const RegisterStudentTable = () => {
                 const studentsData = await studentsRes.json();
                 const schoolsData = await schoolsRes.json();
 
+                console.log("StuD", studentsData);
+                console.log("SchD", schoolsData);
+                
                 setStudents(studentsData.students);
 
-                // school id to school name....
+                // school id to school name mapping
                 const schoolMap = {};
                 schoolsData.schools.forEach(school => {
                     schoolMap[school._id] = school.name;
                 });
 
                 setSchools(schoolMap);
+
+                // Get unique school IDs from registered students
+                const uniqueSchoolIds = [...new Set(studentsData.students.map(student => student.school))];
+                
+                // Filter schools list to include only those that have registered students
+                const filteredSchools = schoolsData.schools.filter(school => 
+                    uniqueSchoolIds.includes(school._id)
+                );
+                
+                setSchoolsList(filteredSchools);
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -46,7 +62,7 @@ const RegisterStudentTable = () => {
     const confirmDelete = (id) => {
         setStudentToDelete(id);
         setDeleteConfirmation(true);
-      };
+    };
 
     const deleteStudent = async () => {
         if (!studentToDelete) return;
@@ -59,30 +75,60 @@ const RegisterStudentTable = () => {
             }
             setStudents(students.filter((student) => student._id !== studentToDelete));
             setDeleteConfirmation(false);
-      setStudentToDelete(null);
+            setStudentToDelete(null);
         } catch (error) {
             setError(error.message);
         }
     };
 
-    const filteredStudents = students.filter((student) =>
-        student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        student.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const handleSchoolChange = (e) => {
+        setSelectedSchool(e.target.value);
+    };
+
+    const filteredStudents = students.filter((student) => {
+        const matchesSearch = 
+            student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            student.email?.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        const matchesSchool = 
+            selectedSchool === "" || student.school === selectedSchool;
+        
+        return matchesSearch && matchesSchool;
+    });
 
     return (
         <div className="mx-auto bg-[#ECECEC] p-4">
             <div className="p-5 bg-white">
                 <div className="mx-auto bg-white">
                     <div className="bg-yellow-100 p-4 rounded-lg shadow-md space-y-4">
-                        <div className="flex flex-wrap items-center gap-5">
-                            <input
-                                className="p-2 rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-yellow-500 w-full sm:w-auto"
-                                type="text"
-                                placeholder="Search registered students"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
+                        <div className="flex items-center gap-10">
+                            <div className="flex items-center space-x-2 bg-white w-[250px]">
+                                <input
+                                    className="p-2 rounded-lg border-0 focus:outline-none focus:ring-3 focus:ring-yellow-500 w-full sm:w-auto"
+                                    type="text"
+                                    placeholder="Search registered students"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <button className="text-yellow-500 p-1">
+                                    <img src={search} alt="Search" />
+                                </button>
+                            </div>
+
+                            <div>
+                                <select 
+                                    className="p-2 rounded-lg border focus:outline-none focus:ring-3 focus:ring-yellow-500"
+                                    value={selectedSchool}
+                                    onChange={handleSchoolChange}
+                                >
+                                    <option value="">All Schools</option>
+                                    {schoolsList.map(school => (
+                                        <option key={school._id} value={school._id}>
+                                            {school.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
                         <div className="flex flex-wrap justify-between items-center gap-4">
@@ -141,18 +187,17 @@ const RegisterStudentTable = () => {
                     )}
                 </div>
                 {deleteConfirmation && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
-            <div className="flex justify-center gap-4">
-              <button onClick={deleteStudent} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
-              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
+                    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+                        <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
+                            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this student?</p>
+                            <div className="flex justify-center gap-4">
+                                <button onClick={deleteStudent} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
+                                <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
-          </div>
-        </div>
-      )}
-            </div>
-        
         </div>
     );
 };
