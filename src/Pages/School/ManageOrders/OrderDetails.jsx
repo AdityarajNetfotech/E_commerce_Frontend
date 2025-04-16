@@ -5,6 +5,14 @@ function OrderDetails() {
     const location = useLocation();
     const order = location.state?.order;
 
+    const statusTextColor = {
+        Delivered: "text-green-600",
+        Processing: "text-yellow-600",
+        Shipped: "text-blue-600",
+        Cancelled: "text-red-600",
+      };
+      
+
     if (!order) {
         return <p className="text-center text-red-600">No order details available</p>;
     }
@@ -91,8 +99,8 @@ function OrderDetails() {
                         <div key={item._id} className="bg-white shadow-lg rounded-xl p-4 border border-gray-300">
                             <div className="flex items-center gap-2 text-sm font-medium">
                                 <i class="fa-solid fa-box-archive" />
-                                <span className="text-green-600">{order.orderStatus}</span>
-                                <span className="text-gray-500">on Friday, 15th September</span>
+                                <span className={`${statusTextColor[order.orderStatus] || "text-gray-600"}`}> {order.orderStatus}</span> on
+                                <span className="text-gray-500">{new Date(order.createdAt).toDateString()}</span>
                             </div>
 
                             <hr className='mt-1 mb-3' />
