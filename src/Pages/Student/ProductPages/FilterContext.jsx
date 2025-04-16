@@ -10,6 +10,7 @@ export const FilterProvider = ({ children }) => {
     color: "",
     grade: "",
     gender: "",
+    category: "",
   });
 
   

@@ -15,7 +15,7 @@ const SearchBar = () => {
   };
 
   const resetFilters = () => {
-    updateFilters({ searchTerm: "", color: "", grade: "", gender: "" });
+    updateFilters({ searchTerm: "", color: "", grade: "", gender: "", category: "" });
   };
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -29,14 +29,14 @@ const SearchBar = () => {
       <style>
         {`
           @media (max-width: 1093px) {
-            #filter-custom_css{
+            #filter-custom_css {
               flex-direction: column;
               gap: 10px;
             }
           }
 
           @media (max-width: 768px) {
-            #filter-custom_css{
+            #filter-custom_css {
               display: ${isFilterOpen ? "flex" : "none"};
               flex-direction: column;
               margin-top: 10px;
@@ -45,14 +45,14 @@ const SearchBar = () => {
           }
 
           @media (max-width: 642px) {
-            #sort-custom_css{
-             width: 240px !important;
+            #sort-custom_css {
+              width: 240px !important;
             }
           }
         `}
       </style>
 
-      {/* Show Filter Button */}
+
       {!isFilterOpen && (
         <button
           onClick={toggleFilter}
@@ -62,21 +62,32 @@ const SearchBar = () => {
         </button>
       )}
 
-      <div id="filter-custom_css" className="absolute top-[-35px] flex gap-9 justify-between items-center bg-peach-custom shadow-lg p-4 rounded-xl w-full">
-        <div id="search-custom_css" className="flex items-center bg-white px-3 py-1.5 rounded-lg sm:w-[400px] md:w-[600px] lg:w-[350px] shadow-md border-gray-custom relative mb-4 md:mb-0">
-          <input
-            type="text"
-            placeholder="Search something"
-            value={filters.searchTerm}
-            onChange={handleSearchChange}
-            className="outline-none w-full text-lg text-[18px] text-gray-custom font-[Poppins]"
-          />
-          <button className="text-orange-500 text-xl text-[18px] absolute right-3">
-            <img src={search} alt="cart" />
-          </button>
-        </div>
+      <div
+        id="filter-custom_css"
+        className="absolute top-[-35px] flex justify-between items-start md:items-center gap-6 bg-peach-custom shadow-lg p-4 rounded-xl w-full"
+      >
 
-        <div id="sort-custom_css" className="flex lg:w-[600px] md:w-[600px] sm:w-[400px] justify-between flex-col md:flex-row gap-2 mt-2 sm:mt-0">
+        <div
+          id="sort-custom_css"
+          className="flex flex-wrap justify-start gap-3 w-full md:w-auto"
+        >
+
+          <label className="flex items-center bg-white px-4 rounded-md shadow-md border border-gray-200">
+            <span className="mr-2 text-gray-700 font-[Montserrat] text-[18px]">Category:</span>
+            <select
+              name="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+              className="border p-1 md:p-2 rounded-md font-semibold text-gray-700 text-[18px] outline-none border-none"
+            >
+              <option value="">Category</option>
+              <option value="Uniform">Uniform</option>
+              <option value="Books">Books</option>
+              <option value="Stationary">Stationery</option>
+            </select>
+          </label>
+
+
           <label className="flex items-center bg-white px-4 rounded-md shadow-md border border-gray-200">
             <span className="mr-2 text-gray-700 font-[Montserrat] text-[18px]">Color:</span>
             <select
@@ -116,6 +127,7 @@ const SearchBar = () => {
             </select>
           </label>
 
+
           <label className="flex items-center bg-white px-4 rounded-md shadow-md border border-gray-200">
             <span className="mr-2 text-gray-700 font-[Montserrat] text-[18px]">Gender:</span>
             <select
@@ -132,23 +144,47 @@ const SearchBar = () => {
           </label>
         </div>
 
-        <button
-          onClick={resetFilters}
-          className="ml-auto text-gray-600 text-base md:text-lg flex items-center hover:text-gray-800 transition duration-200 mt-4 md:mt-0 cursor-pointer"
-        >
-          🔄 Reset Filter
-        </button>
+
+        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center w-full md:w-auto">
+
+          <div className="flex items-center bg-white px-3 py-1.5 rounded-lg sm:w-[400px] md:w-[250px] lg:w-[300px] shadow-md border-gray-custom relative">
+            <input
+              type="text"
+              placeholder="Search something"
+              value={filters.searchTerm}
+              onChange={handleSearchChange}
+              className="outline-none w-full text-[18px] text-gray-custom font-[Poppins]"
+            />
+            <button className="absolute right-3">
+              <img src={search} alt="search" className="w-4 h-4" />
+            </button>
+          </div>
+
+
+          <button
+            onClick={resetFilters}
+            className="text-gray-600 text-base md:text-lg flex items-center hover:text-gray-800 transition duration-200 cursor-pointer"
+          >
+            🔄 Reset Filter
+          </button>
+
+
+          {isFilterOpen && (
+            <div className="md:hidden mt-2 flex justify-start w-full">
+              <button
+                onClick={toggleFilter}
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md shadow-md hover:bg-gray-300 transition"
+              >
+                Hide Filters
+              </button>
+            </div>
+          )}
+
+
+        </div>
       </div>
 
-      {/* Hide Filter Button (Positioned at bottom-left) */}
-      {isFilterOpen && (
-        <button
-          onClick={toggleFilter}
-          className="md:hidden text-gray-600 px-4 py-2 rounded-md absolute bottom-0 left-0 mb-2 ml-2"
-        >
-          Hide Filters
-        </button>
-      )}
+
     </div>
   );
 };
