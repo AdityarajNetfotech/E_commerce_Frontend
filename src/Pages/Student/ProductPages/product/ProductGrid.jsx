@@ -43,8 +43,20 @@ const ProductGrid = () => {
 
 
   const filteredData = products.filter((product) => {
+    if (product.category === "Uniform" && product.uniformDetails && product.uniformDetails.variations) {
+      const allSizesOutOfStock = product.uniformDetails.variations.every(variation => {
+        if (!variation.subVariations || !Array.isArray(variation.subVariations)) {
+          return true;
+        }
+        return variation.subVariations.every(subVar => subVar.stockQty <= 0);
+      });
 
-     if (product.category === "Books" && product.bookDetails && product.bookDetails.stockQty <= 0) {
+      if (allSizesOutOfStock) {
+        return false;
+      }
+
+    }
+    if (product.category === "Books" && product.bookDetails && product.bookDetails.stockQty <= 0) {
       return false;
     }
     if (product.category === "Stationary" && product.stationaryDetails && product.stationaryDetails.stockQty <= 0) {
@@ -82,7 +94,7 @@ const ProductGrid = () => {
       if (filters.category === "Uniform" && !product.uniformDetails) return false;
       if (filters.category === "Books" && !product.bookDetails) return false;
       if (filters.category === "Stationary" && !product.stationaryDetails) return false;
-  }
+    }
 
 
     return true;
