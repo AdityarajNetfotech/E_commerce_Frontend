@@ -78,6 +78,12 @@ const ProductGrid = () => {
       }
     }
 
+    if (filters.category) {
+      if (filters.category === "Uniform" && !product.uniformDetails) return false;
+      if (filters.category === "Books" && !product.bookDetails) return false;
+      if (filters.category === "Stationary" && !product.stationaryDetails) return false;
+  }
+
 
     return true;
   });

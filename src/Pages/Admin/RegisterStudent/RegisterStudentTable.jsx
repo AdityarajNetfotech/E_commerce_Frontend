@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import search from "../../../Components/Images/SearchOutline.png";
+import Pagination from "../../../Components/Pagination/pagination";
 
 const RegisterStudentTable = () => {
     const [students, setStudents] = useState([]);
@@ -11,6 +12,8 @@ const RegisterStudentTable = () => {
     const [studentToDelete, setStudentToDelete] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedSchool, setSelectedSchool] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const studentsPerPage = 6;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +32,7 @@ const RegisterStudentTable = () => {
 
                 console.log("StuD", studentsData);
                 console.log("SchD", schoolsData);
-                
+
                 setStudents(studentsData.students);
 
                 // school id to school name mapping
@@ -42,12 +45,12 @@ const RegisterStudentTable = () => {
 
                 // Get unique school IDs from registered students
                 const uniqueSchoolIds = [...new Set(studentsData.students.map(student => student.school))];
-                
+
                 // Filter schools list to include only those that have registered students
-                const filteredSchools = schoolsData.schools.filter(school => 
+                const filteredSchools = schoolsData.schools.filter(school =>
                     uniqueSchoolIds.includes(school._id)
                 );
-                
+
                 setSchoolsList(filteredSchools);
             } catch (error) {
                 setError(error.message);
@@ -86,15 +89,23 @@ const RegisterStudentTable = () => {
     };
 
     const filteredStudents = students.filter((student) => {
-        const matchesSearch = 
+        const matchesSearch =
             student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             student.email?.toLowerCase().includes(searchTerm.toLowerCase());
-        
-        const matchesSchool = 
+
+        const matchesSchool =
             selectedSchool === "" || student.school === selectedSchool;
-        
+
         return matchesSearch && matchesSchool;
     });
+
+    const indexOfLastStudent = currentPage * studentsPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+    const currentStudents = filteredStudents.slice(
+        indexOfFirstStudent,
+        indexOfLastStudent
+    );
+    const totalPages = Math.ceil(filteredStudents.length / studentsPerPage);
 
     return (
         <div className="mx-auto bg-[#ECECEC] p-4">
@@ -116,7 +127,7 @@ const RegisterStudentTable = () => {
                             </div>
 
                             <div>
-                                <select 
+                                <select
                                     className="p-2 rounded-lg border focus:outline-none focus:ring-3 focus:ring-yellow-500"
                                     value={selectedSchool}
                                     onChange={handleSchoolChange}
@@ -156,8 +167,8 @@ const RegisterStudentTable = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredStudents.length > 0 ? (
-                                        filteredStudents.map((student) => (
+                                    {currentStudents.length > 0 ? (
+                                        currentStudents.map((student) => (
                                             <tr key={student._id} className="bg-gray-100">
                                                 <td className="py-2 px-4">{student.name || "N/A"}</td>
                                                 <td className="py-2 px-4">{student.email || "N/A"}</td>
@@ -185,6 +196,12 @@ const RegisterStudentTable = () => {
                             </table>
                         </div>
                     )}
+
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={setCurrentPage}
+                    />
                 </div>
                 {deleteConfirmation && (
                     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
