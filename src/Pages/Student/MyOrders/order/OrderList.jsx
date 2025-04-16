@@ -12,27 +12,32 @@ const OrderList = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const authToken = localStorage.getItem("authToken"); // Get token from local storage
+      const authToken = localStorage.getItem("authToken");
       const response = await fetch("http://localhost:5000/api/order/my-orders", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`, // Add token to headers
+          Authorization: `Bearer ${authToken}`,
         },
       });
-
+  
       if (!response.ok) throw new Error("Failed to fetch orders");
-
+  
       const data = await response.json();
-      setOrders(data);
-      setFilteredOrders(data);
+  
+      const sortedOrders = data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+  
+      setOrders(sortedOrders);
+      setFilteredOrders(sortedOrders);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchOrders();
   }, []);
