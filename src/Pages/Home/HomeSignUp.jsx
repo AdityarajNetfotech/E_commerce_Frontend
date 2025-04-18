@@ -18,7 +18,7 @@ function HomeSignUp() {
   }, []);
 
   return (
-    <section className="min-h-screen bg-[#F7C322] flex flex-col md:flex-row items-center justify-center px-12 py-10 gap-16 relative">
+    <section className="min-h-screen overflow-hidden bg-[#F7C322] flex flex-col md:flex-row items-center justify-center px-12 py-10 gap-16 relative">
       {!isMobile && (
         <div className="absolute top-10 left-10 md:left-20 flex items-center">
           <img src={educartLogo} alt="EduKart Logo" className="w-24 h-24 md:w-28 md:h-28" />

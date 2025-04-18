@@ -19,7 +19,7 @@ const Header = ({ heading }) => {
         <img
           src={airplane}
           alt="Paper Airplane"
-          className="w-[100px] sm:w-[150px] md:w-[50px] lg:w-[450px] h-auto drop-shadow-lg"
+          className="w-[100px] sm:w-[150px] md:w-[50px] lg:w-[450px] h-auto drop-shadow-lg [@media(width:1024px)]:w-[350px]"
         />
       </div>
     </div>
