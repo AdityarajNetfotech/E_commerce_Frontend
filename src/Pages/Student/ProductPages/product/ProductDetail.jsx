@@ -74,6 +74,21 @@ function ProductDetail() {
         return [];
     };
 
+    const getStockQtyForSize = () => {
+        if (!selectedMaterial || !selectedColor || !selectedSize) return null;
+
+        const selectedVariation = product.uniformDetails.variations.find(
+            variation =>
+                variation.variationInfo === selectedMaterial &&
+                variation.secondVariationInfo === selectedColor
+        );
+
+        if (selectedVariation) {
+            const sizeInfo = selectedVariation.subVariations.find(size => size.subVariationType === selectedSize);
+            return sizeInfo ? sizeInfo.stockQty : null;
+        }
+        return null;
+    };
 
     // Function to get price for selected size
     const getPriceForSize = () => {
@@ -214,11 +229,18 @@ function ProductDetail() {
 
                         <div className='my-8 space-y-4'>
                             {isBookOrStationery ? (
-                                <div>
-                                    <h1 className="text-lg font-semibold mt-4">Price</h1>
-                                    <p className="font-bold text-xl text-green-600">
-                                        ₹ {product?.bookDetails?.price || product?.stationaryDetails?.price || "N/A"}
-                                    </p>
+                                <div className='flex space-x-4'>
+                                    <div>
+                                        <h1 className="text-lg font-semibold">Price</h1>
+                                        <p className="font-bold text-xl text-green-600">
+                                            ₹ {product?.bookDetails?.price || product?.stationaryDetails?.price || "N/A"}
+                                        </p>
+                                    </div>
+                                    <div className="h-14 border-l border-gray-500"></div>
+                                    <div>
+                                        <h1 className="text-lg font-semibold">Stock</h1>
+                                        <p className="text-lg">{product?.bookDetails?.stockQty || product?.stationaryDetails?.stockQty || 0} left</p>
+                                    </div>
                                 </div>
                             ) : (
                                 <>
@@ -234,7 +256,6 @@ function ProductDetail() {
                                                             ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                             : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
                                                         `}
-
                                                     onClick={() => handleMaterialChange(material)}
                                                 >
                                                     {material || "Unknown"}
@@ -260,7 +281,6 @@ function ProductDetail() {
                                                                     color: "#fff",
                                                                     border: selectedColor === color ? "2px solid black" : "1px solid gray"
                                                                 }}
-
                                                                 onClick={() => handleColorChange(color)}
                                                             >
                                                                 {color}
@@ -273,11 +293,10 @@ function ProductDetail() {
                                                                             <span
                                                                                 key={index}
                                                                                 className={`px-4 py-2 border rounded-lg cursor-pointer transition-all 
-                                                                                    ${selectedSize === size.subVariationType
+                                                                                      ${selectedSize === size.subVariationType
                                                                                         ? "bg-blue-500 text-white border-blue-500 shadow-lg"
                                                                                         : "bg-gray-100 hover:bg-gray-200 border-gray-300"}
-                                                                                    `}
-
+                                                                                      `}
                                                                                 onClick={() => handleSizeChange(size.subVariationType)}
                                                                             >
                                                                                 {size.subVariationType}
@@ -299,9 +318,18 @@ function ProductDetail() {
 
                                     {selectedSize && (
                                         <>
-                                            <h1 className="text-lg font-semibold mt-4">Price</h1>
-                                            <p className="font-bold text-xl text-green-600">₹ {getPriceForSize() || "N/A"}</p>
-                                        </>
+                                            <div className='mt-4 flex space-x-4'>
+                                                <div>
+                                                    <h1 className="text-lg font-semibold">Price</h1>
+                                                    <p className="font-bold text-xl text-green-600">₹ {getPriceForSize() || "N/A"}</p>
+                                                </div>
+                                                <div className="h-14 border-l border-gray-500"></div>
+                                                <div>
+                                                    <h1 className="text-lg font-semibold">Stock</h1>
+                                                    <p className="text-lg">{getStockQtyForSize() || 0} left</p>
+                                                </div>
+                                            </div>
+                                        </> 
                                     )}
                                 </>
                             )}
