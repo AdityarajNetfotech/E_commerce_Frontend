@@ -15,6 +15,8 @@ function DeliveryAddress() {
   const [schoolId, setSchoolId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [hasSavedAddress, setHasSavedAddress] = useState(false);
+
 
   const [formData, setFormData] = useState({
     emailId: '',
@@ -61,14 +63,22 @@ function DeliveryAddress() {
       const res = await axios.get("http://localhost:5000/api/order/address", {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.data) {
+  
+      if (res.data && Object.keys(res.data).length > 0) {
         setFormData(res.data);
+        setHasSavedAddress(true);    // Returning user
+        setIsEditing(false);         // Start in view-only mode
+      } else {
+        setHasSavedAddress(false);   // New user
+        setIsEditing(true);          // Allow input immediately
       }
     } catch (err) {
       console.error("Fetch saved address error:", err.message);
+      setIsEditing(true); // Fallback to editable if something breaks
     }
   };
 
+  
   const handleSaveClick = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -328,34 +338,38 @@ function DeliveryAddress() {
                 </div>
            </div>
 
-            {/* Edit / Save / Cancel Buttons */}
-              <div className="md:col-span-2 flex gap-4 p-3 mt-4">
-                {!isEditing ? (
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(true)}
-                    className="w-full bg-[#FF902A] hover:bg-orange-600 text-white font-semibold p-3 rounded-md transition"
-                  >
-                    Edit Address
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={handleSaveClick}
-                    className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold p-3 rounded-md transition"
-                  >
-                    Save Address
-                  </button>
-                )}
+           {/* Edit / Save / Cancel Buttons */}
+          {hasSavedAddress && (
+          <div className="md:col-span-2 flex gap-4 p-3 mt-4">
+            {!isEditing ? (
+            <button
+            type="button"
+            onClick={() => setIsEditing(true)}
+            className="w-full bg-black hover:bg-gray-600 text-white font-semibold p-3 rounded-[400px] transition"
+           >
+            Edit Address
+            </button>
+          ) : (
+           <>
+            <button
+            type="button"
+            onClick={handleSaveClick}
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold p-3 rounded-md transition"
+           >
+            Save Address
+            </button>
+            <button
+            type="button"
+            className="w-full bg-black hover:bg-gray-600 text-white font-semibold p-3 rounded-md transition"
+            onClick={() => setIsEditing(false)}
+               >
+             Cancel Editing
+             </button>
+             </>
+              )}
+            </div>
+        )}
 
-                <button
-                  type="button"
-                  className="w-full bg-black hover:bg-gray-600 text-white font-semibold py-2 rounded-md transition"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel Editing 
-                </button>
-              </div>
 
               {/* Place Order Button */}
               <div className="mt-3">
