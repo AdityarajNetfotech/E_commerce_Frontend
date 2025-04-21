@@ -90,6 +90,14 @@ function ProductDetail() {
         return null;
     };
 
+    const getAvailableStock = () => {
+        if (isBookOrStationery) {
+            return product?.bookDetails?.stockQty || product?.stationaryDetails?.stockQty || 0;
+        } else {
+            return getStockQtyForSize() || 0;
+        }
+    };
+
     // Function to get price for selected size
     const getPriceForSize = () => {
         if (!selectedMaterial || !selectedColor || !selectedSize) return null;
@@ -109,6 +117,14 @@ function ProductDetail() {
     const handleAddToCart = async () => {
         if (!isBookOrStationery && (!selectedSize || !selectedColor || !selectedMaterial)) {
             alert("Please select all product options.");
+            return;
+        }
+
+        // Check if quantity exceeds available stock
+        const availableStock = getAvailableStock();
+        if (quantity > availableStock) {
+            alert(`Sorry, we only have ${availableStock} item(s) in stock.`);
+            setQuantity(availableStock); // Set quantity to maximum available
             return;
         }
 
@@ -176,6 +192,14 @@ function ProductDetail() {
 
     // handling quantity change
     const handleQuantityChange = (newQuantity) => {
+        const availableStock = getAvailableStock();
+        
+        if (newQuantity > availableStock) {
+            alert(`Sorry, we only have ${availableStock} item(s) in stock.`);
+            setQuantity(availableStock); // Set to maximum available
+            return;
+        }
+        
         setQuantity(newQuantity);
         if (newQuantity === 1) {
             setWarningMessage("");

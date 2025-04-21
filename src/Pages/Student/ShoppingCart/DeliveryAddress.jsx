@@ -197,7 +197,7 @@ function DeliveryAddress() {
       document.body.appendChild(script);
     } catch (error) {
       console.error("Error placing order:", error.message);
-      alert("Failed to place order.");
+      alert("Sorry, the quantity you selected exceeds the available stock.");
     } finally {
       setIsLoading(false);
     }
