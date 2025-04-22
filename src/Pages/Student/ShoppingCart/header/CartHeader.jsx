@@ -1,5 +1,6 @@
 import React from 'react';
 import airplane from "../../../../components/images/airplane.png";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -10,7 +11,9 @@ const Header = () => {
       </h1>
       
       <nav className="text-gray-700 text-sm sm:text-1g md:text-lg lg:text-xl mt-5 text-center">
-        <span className="cursor-pointer hover:underline">home</span> &gt;
+        <Link to="/StudentMainLandingPage" className="cursor-pointer hover:underline">
+        home
+        </Link> &gt;
         <span className="font-semibold"> Shopping Cart</span>
       </nav>
 
