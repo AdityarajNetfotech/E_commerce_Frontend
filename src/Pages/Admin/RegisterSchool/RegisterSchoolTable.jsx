@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "../../../Components/Pagination/pagination";
+import Pagination from "../../../Components/Pagination/Pagination";
 import search from "../../../Components/Images/SearchOutline.png";
 
 const RegisterSchoolTable = () => {

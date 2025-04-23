@@ -1,6 +1,6 @@
 import React from "react";
 import Dbtn from "../../../../Components/Images/Dltbtn.png";
-import Ebtn from "../../../../Components/Images/Editbtn.png";
+//import Ebtn from "../../../../Components/Images/Editbtn.png";
 import UniformModal from "./UniformModal";
 import { useState } from "react";
 

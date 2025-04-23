@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import search from "../../../Components/Images/SearchOutline.png";
-import Pagination from "../../../Components/Pagination/pagination";
+import Pagination from "../../../Components/Pagination/Pagination";
 
 const RegisterStudentTable = () => {
     const [students, setStudents] = useState([]);
