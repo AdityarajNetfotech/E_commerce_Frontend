@@ -8,7 +8,7 @@ import {
 import ProtectedRoute from "./Components/protected-routes/ProtectedRoute";
 
 import AdminDashboard from "./Components/UserManagement/Admin/AdminDashboard";
-import OtpVerification from "./Components/UserManagement/Users/OtpVerification";
+import OtpVerification from "./Components/UserManagement/Users/Otpverification";
 //import SchoolDashboard from "./Components/User Management/School/SchoolDashboard";
 import UserRegister from "./Components/UserManagement/Users/UserRegister";
 import Userlogin from "./Components/UserManagement/Users/Userlogin";
