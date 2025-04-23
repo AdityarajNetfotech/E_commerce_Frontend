@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/Footer/Footer';
 import icon from '../../../Components/Images/goThrough.png'
-import Header from '../Dashboard/header/header';
+import Header from '../Dashboard/header/Header';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
