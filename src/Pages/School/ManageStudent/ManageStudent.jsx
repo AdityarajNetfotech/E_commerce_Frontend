@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from "react";
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Footer from '../../../Components/footer/Footer'
+import Footer from '../../../Components/Footer/Footer';
 import icon from '../../../Components/Images/goThrough.png'
 import Header from '../Dashboard/header/header';
 import axios from 'axios';

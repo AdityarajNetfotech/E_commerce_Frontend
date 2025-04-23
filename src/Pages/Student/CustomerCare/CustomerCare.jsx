@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CustomNavbar from '../../../Components/Navbar/Navbar';
-import Footer from '../../../Components/footer/Footer';
+import Footer from '../../../Components/Footer/Footer';
 import SidebarButtons from '../../../Components/button/Button';
 import Header from '../MyOrders/header/OrderHeader';
 
