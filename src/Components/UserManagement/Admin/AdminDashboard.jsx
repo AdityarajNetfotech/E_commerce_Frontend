@@ -1,7 +1,7 @@
 import AdminSidebar from "../../SideBar/AdminSideBar";
 import DashboardHeader from "./DashboardHeader";
 import DashboardScreen from "./DashboardScreen";
-import Footer from "../../footer/Footer";
+import Footer from "../../Footer/Footer";
 function AdminDashboard() {
 
   return (
