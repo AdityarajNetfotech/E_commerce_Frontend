@@ -7,7 +7,7 @@ const AdminSidebar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/logout", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/logout", {
         method: "POST",
         credentials: "include",
         headers: {

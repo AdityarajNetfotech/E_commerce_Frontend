@@ -77,7 +77,7 @@ function OtpVerification() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/student/verify", {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/student/verify", {
         otp: otpCode, // Send OTP as 'otp' in the request body
       });
 
@@ -100,7 +100,7 @@ function OtpVerification() {
       setError(""); // Clear any previous errors
 
       // Call the backend API to resend OTP
-      const response = await axios.post("http://localhost:5000/api/student/resend-otp", { email });
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/student/resend-otp", { email });
 
       if (response.data.message) {
         setMessage(response.data.message); // Display success message

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SchoolChangePassword = () => {
+const ChangePassword = () => {
   const [email, setEmail] = useState(""); // Retrieve stored email
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,7 +37,7 @@ const SchoolChangePassword = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/school/reset-password", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/student/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", 
@@ -53,7 +53,7 @@ const SchoolChangePassword = () => {
       setSuccessMessage("Password reset successfully. Redirecting...");
       setTimeout(() => {
         localStorage.removeItem("resetEmail"); // ✅ Clear stored email
-        navigate("/SchoolLogin");
+        navigate("/UserLogin");
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -139,4 +139,4 @@ const SchoolChangePassword = () => {
   );
 };
 
-export default SchoolChangePassword;
+export default ChangePassword;

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+//import Logo from "../../../Components/Images/Logo.png"; 
 
-export default function SchoolEmailResetPage() {
+export default function EmailResetPage() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ export default function SchoolEmailResetPage() {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/school/forgot-password", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/student/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", 
@@ -40,7 +41,7 @@ export default function SchoolEmailResetPage() {
 
       setSuccessMessage("An OTP has been sent to your email.");
       setTimeout(() => {
-        navigate('/schoolemailotppage');
+        navigate('/EmailOtpPage');
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -50,7 +51,10 @@ export default function SchoolEmailResetPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-[#F7C322]">
+    <div className="bg-[#F7C322] min-h-screen flex items-center justify-center px-6 py-8">
+     
+
+
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
         <h2 className="text-2xl font-semibold text-center mb-6">Enter Your Email</h2>
         
@@ -78,5 +82,6 @@ export default function SchoolEmailResetPage() {
         </form>
       </div>
     </div>
+
   );
 }

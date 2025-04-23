@@ -38,7 +38,7 @@ function UserRegister() {
     const fetchSchools = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/getAllSchools"
+          "https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllSchools"
         );
         if (response.data.schools) {
           setSchools(response.data.schools);
@@ -78,7 +78,7 @@ function UserRegister() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/student/register",
+        "https://e-commerce-backend-phi-five.vercel.app/api/student/register",
         formData,{
           onUploadProgress: (progressEvent) => {
             // Calculate progress percentage

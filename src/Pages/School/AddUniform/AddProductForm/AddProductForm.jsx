@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import dltbtn from "../../../../Components/Images/DangerButton.png"
 import attach from "../../../../Components/Images/Attach.png"
-import media from "../../../../Components/Images/Media.png"
+//import media from "../../../../Components/Images/Media.png"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -218,7 +218,7 @@ const AddProductForm = () => {
       // console.log("Sending request to:", "http://localhost:5000/api/product/add");
       console.log("With token:", token ? "Token present" : "No token");
 
-      const response = await axios.post("http://localhost:5000/api/product/add", formData, {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/product/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

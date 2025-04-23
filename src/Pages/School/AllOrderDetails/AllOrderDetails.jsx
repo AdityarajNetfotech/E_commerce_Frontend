@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import exchange from "../../../Components/Images/Exchange.png";
 import inTransit from "../../../Components/Images/Intransit.png";
 import delivered from "../../../Components/Images/Delivered.png";
-import red from "../../../Components/Images/RedUni.png"
+//import red from "../../../Components/Images/RedUni.png"
 import replay from "../../../Components/Images/ReplayIcon.png"
 import search from "../../../Components/Images/SearchOutline.png"
 import { useLocation } from 'react-router-dom';

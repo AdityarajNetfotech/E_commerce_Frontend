@@ -19,7 +19,7 @@ const OrderCard = ({ order, onCancel }) => {
       const token = localStorage.getItem("authToken");
 
       const response = await axios.put(
-        `http://localhost:5000/api/order/cancel/${order._id}`,
+        `https://e-commerce-backend-phi-five.vercel.app/api/order/cancel/${order._id}`,
         {},
         {
           headers: {

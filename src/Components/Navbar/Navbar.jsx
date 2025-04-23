@@ -26,7 +26,7 @@ function CustomNavbar() {
   const fetchStudentProfile = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://localhost:5000/api/student/profile", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ function CustomNavbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/student/logout", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/student/logout", {
         method: "POST",
         credentials: "include",
         headers: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Footer from '../../../../Components/footer/Footer';
+import Footer from '../../../../Components/Footer/Footer';
 import CustomNavbar from '../../../../Components/Navbar/Navbar';
 import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
@@ -141,7 +141,7 @@ function ProductDetail() {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/cart/add', cartData, {
+            const response = await axios.post('https://e-commerce-backend-phi-five.vercel.app/api/cart/add', cartData, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem("authToken")}`,

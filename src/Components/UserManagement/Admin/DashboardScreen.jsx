@@ -40,7 +40,7 @@ function DashboardScreen() {
     useEffect(() => {
         const fetchSchools = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/admin/getAllSchools");
+                const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllSchools");
                 if (!response.ok) throw new Error("Failed to fetch schools");
                 const data = await response.json();
                 const approvedSchools = data.schools.filter((school) => school.isApproved);
@@ -56,7 +56,7 @@ function DashboardScreen() {
 
         const fetchOrderData = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/admin/all");
+                const res = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/all");
                 const data = await res.json();
                 const orders = data.orders || [];
         
@@ -85,7 +85,7 @@ function DashboardScreen() {
 
         const fetchStudentData = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/admin/getAllStudents");
+                const res = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllStudents");
                 const data = await res.json();
                 setTotalStudents(data.students?.length || 0);
             } catch (err) {

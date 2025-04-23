@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Footer from '../../../Components/footer/Footer'
-import Header from "../Dashboard/header/header";
+import Footer from '../../../Components/Footer/Footer';
+import Header from '../Dashboard/header/Header';
 import AddProductForm from './AddProductForm/AddProductForm'
 
 

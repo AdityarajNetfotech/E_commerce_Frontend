@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import search from "../../../Components/Images/SearchOutline.png";
-import Pagination from "../../../Components/Pagination/pagination";
+import Pagination from "../../../Components/Pagination/Pagination";
 
 const RegisterStudentTable = () => {
     const [students, setStudents] = useState([]);
@@ -19,8 +19,8 @@ const RegisterStudentTable = () => {
         const fetchData = async () => {
             try {
                 const [studentsRes, schoolsRes] = await Promise.all([
-                    fetch("http://localhost:5000/api/admin/getAllStudents"),
-                    fetch("http://localhost:5000/api/admin/getAllSchools")
+                    fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllStudents"),
+                    fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllSchools")
                 ]);
 
                 if (!studentsRes.ok || !schoolsRes.ok) {
@@ -70,7 +70,7 @@ const RegisterStudentTable = () => {
     const deleteStudent = async () => {
         if (!studentToDelete) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/deleteStudent/${studentToDelete}`, {
+            const response = await fetch(`https://e-commerce-backend-phi-five.vercel.app/api/admin/deleteStudent/${studentToDelete}`, {
                 method: "DELETE",
             });
             if (!response.ok) {

@@ -30,7 +30,7 @@ function AccountDetails() {
 
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/api/student/profile", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -68,7 +68,7 @@ function AccountDetails() {
   const handleSaveClick = async () => {
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/student/update",
+        "https://e-commerce-backend-phi-five.vercel.app/api/student/update",
         { ...studentData, email: undefined }, // Remove email from update payload
         {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },

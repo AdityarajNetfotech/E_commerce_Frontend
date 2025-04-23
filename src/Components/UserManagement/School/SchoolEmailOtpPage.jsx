@@ -37,7 +37,7 @@ const SchoolEmailOtpPage = () => {
     try {
       setLoading(true);
       // Send OTP to the backend for verification
-      const response = await fetch("http://localhost:5000/api/school/verify-forgot-password-otp", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/school/verify-forgot-password-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // Ensures session data is used

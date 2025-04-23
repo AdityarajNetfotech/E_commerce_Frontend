@@ -1,5 +1,5 @@
 import React from 'react';
-import airplane from "../../../../components/images/airplane.png";
+import airplane from "../../../../Components/Images/airplane.png";
 import { Link } from "react-router-dom";
 
 

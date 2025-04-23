@@ -22,7 +22,7 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/order/school-orders/", {
+        const { data } = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/order/school-orders/", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
@@ -39,7 +39,7 @@ const OrderList = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/order/${orderId}/status`, 
+      await axios.put(`https://e-commerce-backend-phi-five.vercel.app/api/order/${orderId}/status`, 
         { orderStatus: newStatus }, 
         {
           headers: { Authorization: `Bearer ${token}` }

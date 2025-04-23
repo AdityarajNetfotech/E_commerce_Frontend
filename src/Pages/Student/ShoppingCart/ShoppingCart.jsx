@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../../../Components/Navbar/Navbar";
-import Footer from "../../../Components/footer/Footer";
+import Footer from "../../../Components/Footer/Footer";
 import CartHeader from "./header/CartHeader";
 import CartList from "./Cart/CartList";
 import OrderSummary from "../../../Components/order-summary/OrderSummary";
@@ -23,7 +23,7 @@ const ShoppingCart = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5000/api/cart", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/cart", {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

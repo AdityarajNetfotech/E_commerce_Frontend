@@ -19,7 +19,7 @@ export default function UserLogin() {
 
     try {
       // API request to login
-      const response = await axios.post("http://localhost:5000/api/student/login", {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/student/login", {
         email,
         password,
       });

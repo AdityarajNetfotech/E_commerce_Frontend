@@ -1,8 +1,8 @@
 import React from "react";
 import Sidebar from "../../../Components/SideBar/SideBar";
 import OrderList from "./Orders/OrderList";
-import Footer from "../../../Components/footer/Footer";
-import Header from "../Dashboard/header/header";
+import Footer from "../../../Components/Footer/Footer";
+import Header from "../Dashboard/header/Header";
 
 function ManageOrders() {
 

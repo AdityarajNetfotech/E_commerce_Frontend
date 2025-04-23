@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import OrderCard from "./OrderCard";
-import searchIcon from "../../../../components/images/search.png";
+import searchIcon from "../../../../Components/Images/search.png";
 
 const OrderList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +13,7 @@ const OrderList = () => {
     setLoading(true);
     try {
       const authToken = localStorage.getItem("authToken");
-      const response = await fetch("http://localhost:5000/api/order/my-orders", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/order/my-orders", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

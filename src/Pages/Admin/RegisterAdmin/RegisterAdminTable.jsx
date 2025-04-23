@@ -11,7 +11,7 @@ const RegisterAdminTable = () => {
     useEffect(() => {
         const fetchAdmins = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/admin/getAllAdmins");
+                const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllAdmins");
                 if (!response.ok) {
                     throw new Error("Failed to fetch admins");
                 }
@@ -34,7 +34,7 @@ const RegisterAdminTable = () => {
     const deleteAdmin = async () => {
         if (!adminToDelete) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/deleteAdmin/${adminToDelete}`, {
+            const response = await fetch(`https://e-commerce-backend-phi-five.vercel.app/api/admin/deleteAdmin/${adminToDelete}`, {
                 method: "DELETE",
             });
             if (!response.ok) {

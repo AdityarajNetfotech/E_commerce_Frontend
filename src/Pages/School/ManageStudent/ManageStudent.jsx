@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from "react";
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Footer from '../../../Components/footer/Footer'
+import Footer from '../../../Components/Footer/Footer';
 import icon from '../../../Components/Images/goThrough.png'
-import Header from '../Dashboard/header/header';
+import Header from '../Dashboard/header/Header';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +27,7 @@ function ManageStudent() {
                 return;
             }
 
-            const response = await axios.get("http://localhost:5000/api/school/students", {
+            const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/school/students", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

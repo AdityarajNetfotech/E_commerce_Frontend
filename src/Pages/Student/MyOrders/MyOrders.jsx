@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../../Components/Navbar/Navbar";
-import Footer from "../../../Components/footer/Footer";
+import Footer from "../../../Components/Footer/Footer";
 import Header from "./header/OrderHeader";
 import SidebarButtons from "../../../Components/button/Button";
 import OrderList from "./order/OrderList";

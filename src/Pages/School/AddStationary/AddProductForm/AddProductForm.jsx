@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import dltbtn from "../../../../Components/Images/DangerButton.png"
-import media from "../../../../Components/Images/Media.png"
+//import dltbtn from "../../../../Components/Images/DangerButton.png"
+//import media from "../../../../Components/Images/Media.png"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -117,7 +117,7 @@ const AddProductForm = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/product/add", formData, {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/product/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
