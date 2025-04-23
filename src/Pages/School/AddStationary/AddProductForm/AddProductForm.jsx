@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import dltbtn from "../../../../Components/Images/DangerButton.png"
-import media from "../../../../Components/Images/Media.png"
+//import dltbtn from "../../../../Components/Images/DangerButton.png"
+//import media from "../../../../Components/Images/Media.png"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";

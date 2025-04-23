@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import cart from "../../../../components/images/cart.png";
+import cart from "../../../../Components/Images/cart.png";
 import axios from "axios";
 
 const ProductCard = ({ product }) => {

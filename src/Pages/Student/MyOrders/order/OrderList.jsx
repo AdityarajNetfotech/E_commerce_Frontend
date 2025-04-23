@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import OrderCard from "./OrderCard";
-import searchIcon from "../../../../components/images/search.png";
+import searchIcon from "../../../../Components/Images/search.png";
 
 const OrderList = () => {
   const [searchTerm, setSearchTerm] = useState("");

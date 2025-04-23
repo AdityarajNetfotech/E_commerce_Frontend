@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import search from "../../../../components/images/search.png";
+import search from "../../../../Components/Images/search.png";
 import { useFilter } from "../FilterContext";
 
 const SearchBar = () => {

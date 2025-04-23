@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import dltbtn from "../../../../Components/Images/DangerButton.png"
 import attach from "../../../../Components/Images/Attach.png"
-import media from "../../../../Components/Images/Media.png"
+//import media from "../../../../Components/Images/Media.png"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
