@@ -20,7 +20,7 @@ export default function SchoolLogin() {
 
     try {
       // API request to login
-      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/school/login", {
+      const response = await axios.post("http://localhost:5000/api/school/login", {
         email,
         password,
       });
