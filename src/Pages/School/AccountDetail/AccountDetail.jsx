@@ -2,7 +2,7 @@ import React from "react";
 import Sidebar from "../../../Components/SideBar/SideBar";
 import AccountDetailsForm from "./Form/AccountDetailsForm";
 import Footer from "../../../Components/Footer/Footer";
-import Header from "../Dashboard/header/header";
+import Header from "../Dashboard/header/Header";
 
 function AccountDetail() {
 

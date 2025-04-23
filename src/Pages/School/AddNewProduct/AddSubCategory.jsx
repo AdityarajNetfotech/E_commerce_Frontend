@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
-import Header from "../Dashboard/header/header";
+import Header from '../Dashboard/header/Header'
 import { Link } from 'react-router-dom'
 import Footer from '../../../Components/Footer/Footer'
 

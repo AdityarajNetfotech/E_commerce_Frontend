@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../../../Components/SideBar/SideBar'
 import Footer from '../../../Components/Footer/Footer'
-import Header from './header/header'
+import Header from './header/Header'
 import DashboardScreen from './DashboardScreen/DashboardScreen'
 
 
