@@ -17,7 +17,7 @@ function OAuth() {
 
             // console.log("Firebase Response", res.user);
 
-            const { data } = await axios.post("http://localhost:5000/api/googleAuth/google-signin", { email });
+            const { data } = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/googleAuth/google-signin", { email });
 
             // console.log("Response:", data);
 

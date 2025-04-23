@@ -13,7 +13,7 @@ const Header = ({heading}) => {
         return;
       }
 
-      const response = await axios.get("http://localhost:5000/api/school/dashboard", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/school/dashboard", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

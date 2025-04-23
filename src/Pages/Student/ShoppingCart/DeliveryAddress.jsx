@@ -46,7 +46,7 @@ function DeliveryAddress() {
   const fetchStudentProfile = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const res = await axios.get("http://localhost:5000/api/student/profile", {
+      const res = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/profile", {
         headers: { Authorization: `Bearer ${token}` }
       });
       const student = res.data;
@@ -60,7 +60,7 @@ function DeliveryAddress() {
   const fetchSavedAddress = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const res = await axios.get("http://localhost:5000/api/order/address", {
+      const res = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/order/address", {
         headers: { Authorization: `Bearer ${token}` }
       });
   
@@ -82,7 +82,7 @@ function DeliveryAddress() {
   const handleSaveClick = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      await axios.put("http://localhost:5000/api/order/address", formData, {
+      await axios.put("https://e-commerce-backend-phi-five.vercel.app/api/order/address", formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Address updated successfully.");
@@ -125,7 +125,7 @@ function DeliveryAddress() {
 
       const token = localStorage.getItem("authToken");
 
-      const orderRes = await axios.post("http://localhost:5000/api/order/add-order", orderData, {
+      const orderRes = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/order/add-order", orderData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -135,7 +135,7 @@ function DeliveryAddress() {
       const { _id: orderId } = orderRes.data;
       localStorage.setItem("latestOrderId", orderId);
 
-      const paymentRes = await axios.post("http://localhost:5000/api/payment/create-order", {
+      const paymentRes = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/payment/create-order", {
         amount: totalPrice,
         currency: "INR",
       });
@@ -151,13 +151,13 @@ function DeliveryAddress() {
         order_id: razorpayOrderId,
         handler: async function (response) {
             try {
-              await axios.post("http://localhost:5000/api/payment/verify-payment", response);
+              await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/payment/verify-payment", response);
           
               // ✅ Update paymentStatus to "Paid"
               const token = localStorage.getItem("authToken");
               const orderId = localStorage.getItem("latestOrderId");
           
-              await axios.put(`http://localhost:5000/api/order/update-payment/${orderId}`, 
+              await axios.put(`https://e-commerce-backend-phi-five.vercel.app/api/order/update-payment/${orderId}`, 
                 { paymentStatus: "Paid" },
                 { headers: { Authorization: `Bearer ${token}` } }
               );
@@ -171,7 +171,7 @@ function DeliveryAddress() {
               const token = localStorage.getItem("authToken");
               const orderId = localStorage.getItem("latestOrderId");
           
-              await axios.put(`http://localhost:5000/api/orders/update-payment/${orderId}`, 
+              await axios.put(`https://e-commerce-backend-phi-five.vercel.app/api/orders/update-payment/${orderId}`, 
                 { paymentStatus: "Pending" },
                 { headers: { Authorization: `Bearer ${token}` } }
               );

@@ -117,7 +117,7 @@ const AddProductForm = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/product/add", formData, {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/product/add", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

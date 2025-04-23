@@ -52,7 +52,7 @@ function DashboardScreen() {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const res = await axios.get("http://localhost:5000/api/order/school-orders/", config);
+            const res = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/order/school-orders/", config);
             const fetchedOrders = res.data || [];
 
             setOrders(fetchedOrders);
@@ -113,7 +113,7 @@ function DashboardScreen() {
                 },
             };
 
-            const res = await axios.get("http://localhost:5000/api/school/students", config);
+            const res = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/school/students", config);
             const fetchedStudents = res.data.students || [];
             console.log("num", fetchedStudents.length);
             setStudents(fetchedStudents);

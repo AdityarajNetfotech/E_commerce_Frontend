@@ -17,7 +17,7 @@ const RegisterSchoolTable = () => {
     const fetchSchools = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/admin/getAllSchools"
+          "https://e-commerce-backend-phi-five.vercel.app/api/admin/getAllSchools"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch schools");
@@ -48,7 +48,7 @@ const RegisterSchoolTable = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/deleteSchool/${schoolToDelete}`,
+        `https://e-commerce-backend-phi-five.vercel.app/api/admin/deleteSchool/${schoolToDelete}`,
         { method: "DELETE" }
       );
       if (!response.ok) {

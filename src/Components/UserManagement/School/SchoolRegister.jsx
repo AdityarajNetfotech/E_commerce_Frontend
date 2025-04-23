@@ -54,7 +54,7 @@ function SchoolRegister() {
     });
   
     try {
-      const response = await axios.post("http://localhost:5000/api/school/register", formDataToSend, {
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/school/register", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           // Calculate progress percentage

@@ -18,7 +18,7 @@ function OrderSuccessful() {
         if (!latestOrderId) throw new Error("No recent orders found.");
 
         // Fetch details of the latest order using its ID
-        const response = await axios.get(`http://localhost:5000/api/order/${latestOrderId}`, {
+        const response = await axios.get(`https://e-commerce-backend-phi-five.vercel.app/api/order/${latestOrderId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

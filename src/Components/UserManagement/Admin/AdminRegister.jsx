@@ -28,7 +28,7 @@ function AdminRegister() {
     setUploadProgress(0); // Reset progress
   
     try {
-      const response = await axios.post("http://localhost:5000/api/admin/register", formData,{
+      const response = await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/admin/register", formData,{
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
           setUploadProgress(percentCompleted);

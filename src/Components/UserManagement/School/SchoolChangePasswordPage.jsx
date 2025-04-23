@@ -37,7 +37,7 @@ const SchoolChangePassword = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/school/reset-password", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/school/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", 

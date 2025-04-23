@@ -34,7 +34,7 @@ const OrderList = () => {
       }
 
       try {
-        const { data } = await axios.get("http://localhost:5000/api/order/all-orders", {
+        const { data } = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/order/all-orders", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });

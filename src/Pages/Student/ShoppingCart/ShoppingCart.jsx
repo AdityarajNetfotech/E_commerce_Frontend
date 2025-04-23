@@ -23,7 +23,7 @@ const ShoppingCart = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5000/api/cart", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/cart", {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

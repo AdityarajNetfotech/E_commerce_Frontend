@@ -15,7 +15,7 @@ const CartItem = ({ product, updateCartItem, removeFromCart }) => {
     try {
       const token = localStorage.getItem("authToken");
       await axios.put(
-        "http://localhost:5000/api/cart/update",
+        "https://e-commerce-backend-phi-five.vercel.app/api/cart/update",
         { productId, quantity: newQuantity },
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
       );
@@ -36,7 +36,7 @@ const CartItem = ({ product, updateCartItem, removeFromCart }) => {
         return;
       }
   
-      const res = await axios.delete("http://localhost:5000/api/cart/remove", {
+      const res = await axios.delete("https://e-commerce-backend-phi-five.vercel.app/api/cart/remove", {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
         data: { productId: product.product._id }
       });

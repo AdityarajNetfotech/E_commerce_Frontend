@@ -11,7 +11,7 @@ function ProdDetailComp() {
         const fetchProductsCards = async () => {
             try {
                 const token = localStorage.getItem("authToken");
-                const response = await axios.get("http://localhost:5000/api/student/products", {
+                const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/products", {
                     headers: { Authorization: `Bearer ${token}` },
                     withCredentials: true,
                 });

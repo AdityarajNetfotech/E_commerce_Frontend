@@ -141,7 +141,7 @@ function ProductDetail() {
         };
 
         try {
-            const response = await axios.post('http://localhost:5000/api/cart/add', cartData, {
+            const response = await axios.post('https://e-commerce-backend-phi-five.vercel.app/api/cart/add', cartData, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${localStorage.getItem("authToken")}`,

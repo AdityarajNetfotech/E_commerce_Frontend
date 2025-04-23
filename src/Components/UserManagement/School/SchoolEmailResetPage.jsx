@@ -22,7 +22,7 @@ export default function SchoolEmailResetPage() {
     try {
       setLoading(true);
 
-      const response = await fetch("http://localhost:5000/api/school/forgot-password", {
+      const response = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/school/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", 

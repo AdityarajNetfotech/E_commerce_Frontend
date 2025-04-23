@@ -27,7 +27,7 @@ function ManageStudent() {
                 return;
             }
 
-            const response = await axios.get("http://localhost:5000/api/school/students", {
+            const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/school/students", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

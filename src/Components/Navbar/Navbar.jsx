@@ -26,7 +26,7 @@ function CustomNavbar() {
   const fetchStudentProfile = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://localhost:5000/api/student/profile", {
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

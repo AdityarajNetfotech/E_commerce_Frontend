@@ -19,7 +19,7 @@ const PendingSchoolsTable = () => {
       try {
         const token = localStorage.getItem("adminAuthToken");
         const response = await fetch(
-          "http://localhost:5000/api/admin/pending-schools",
+          "https://e-commerce-backend-phi-five.vercel.app/api/admin/pending-schools",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -93,7 +93,7 @@ const PendingSchoolsTable = () => {
       try {
         const token = localStorage.getItem("adminAuthToken");
         const response = await fetch(
-          `http://localhost:5000/api/admin/approve-school/${schoolId}`,
+          `https://e-commerce-backend-phi-five.vercel.app/api/admin/approve-school/${schoolId}`,
           {
             method: "PUT",
             headers: {

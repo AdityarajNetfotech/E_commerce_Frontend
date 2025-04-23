@@ -20,7 +20,7 @@ const TableList = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const { data } = await axios.get("http://localhost:5000/api/product/my-products", {
+                const { data } = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/product/my-products", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -86,7 +86,7 @@ const TableList = () => {
                 return;
             }
     
-            await axios.delete(`http://localhost:5000/api/product/delete/${id}`, {
+            await axios.delete(`https://e-commerce-backend-phi-five.vercel.app/api/product/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
