@@ -1,6 +1,6 @@
 import React from "react";
 import { FaFacebookF, FaInstagram, FaEnvelope } from "react-icons/fa";
-import book from "../../components/images/book.png";
+import book from "../../Components/Images/book.png";
 
 const Footer = () => {
   return (
