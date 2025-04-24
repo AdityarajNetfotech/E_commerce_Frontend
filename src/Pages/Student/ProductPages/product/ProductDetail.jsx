@@ -4,7 +4,7 @@ import CustomNavbar from '../../../../Components/Navbar/Navbar';
 import Header from '../header/Header';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import ProdDetailComp from './ProdDetailComp';
+// import ProdDetailComp from './ProdDetailComp';
 import axios from 'axios';
 
 function ProductDetail() {
@@ -362,14 +362,14 @@ function ProductDetail() {
                         <div className="flex items-center space-x-4 mt-6 mb-6">
                             <div className="flex items-center space-x-4 h-10 rounded border border-gray-300 px-3">
                                 <button
-                                    className="text-gray-500 hover:text-gray-700"
+                                    className="text-gray-500 hover:text-gray-700 cursor-pointer"
                                     onClick={() => handleQuantityChange(Math.max(1, quantity - 1))}
                                 >
                                     -
                                 </button>
                                 <span>{quantity}</span>
                                 <button
-                                    className="text-gray-500 hover:text-gray-700"
+                                    className="text-gray-500 hover:text-gray-700 cursor-pointer"
                                     onClick={() => handleQuantityChange(quantity + 1)}
                                 >
                                     +
@@ -433,7 +433,7 @@ function ProductDetail() {
                     </div>
                 </section>
 
-                <ProdDetailComp />
+                {/* <ProdDetailComp /> */}
 
                 <Footer />
             </div>

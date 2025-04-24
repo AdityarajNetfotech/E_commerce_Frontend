@@ -23,7 +23,7 @@ const CartList = ({ productDetail, updatedCartItem }) => {
       </div>
       <div>
         <button
-          className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition"
+          className="w-full bg-orange-500 text-white py-3 mt-4 rounded-lg hover:bg-orange-600 transition cursor-pointer"
           onClick={handleNavigate}
         >
           Place Order

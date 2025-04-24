@@ -114,12 +114,6 @@ const OrderCard = ({ order, onCancel }) => {
 
       {/* Buttons */}
       <div className="flex flex-col gap-2 pt-2 self-end">
-        <button className="bg-[#FEEFC3] px-5 py-2 rounded-lg text-gray-700 shadow-md text-[14px] w-48">
-          Exchange
-        </button>
-        <button className="bg-[#FEEFC3] px-5 py-2 rounded-lg text-gray-700 shadow-md text-[14px] w-48">
-          Return
-        </button>
         <button
           onClick={handleCancelOrder}
           disabled={

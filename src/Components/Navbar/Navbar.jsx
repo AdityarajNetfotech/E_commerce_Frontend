@@ -75,12 +75,15 @@ function CustomNavbar() {
   return (
     <header className="flex justify-between items-center px-2 py-2 md:px-20 md:py-10 bg-yellow-400 w-full">
       {/* Logo Section */}
-      <div className="flex items-center">
-        <img src={group} alt="Brand Logo" className="w-10 h-10 md:w-12 md:h-12" />
-        <h1 className="text-xl md:text-3xl font-bold text-gray-800 ml-2">
-          Edu<span className="text-blue-600">Kart</span>
-        </h1>
-      </div>
+      <div
+  className="flex items-center cursor-pointer"
+  onClick={() => handleNavigation("/StudentMainLandingPage")}
+>
+  <img src={group} alt="Brand Logo" className="w-10 h-10 md:w-12 md:h-12" />
+  <h1 className="text-xl md:text-3xl font-bold text-gray-800 ml-2">
+    Edu<span className="text-blue-600">Kart</span>
+  </h1>
+</div>
 
       {/* Desktop School Name */}
       <div className="hidden lg:flex items-center space-x-2">

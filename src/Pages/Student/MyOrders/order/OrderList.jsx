@@ -69,20 +69,20 @@ const OrderList = () => {
 
         <div className="bg-peach-custom p-4 rounded-lg shadow-md mb-4">
           <div className="flex flex-wrap justify-between items-center gap-3">
-            <div className="relative w-full sm:w-[280px]">
+            <div className="relative w-full sm:w-[280px] ">
               <input
                 type="text"
                 placeholder="Search something"
                 value={searchTerm}
                 onChange={handleSearch}
-                className="border border-gray-500 bg-white px-5 py-2 w-full rounded-lg focus:outline-none"
+                className="border border-gray-500 bg-white px-5 py-2 w-full cursor-pointer rounded-lg focus:outline-none"
               />
-              <button className="absolute right-3 top-2">
+              <button className="absolute right-3 top-2 cursor-pointer">
                 <img src={searchIcon} alt="Search" className="h-5 w-5" />
               </button>
             </div>
 
-            <button onClick={resetFilters} className="text-gray-500 underline text-md">
+            <button onClick={resetFilters} className="text-gray-500 underline text-md cursor-pointer">
               Reset Filter
             </button>
           </div>

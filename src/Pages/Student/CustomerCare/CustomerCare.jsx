@@ -38,9 +38,9 @@ function CustomerCare() {
                                 <hr className='my-4' />
                                 <div>
                                     <p className='font-bold' style={{ color: "#4163BC" }}>Contact Us</p>
-                                    <p><i class="fa-solid fa-envelope mr-2 text-[#4163BC]" />saad@gmail.com</p>
-                                    <p><i class="fa-solid fa-phone mr-2 text-[#4163BC]" />+91 0000000000</p>
-                                    <p><i class="fa-solid fa-location-dot mr-2 text-[#4163BC]" />Pune Maharashtra</p>
+                                    <p><i class="fa-solid fa-envelope mr-2 text-[#4163BC]" />Netfotech solutions</p>
+                                    <p><i class="fa-solid fa-phone mr-2 text-[#4163BC]" />+91 844644464</p>
+                                    <p><i class="fa-solid fa-location-dot mr-2 text-[#4163BC]" />Kolkata WestBengal</p>
                                 </div>
                             </div>
                         )}
