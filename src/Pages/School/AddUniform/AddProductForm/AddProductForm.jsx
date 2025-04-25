@@ -436,8 +436,9 @@ const AddProductForm = () => {
                       name="variationType"
                       value="Material"
                       disabled
-                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="appearance-none pointer-events-none mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm text-gray-700 sm:text-sm"
                     >
+                      <option value="Material">Material</option>
                     </select>
                   </div>
 
@@ -476,8 +477,9 @@ const AddProductForm = () => {
                       name="secondVariationType"
                       value="Color"
                       disabled
-                      className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="appearance-none pointer-events-none mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm text-gray-700 sm:text-sm"
                     >
+                      <option value="Color">Color</option>
                     </select>
                   </div>
                   <div className="relative flex items-end">
