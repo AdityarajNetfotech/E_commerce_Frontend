@@ -438,7 +438,6 @@ const AddProductForm = () => {
                       disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <label value="Material">Material</label>
                     </select>
                   </div>
 
@@ -479,7 +478,6 @@ const AddProductForm = () => {
                       disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <label value="Color">Color</label>
                     </select>
                   </div>
                   <div className="relative flex items-end">
