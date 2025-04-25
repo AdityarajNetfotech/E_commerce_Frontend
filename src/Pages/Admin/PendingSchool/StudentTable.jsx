@@ -10,6 +10,7 @@ const PendingSchoolsTable = () => {
   const [error, setError] = useState(null);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [status, setStatus] = useState({});
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [schoolToDelete, setSchoolToDelete] = useState(null)
   const itemsPerPage = 4;
 
@@ -316,6 +317,18 @@ const PendingSchoolsTable = () => {
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+        {deleteConfirmation && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
+          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
+            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
+            <div className="flex justify-center gap-4">
+              <button onClick={deleteSchool} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
+              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
             </div>
           </div>
         </div>
