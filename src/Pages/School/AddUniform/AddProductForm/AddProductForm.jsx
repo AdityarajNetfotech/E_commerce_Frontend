@@ -368,6 +368,9 @@ const AddProductForm = () => {
                     <option value="Shoes">Shoes</option>
                     <option value="Sweater">Sweater</option>
                     <option value="Blazer">Blazer</option>
+                    <option value="Blazer">Shirt</option>
+                    <option value="Blazer">Trousers</option>
+                    <option value="Blazer">Tie</option>
                   </select>
                 </div>
                 <div>
@@ -435,7 +438,7 @@ const AddProductForm = () => {
                       disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <option value="Material">Material</option>
+                      <label value="Material">Material</label>
                     </select>
                   </div>
 
@@ -476,7 +479,7 @@ const AddProductForm = () => {
                       disabled
                       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     >
-                      <option value="Color">Color</option>
+                      <label value="Color">Color</label>
                     </select>
                   </div>
                   <div className="relative flex items-end">

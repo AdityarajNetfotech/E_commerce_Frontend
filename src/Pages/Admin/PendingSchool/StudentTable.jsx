@@ -10,8 +10,6 @@ const PendingSchoolsTable = () => {
   const [error, setError] = useState(null);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [status, setStatus] = useState({});
-  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-  const [schoolToDelete, setSchoolToDelete] = useState(null)
   const itemsPerPage = 4;
 
   useEffect(() => {
@@ -51,31 +49,6 @@ const PendingSchoolsTable = () => {
 
     fetchPendingSchools();
   }, []);
-
-  const confirmDelete = (id) => {
-    setSchoolToDelete(id);
-    setDeleteConfirmation(true);
-  };
-
-  const deleteSchool = async () => {
-    if (!schoolToDelete) return;
-
-    try {
-      const response = await fetch(
-        `https://e-commerce-backend-phi-five.vercel.app/api/admin/deleteSchool/${schoolToDelete}`,
-        { method: "DELETE" }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to delete school");
-      }
-      setSchools(schools.filter((school) => school._id !== schoolToDelete));
-      setDeleteConfirmation(false);
-      setSchoolToDelete(null);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -202,7 +175,6 @@ const PendingSchoolsTable = () => {
                         Affiliation Certificate
                       </th>
                       <th className="py-2 px-4 text-left">Status</th>
-                      <th className="py-2 px-4 text-left">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -254,14 +226,6 @@ const PendingSchoolsTable = () => {
                               <option value="Accepted">Accepted</option>
                             </select>
                           </td>
-                          <td className="py-2 px-4">
-                        <button
-                            onClick={() => confirmDelete(school._id)}
-                            className="text-red-500"
-                          >
-                            🗑️
-                            </button>
-                            </td>
                         </tr>
                       ))
                     ) : (
@@ -317,18 +281,6 @@ const PendingSchoolsTable = () => {
               >
                 Close
               </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-        {deleteConfirmation && (
-        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
-          <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
-            <div className="flex justify-center gap-4">
-              <button onClick={deleteSchool} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
-              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
             </div>
           </div>
         </div>
