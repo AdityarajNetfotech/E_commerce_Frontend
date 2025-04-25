@@ -108,6 +108,7 @@ const ProductGrid = () => {
     <div className="mx-auto mt-30 flex flex-col items-center">
 
       <div className="w-full max-w-[1200px] px-4 flex justify-center items-center">
+      <tr><td colSpan="100%" className="text-center py-10 text-gray-500">⏳ Loading Orders...</td></tr>
         {selectedProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-18 justify-center">
             {selectedProducts.map((product) => (
