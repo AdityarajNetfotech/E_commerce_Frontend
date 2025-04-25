@@ -10,6 +10,7 @@ const PendingSchoolsTable = () => {
   const [error, setError] = useState(null);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [status, setStatus] = useState({});
+  const [schoolToDelete, setSchoolToDelete] = useState(null)
   const itemsPerPage = 4;
 
   useEffect(() => {
@@ -49,6 +50,31 @@ const PendingSchoolsTable = () => {
 
     fetchPendingSchools();
   }, []);
+
+  const confirmDelete = (id) => {
+    setSchoolToDelete(id);
+    setDeleteConfirmation(true);
+  };
+
+  const deleteSchool = async () => {
+    if (!schoolToDelete) return;
+
+    try {
+      const response = await fetch(
+        `https://e-commerce-backend-phi-five.vercel.app/api/admin/deleteSchool/${schoolToDelete}`,
+        { method: "DELETE" }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete school");
+      }
+      setSchools(schools.filter((school) => school._id !== schoolToDelete));
+      setDeleteConfirmation(false);
+      setSchoolToDelete(null);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -175,6 +201,7 @@ const PendingSchoolsTable = () => {
                         Affiliation Certificate
                       </th>
                       <th className="py-2 px-4 text-left">Status</th>
+                      <th className="py-2 px-4 text-left">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -226,6 +253,14 @@ const PendingSchoolsTable = () => {
                               <option value="Accepted">Accepted</option>
                             </select>
                           </td>
+                          <td className="py-2 px-4">
+                        <button
+                            onClick={() => confirmDelete(school._id)}
+                            className="text-red-500"
+                          >
+                            🗑️
+                            </button>
+                            </td>
                         </tr>
                       ))
                     ) : (
