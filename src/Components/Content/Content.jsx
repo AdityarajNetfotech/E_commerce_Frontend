@@ -41,15 +41,6 @@ export default function Hero() {
             <p className="py-4 text-[24px] leading-[30px] tracking-[0.2px] font-[400] text-gray-500">
               Shop Books, Uniforms, Stationery & More
             </p>
-
-            <div className="mt-4">
-              <div className="flex items-center bg-white rounded-2xl shadow-md w-auto h-15 overflow-hidden border-2 border-yellow-400">
-                <input type="text" placeholder="Search something" className="px-4 py-2 w-full focus:outline-none text-gray-700" />
-                <button className="px-4 py-2 text-orange-500 text-lg">
-                  <FaSearch />
-                </button>
-              </div>
-            </div>
           </div>
 
           <div className="pb-10 overflow-hidden md:p-10 lg:p-0 sm:pb-0 sm:mb-30">
