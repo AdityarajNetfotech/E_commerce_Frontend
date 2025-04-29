@@ -169,9 +169,9 @@ function DeliveryAddress() {
             // ✅ Remove purchased products from cart
             for (const item of cartData) {
             try {
-            await axios.post(
+            await axios.delete(
             "https://e-commerce-backend-phi-five.vercel.app/api/cart/remove",
-            { productId: item.product._id }, // assuming item.product is the product ID
+            { productId: item.product._id }, 
           {
               headers: {
             Authorization: `Bearer ${token}`,
