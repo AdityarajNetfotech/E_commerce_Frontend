@@ -118,7 +118,6 @@ function App() {
           <Route path="/ProdCatalogue" element={<ProductCatlogue />} />
           <Route path="/ManageOrders" element={<ManageOrders />} />
           <Route path="/ProdReview" element={<ProductReview />} />
-          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />
@@ -141,6 +140,12 @@ function App() {
           <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
           <Route path="/BankDetail" element={<BankDetail />} />
         </Route>
+
+        {/* Shared Protected Route for School + Admin */}
+        <Route element={<ProtectedRoute roles={["admin", "school"]} />}>
+        <Route path="/OrderDetails" element={<OrderDetails />} />
+        </Route>
+
       
         {/* Redirect Unknown Routes to Home */}
         <Route path="*" element={<Navigate to="/" />} />
