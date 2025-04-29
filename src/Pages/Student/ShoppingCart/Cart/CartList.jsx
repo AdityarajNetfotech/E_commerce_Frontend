@@ -2,7 +2,7 @@ import React from "react";
 import CartItem from './CartItem';
 import { useNavigate } from "react-router-dom";
 
-const CartList = ({ productDetail, updatedCartItem }) => {
+const CartList = ({ productDetail, updatedCartItem, removeFromCart }) => {
   const navigate = useNavigate();
   // console.log("cartlist", productDetail);
 
@@ -15,7 +15,7 @@ const CartList = ({ productDetail, updatedCartItem }) => {
       <div className="max-h-[600px] overflow-y-auto pr-3 space-y-4 custom-scrollbar">
         {productDetail.length > 0 ? (
           productDetail.map((product) => (
-            <CartItem key={product.product._id} product={product} updateCartItem={updatedCartItem} />
+            <CartItem key={product.product._id} product={product} updateCartItem={updatedCartItem} removeFromCart={removeFromCart}  />
           ))
         ) : (
           <p className="text-center text-gray-500">Your cart is empty</p>

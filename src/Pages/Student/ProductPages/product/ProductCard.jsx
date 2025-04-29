@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import cart from "../../../../Components/Images/cart.png";
 import axios from "axios";
 
+
 const ProductCard = ({ product }) => {
   const [schoolName, setSchoolName] = useState('');
 
@@ -28,7 +29,7 @@ const ProductCard = ({ product }) => {
     const fetchStudentProfile = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/student/profile", {
+        const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/student/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
