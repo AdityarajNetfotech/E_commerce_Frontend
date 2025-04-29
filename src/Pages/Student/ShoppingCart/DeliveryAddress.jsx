@@ -169,16 +169,17 @@ function DeliveryAddress() {
             // ✅ Remove purchased products from cart
             for (const item of cartData) {
             try {
-            await axios.delete(
-            "https://e-commerce-backend-phi-five.vercel.app/api/cart/remove",
-            { productId: item.product._id }, 
-          {
-              headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+              await axios.delete(
+                "https://e-commerce-backend-phi-five.vercel.app/api/cart/remove",
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                  data: { productId: item.product._id },
+                }
+              );
+              
           } catch (err) {
         console.error(`Failed to remove product ${item.product} from cart:`, err.message);
       }
