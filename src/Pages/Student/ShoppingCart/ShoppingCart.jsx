@@ -43,7 +43,7 @@ const ShoppingCart = () => {
   
     // Redirect to product page if cart is empty
     if (updatedCart.length === 0) {
-      navigate("/products");
+      navigate("/Product");
     }
   };
 
