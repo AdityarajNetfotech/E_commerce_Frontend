@@ -12,6 +12,7 @@ import axios from 'axios';
 function CustomNavbar() {
   const [student, setStudent] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [cartItem, setCartItem] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
@@ -71,6 +72,26 @@ function CustomNavbar() {
     }
   };
 
+  const fetchCart = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      const response = await axios.get("https://e-commerce-backend-phi-five.vercel.app/api/cart", {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      });
+      setCartItem(response.data);
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudentProfile();
+    fetchCart();
+  }, []);
+
 
   return (
     <header className="flex justify-between items-center px-2 py-2 md:px-20 md:py-10 bg-yellow-400 w-full">
@@ -95,7 +116,13 @@ function CustomNavbar() {
 
       {/* Icons and Menu */}
       <div className="flex items-center space-x-4">
-        <img src={cart} className="w-10 h-10 cursor-pointer" onClick={() => handleNavigation("/ShoppingCart")} />
+      {cartItem.length > 0 && (
+      <img
+        src={cart}
+        className="w-10 h-10 cursor-pointer"
+        onClick={() => handleNavigation("/ShoppingCart")}
+       />
+    )}
 
         {/* User Dropdown - Desktop */}
         <div className="relative hidden md:block">

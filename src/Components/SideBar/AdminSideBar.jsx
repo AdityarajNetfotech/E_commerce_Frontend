@@ -90,13 +90,7 @@ const AdminSidebar = () => {
             >
               <NavLink to="/RegisterAdmin">Registered Admins</NavLink>
             </li>
-            <li
-              className={`px-6 py-2 rounded-md cursor-pointer ${
-                location.pathname === "/AdminAccountDetail" ? "bg-black text-white" : "hover:bg-black hover:text-white"
-              }`}
-            >
-              <NavLink to="/AdminAccountDetail">Account Detail</NavLink>
-            </li>
+
 
             <li
               className={`px-6 py-2 rounded-md cursor-pointer ${
