@@ -115,14 +115,13 @@ function CustomNavbar() {
       </div>
 
       {/* Icons and Menu */}
-      <div className="flex items-center space-x-4">
-      {cartItem.length > 0 && (
-      <img
-        src={cart}
-        className="w-10 h-10 cursor-pointer"
-        onClick={() => handleNavigation("/ShoppingCart")}
-       />
-    )}
+      <div className="relative">
+      <img src={cart} className="w-10 h-10 cursor-pointer" onClick={() => handleNavigation("/ShoppingCart")} />
+      <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      {cartItem.length}
+      </span>
+      </div>
+
 
         {/* User Dropdown - Desktop */}
         <div className="relative hidden md:block">
