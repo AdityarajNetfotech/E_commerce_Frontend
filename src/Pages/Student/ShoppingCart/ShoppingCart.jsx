@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../../../Components/Navbar/Navbar";
 import Footer from "../../../Components/Footer/Footer";
@@ -9,6 +10,7 @@ import OrderSummary from "../../../Components/order-summary/OrderSummary";
 
 const ShoppingCart = () => {
   const [cartItem, setCartItem] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCart();
@@ -35,6 +37,16 @@ const ShoppingCart = () => {
     }
   };
 
+  const removeFromCart = (productId) => {
+    const updatedCart = cartItem.filter(item => item.product._id !== productId);
+    setCartItem(updatedCart);
+  
+    // Redirect to product page if cart is empty
+    if (updatedCart.length === 0) {
+      navigate("/products");
+    }
+  };
+
   const updateCartItem = (productId, newQuantity) => {
     setCartItem((prevCart) =>
       prevCart.map((item) =>
@@ -52,7 +64,12 @@ const ShoppingCart = () => {
       <h1 className="text-2xl lg:text-3xl font-bold text-center mt-6">Shopping Cart</h1>
 
       <div className="flex flex-col lg:flex-row justify-center items-start p-4 gap-8">
-        <CartList productDetail={cartItem} updatedCartItem={updateCartItem} />
+      <CartList
+      productDetail={cartItem}
+      updatedCartItem={updateCartItem}
+      removeFromCart={removeFromCart}
+      />
+
         <OrderSummary totalPrice={totalPrice} />
       </div>
 
