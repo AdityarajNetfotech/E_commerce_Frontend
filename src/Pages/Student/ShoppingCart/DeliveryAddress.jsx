@@ -43,6 +43,7 @@ function DeliveryAddress() {
     }
   };
 
+
   const fetchStudentProfile = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -56,6 +57,7 @@ function DeliveryAddress() {
       console.error("Profile fetch error:", err.message);
     }
   };
+
 
   const fetchSavedAddress = async () => {
     try {
@@ -162,12 +164,32 @@ function DeliveryAddress() {
                 { headers: { Authorization: `Bearer ${token}` } }
               );
           
-              alert("Payment Successful!");
-              navigate("/OrderSuccessful");
+            alert("Payment Successful!");
+
+            // ✅ Remove purchased products from cart
+            for (const item of cartData) {
+            try {
+            await axios.post(
+            "https://e-commerce-backend-phi-five.vercel.app/api/cart/remove",
+            { productId: item.product }, // assuming item.product is the product ID
+          {
+              headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+          } catch (err) {
+        console.error(`Failed to remove product ${item.product} from cart:`, err.message);
+      }
+    }
+
+        navigate("/OrderSuccessful");
+
             } catch (error) {
               console.error("Payment verification failed:", error);
           
-              // ❌ Update paymentStatus to "Pending"
+
               const token = localStorage.getItem("authToken");
               const orderId = localStorage.getItem("latestOrderId");
           
