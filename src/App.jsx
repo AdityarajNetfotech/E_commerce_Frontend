@@ -135,6 +135,7 @@ function App() {
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
           <Route path="/ManageOrder" element={<ManageOrder />} />
+          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
