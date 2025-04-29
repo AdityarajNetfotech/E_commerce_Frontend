@@ -8,7 +8,7 @@ import {
 import ProtectedRoute from "./Components/protected-routes/ProtectedRoute";
 
 import AdminDashboard from "./Components/UserManagement/Admin/AdminDashboard";
-import OtpVerification from "./Components/UserManagement/Users/Otpverification";
+import OtpVerification from "./Components/UserManagement/Users/OtpVerification";
 //import SchoolDashboard from "./Components/User Management/School/SchoolDashboard";
 import UserRegister from "./Components/UserManagement/Users/UserRegister";
 import Userlogin from "./Components/UserManagement/Users/Userlogin";
@@ -118,7 +118,6 @@ function App() {
           <Route path="/ProdCatalogue" element={<ProductCatlogue />} />
           <Route path="/ManageOrders" element={<ManageOrders />} />
           <Route path="/ProdReview" element={<ProductReview />} />
-          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />
@@ -135,13 +134,18 @@ function App() {
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
           <Route path="/ManageOrder" element={<ManageOrder />} />
-          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
           <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
           <Route path="/BankDetail" element={<BankDetail />} />
         </Route>
+
+        {/* OrderDetails should be accessible by both admin and school */}
+        <Route element={<ProtectedRoute roles={["admin", "school"]} />}>
+        <Route path="/OrderDetails" element={<OrderDetails />} />
+        </Route>
+
       
         {/* Redirect Unknown Routes to Home */}
         <Route path="*" element={<Navigate to="/" />} />
