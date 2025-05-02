@@ -55,7 +55,7 @@ function DashboardScreen() {
 
         schools.forEach((school) => {
             const state = normalizeState(school.state);
-            const createdAt = school.createdAt ? parseISO(school.createdAt) : null;
+            const createdAt = school.createdAt ? new Date(school.createdAt) : null;
             if (!createdAt) return;
 
             if (isWithinInterval(createdAt, { start, end })) {
