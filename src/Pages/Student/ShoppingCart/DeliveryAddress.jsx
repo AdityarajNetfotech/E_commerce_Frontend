@@ -155,7 +155,7 @@ function DeliveryAddress() {
             try {
               await axios.post("https://e-commerce-backend-phi-five.vercel.app/api/payment/verify-payment", response);
           
-              // ✅ Update paymentStatus to "Paid"
+              //  Update paymentStatus to "Paid"
               const token = localStorage.getItem("authToken");
               const orderId = localStorage.getItem("latestOrderId");
           
@@ -166,7 +166,7 @@ function DeliveryAddress() {
           
             alert("Payment Successful!");
 
-            // ✅ Remove purchased products from cart
+            //  Remove purchased products from cart
             for (const item of cartData) {
             try {
               await axios.delete(
