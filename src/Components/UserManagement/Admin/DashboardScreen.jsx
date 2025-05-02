@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer
 } from 'recharts';
-import { parseISO, getWeek, getMonth, getYear } from 'date-fns';
+import {
+    parseISO,
+    isWithinInterval,
+    startOfWeek,
+    endOfWeek,
+    startOfMonth,
+    endOfMonth,
+    startOfYear,
+    endOfYear
+} from 'date-fns';
 import primaryIcon from "../../Images/PrimaryIcon.png";
 import { useNavigate } from "react-router-dom";
 
@@ -29,6 +38,19 @@ function DashboardScreen() {
 
     const groupSchoolsByStateAndTimeframe = (schools, timeframe) => {
         const now = new Date();
+        let start, end;
+
+        if (timeframe === "weekly") {
+            start = startOfWeek(now, { weekStartsOn: 1 }); // Start from Monday
+            end = endOfWeek(now, { weekStartsOn: 1 });
+        } else if (timeframe === "monthly") {
+            start = startOfMonth(now);
+            end = endOfMonth(now);
+        } else {
+            start = startOfYear(now);
+            end = endOfYear(now);
+        }
+
         const result = {};
 
         schools.forEach((school) => {
@@ -36,17 +58,7 @@ function DashboardScreen() {
             const createdAt = school.createdAt ? parseISO(school.createdAt) : null;
             if (!createdAt) return;
 
-            let isInTimeframe = false;
-
-            if (timeframe === "weekly") {
-                isInTimeframe = getWeek(createdAt) === getWeek(now) && getYear(createdAt) === getYear(now);
-            } else if (timeframe === "monthly") {
-                isInTimeframe = getMonth(createdAt) === getMonth(now) && getYear(createdAt) === getYear(now);
-            } else if (timeframe === "yearly") {
-                isInTimeframe = getYear(createdAt) === getYear(now);
-            }
-
-            if (isInTimeframe) {
+            if (isWithinInterval(createdAt, { start, end })) {
                 result[state] = (result[state] || 0) + 1;
             }
         });
@@ -119,7 +131,7 @@ function DashboardScreen() {
         fetchSchools();
         fetchOrderData();
         fetchStudentData();
-    }, [selectedTimeframe]); // 👈 re-fetch chartData when timeframe changes
+    }, [selectedTimeframe]);
 
     const handleButtonClick = (timeframe) => {
         setSelectedTimeframe(timeframe);
@@ -134,7 +146,6 @@ function DashboardScreen() {
             <div className="p-5 bg-white">
                 <div className="mx-auto bg-white">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {/* Cards for Revenue, Orders, Students */}
                         <div className="bg-[#FFF3CE] p-4 rounded-lg shadow-md space-y-4">
                             <div className="bg-white p-1 text-center font-bold">TOTAL ORDERS</div>
                             <div className="flex justify-between">
