@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+    LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer
+} from 'recharts';
+import { parseISO, getWeek, getMonth, getYear } from 'date-fns';
 import primaryIcon from "../../Images/PrimaryIcon.png";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +13,6 @@ function DashboardScreen() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [totalRevenue, setTotalRevenue] = useState(0);
-    const [previousRevenue, setPreviousRevenue] = useState(0); // ✅ new state
     const [completedOrders, setCompletedOrders] = useState(0);
     const [inTransitOrders, setInTransitOrders] = useState(0);
     const [totalStudents, setTotalStudents] = useState(0);
@@ -18,22 +20,44 @@ function DashboardScreen() {
     const navigate = useNavigate();
 
     const toTitleCase = (str) =>
-        str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase());
+        str.replace(/\w\S*/g, (txt) =>
+            txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
+        );
 
-    const groupSchoolsByState = (schools) => {
-        const stateCount = {};
+    const normalizeState = (state) =>
+        state?.trim().toLowerCase().replace(/\s+/g, " ") || "";
+
+    const groupSchoolsByStateAndTimeframe = (schools, timeframe) => {
+        const now = new Date();
+        const result = {};
+
         schools.forEach((school) => {
-            const rawState = school.state || "";
-            const state = rawState.trim().toLowerCase();
-            stateCount[state] = (stateCount[state] || 0) + 1;
+            const state = normalizeState(school.state);
+            const createdAt = school.createdAt ? parseISO(school.createdAt) : null;
+            if (!createdAt) return;
+
+            let isInTimeframe = false;
+
+            if (timeframe === "weekly") {
+                isInTimeframe = getWeek(createdAt) === getWeek(now) && getYear(createdAt) === getYear(now);
+            } else if (timeframe === "monthly") {
+                isInTimeframe = getMonth(createdAt) === getMonth(now) && getYear(createdAt) === getYear(now);
+            } else if (timeframe === "yearly") {
+                isInTimeframe = getYear(createdAt) === getYear(now);
+            }
+
+            if (isInTimeframe) {
+                result[state] = (result[state] || 0) + 1;
+            }
         });
-        return stateCount;
+
+        return result;
     };
 
-    const transformToChartData = (stateCount, scale = 1) => {
-        return Object.entries(stateCount).map(([state, count]) => ({   
+    const transformToChartData = (stateCount) => {
+        return Object.entries(stateCount).map(([state, count]) => ({
             name: toTitleCase(state),
-            uv: count * scale,
+            uv: count,
         }));
     };
 
@@ -45,8 +69,9 @@ function DashboardScreen() {
                 const data = await response.json();
                 const approvedSchools = data.schools.filter((school) => school.isApproved);
                 setSchools(approvedSchools);
-                const stateCount = groupSchoolsByState(approvedSchools);
-                setChartData(transformToChartData(stateCount, 1));
+
+                const stateCount = groupSchoolsByStateAndTimeframe(approvedSchools, selectedTimeframe);
+                setChartData(transformToChartData(stateCount));
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -59,29 +84,27 @@ function DashboardScreen() {
                 const res = await fetch("https://e-commerce-backend-phi-five.vercel.app/api/admin/all");
                 const data = await res.json();
                 const orders = data.orders || [];
-        
+
                 let revenue = 0;
                 let completed = 0;
                 let processing = 0;
-        
+
                 orders.forEach((order) => {
                     revenue += order.totalAmount || 0;
-        
                     if (order.orderStatus === "Delivered") {
                         completed += 1;
                     } else if (order.orderStatus === "Processing") {
                         processing += 1;
                     }
                 });
-        
+
                 setTotalRevenue(revenue);
                 setCompletedOrders(completed);
-                setInTransitOrders(processing); 
+                setInTransitOrders(processing);
             } catch (err) {
                 console.error("Error fetching order data:", err);
             }
         };
-        
 
         const fetchStudentData = async () => {
             try {
@@ -96,15 +119,12 @@ function DashboardScreen() {
         fetchSchools();
         fetchOrderData();
         fetchStudentData();
-    }, []);
+    }, [selectedTimeframe]); // 👈 re-fetch chartData when timeframe changes
 
     const handleButtonClick = (timeframe) => {
         setSelectedTimeframe(timeframe);
-        const stateCount = groupSchoolsByState(schools);
-        let scale = 1;
-        if (timeframe === "monthly") scale = 10;
-        if (timeframe === "yearly") scale = 100;
-        setChartData(transformToChartData(stateCount, scale));
+        const stateCount = groupSchoolsByStateAndTimeframe(schools, timeframe);
+        setChartData(transformToChartData(stateCount));
     };
 
     const visibleSchools = schools.slice(0, 4);
@@ -114,7 +134,7 @@ function DashboardScreen() {
             <div className="p-5 bg-white">
                 <div className="mx-auto bg-white">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                      
+                        {/* Cards for Revenue, Orders, Students */}
                         <div className="bg-[#FFF3CE] p-4 rounded-lg shadow-md space-y-4">
                             <div className="bg-white p-1 text-center font-bold">TOTAL ORDERS</div>
                             <div className="flex justify-between">
@@ -126,7 +146,6 @@ function DashboardScreen() {
                             <p className="text-[12px] text-right text-[#04103B]">Compared to Jan 2023</p>
                         </div>
 
-                       
                         <div className="bg-[#FFF3CE] p-4 rounded-lg shadow-md space-y-4">
                             <div className="bg-white p-1 text-center font-bold">ORDER STATUS</div>
                             <div className="flex justify-between items-center mt-6">
@@ -139,7 +158,6 @@ function DashboardScreen() {
                             </div>
                         </div>
 
-                       
                         <div className="bg-[#FFF3CE] p-4 rounded-lg shadow-md space-y-4">
                             <div className="bg-white p-1 text-center font-bold">TOTAL USERS</div>
                             <div className="flex justify-between items-center mt-6">
@@ -153,7 +171,7 @@ function DashboardScreen() {
                         </div>
                     </div>
 
-                   
+                    {/* Line Chart and School List */}
                     <div className="flex md:flex-row flex-col justify-between gap-6 mt-5">
                         <div className="bg-[#FAFAFA] p-4 rounded-lg shadow-md flex-2 w-full md:w-[70%]">
                             <div className="flex flex-col md:flex-row justify-between border-b border-[#8B8989]">
@@ -162,9 +180,7 @@ function DashboardScreen() {
                                     {["weekly", "monthly", "yearly"].map((label) => (
                                         <button
                                             key={label}
-                                            className={`border px-2 py-1 rounded-lg font-semibold hover:bg-black hover:text-white ${
-                                                selectedTimeframe === label ? "bg-black text-white" : "text-[#5B5454]"
-                                            }`}
+                                            className={`border px-2 py-1 rounded-lg font-semibold hover:bg-black hover:text-white ${selectedTimeframe === label ? "bg-black text-white" : "text-[#5B5454]"}`}
                                             onClick={() => handleButtonClick(label)}
                                         >
                                             {label.toUpperCase()}
@@ -179,7 +195,7 @@ function DashboardScreen() {
                                     <YAxis />
                                     <Tooltip
                                         contentStyle={{ backgroundColor: "#fff", borderColor: "#ccc" }}
-                                        formatter={(value) => [`${value}`, "Schools (scaled)"]}
+                                        formatter={(value) => [`${value}`, "Schools"]}
                                     />
                                     <Line type="monotone" dataKey="uv" stroke="#FFA500" strokeWidth={2} dot={{ r: 3 }} />
                                 </LineChart>
@@ -209,7 +225,6 @@ function DashboardScreen() {
                                             </div>
                                         </div>
                                     ))}
-
                                     <button
                                         className="bg-orange-500 text-white px-4 py-2 rounded-lg mx-auto block mt-5"
                                         onClick={() => navigate("/RegisterSchool")}
