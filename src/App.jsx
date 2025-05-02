@@ -58,6 +58,7 @@ import ExchangeRequestSuccessful from "./Components/Notifications/ExchangeReques
 import AdminRegister from "./Components/UserManagement/Admin/AdminRegister";
 import RegisterAdmin from "./Pages/Admin/RegisterAdmin/RegisterAdmin";
 import ManageOrder from "./Pages/Admin/ManageOrders/ManageOrders";
+import OrderDetail from "./Pages/Admin/ManageOrders/OrderDetail";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -118,6 +119,7 @@ function App() {
           <Route path="/ProdCatalogue" element={<ProductCatlogue />} />
           <Route path="/ManageOrders" element={<ManageOrders />} />
           <Route path="/ProdReview" element={<ProductReview />} />
+          <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/AccountDetail" element={<AccountDetail />} />
           <Route path='/ManageStudent' element={<ManageStudent />} />
           <Route path='/AllOrders' element={<AllOrderDetails />} />
@@ -134,18 +136,13 @@ function App() {
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
           <Route path="/PendingSchool" element={<PendingSchool />} />
           <Route path="/ManageOrder" element={<ManageOrder />} />
+          <Route path="/OrderDetail" element={<OrderDetail />} />
           <Route path="/RegisterSchool" element={<RegisterSchool />} />
           <Route path="/RegisterStudent" element={<RegisterStudent />} />
           <Route path="/RegisterAdmin" element={<RegisterAdmin />} />
           <Route path="/AdminAccountDetail" element={<AdminAccountDetail />} />
           <Route path="/BankDetail" element={<BankDetail />} />
         </Route>
-
-        {/* Shared Protected Route for School + Admin */}
-        <Route element={<ProtectedRoute roles={["admin", "school"]} />}>
-        <Route path="/OrderDetails" element={<OrderDetails />} />
-        </Route>
-
       
         {/* Redirect Unknown Routes to Home */}
         <Route path="*" element={<Navigate to="/" />} />

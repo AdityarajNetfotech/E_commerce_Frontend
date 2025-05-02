@@ -14,7 +14,7 @@ const OrderCard = ({ order }) => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate("/OrderDetails", { state: { order } });
+    navigate("/OrderDetail", { state: { order } });
   };
 
   return (
