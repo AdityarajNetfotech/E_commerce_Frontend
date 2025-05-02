@@ -64,10 +64,21 @@ function DashboardScreen() {
             }
         });
 
-        return Object.entries(result).map(([state, count]) => ({
+        const entries = Object.entries(result).map(([state, count]) => ({
             name: toTitleCase(state),
             uv: count,
         }));
+
+        if (entries.length === 0) {
+            let message = "No user registered";
+            if (timeframe === "weekly") message += " this week";
+            else if (timeframe === "monthly") message += " this month";
+            else message += " this year";
+
+            return [{ name: message, uv: 0 }];
+        }
+
+        return entries;
     };
 
     useEffect(() => {
@@ -178,7 +189,11 @@ function DashboardScreen() {
                 <div className="flex md:flex-row flex-col justify-between gap-6 mt-5">
                     <div className="bg-[#FAFAFA] p-4 rounded-lg shadow-md w-full md:w-[70%]">
                         <div className="flex flex-col md:flex-row justify-between border-b border-[#8B8989]">
-                            <div className="text-lg font-bold mb-2">Registered Schools by State</div>
+                            <div className="text-lg font-bold mb-2">
+                                {chartData.length === 1 && chartData[0].uv === 0
+                                    ? chartData[0].name
+                                    : "Registered Schools by State"}
+                            </div>
                             <div className="flex gap-2 mb-2">
                                 {["weekly", "monthly", "yearly"].map((label) => (
                                     <button
