@@ -8,7 +8,7 @@ function ManageOrder() {
   const ManageOrder = "Manage Orders";
 
   return (
-    <div className="overflow-x-hidden bg-[#ECECEC]">
+    <div className=" bg-[#ECECEC]">
       <div className="flex flex-col lg:flex-row min-h-screen">
         <AdminSidebar />
 
