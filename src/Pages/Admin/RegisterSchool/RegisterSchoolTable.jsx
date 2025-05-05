@@ -9,7 +9,7 @@ const RegisterSchoolTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
-  const [schoolToDelete, setSchoolToDelete] = useState(null)
+  const [schoolToDelete, setSchoolToDelete] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const schoolsPerPage = 3; // Adjust the number of schools per page
 
@@ -24,7 +24,7 @@ const RegisterSchoolTable = () => {
         }
         const data = await response.json();
         console.log(data);
-        
+
         const approvedSchools = data.schools.filter(
           (school) => school.isApproved
         );
@@ -103,20 +103,20 @@ const RegisterSchoolTable = () => {
     <div className="mx-auto bg-[#ECECEC] p-4">
       <div className="p-5 bg-white">
         <div className="bg-yellow-100 p-4 rounded-lg shadow-md space-y-4">
-            <div className="flex flex-wrap items-center gap-5">
-          <div className="flex items-center space-x-2 bg-white">
-            <input
-              className="p-2 rounded-lg border-0 focus:outline-none focus:ring-3 focus:ring-yellow-500 w-full sm:w-auto"
-              type="text"
-              placeholder="Search registered schools"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+          <div className="flex flex-wrap items-center gap-5">
+            <div className="flex items-center space-x-2 bg-white">
+              <input
+                className="p-2 rounded-lg border-0 focus:outline-none focus:ring-3 focus:ring-yellow-500 w-full sm:w-auto"
+                type="text"
+                placeholder="Search registered schools"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-             <button className="text-yellow-500 p-1">
-              <img src={search} alt="Search" />
-            </button>
+              <button className="text-yellow-500 p-1">
+                <img src={search} alt="Search" />
+              </button>
+            </div>
           </div>
-              </div>
           <div className="flex flex-wrap justify-between items-center gap-4">
             <div className="text-2xl font-semibold">
               <span className="text-4xl">{filteredSchools.length}</span>{" "}
@@ -138,7 +138,9 @@ const RegisterSchoolTable = () => {
                   <th className="py-2 px-4 text-left">Email</th>
                   <th className="py-2 px-4 text-left">Mobile</th>
                   <th className="py-2 px-4 text-left">State</th>
+                  <th className="py-2 px-4 text-left">Date</th>
                   <th className="py-2 px-4 text-left">Address</th>
+                  <th className="py-2 px-4 text-left">Gst No.</th>
                   <th className="py-2 px-4 text-left">Affiliation Number</th>
                   <th className="py-2 px-4 text-left">
                     Affiliation Certificate
@@ -154,7 +156,20 @@ const RegisterSchoolTable = () => {
                       <td className="py-2 px-4">{school.email || "N/A"}</td>
                       <td className="py-2 px-4">{school.mobile || "N/A"}</td>
                       <td className="py-2 px-4">{school.state || "N/A"}</td>
+                      <td className="py-2 px-4">
+                        {school.createdAt
+                          ? new Date(school.createdAt).toLocaleDateString(
+                              "en-IN",
+                              {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric",
+                              }
+                            )
+                          : "N/A"}
+                      </td>
                       <td className="py-2 px-4">{school.address || "N/A"}</td>
+                      <td className="py-2 px-4">{school.gstNumber || "N/A"}</td>
                       <td className="py-2 px-4">
                         {school.affiliationNumber || "N/A"}
                       </td>
@@ -240,13 +255,25 @@ const RegisterSchoolTable = () => {
         </div>
       )}
 
-{deleteConfirmation && (
+      {deleteConfirmation && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md bg-opacity-50">
           <div className="bg-white p-5 rounded-lg shadow-lg max-w-sm w-full text-center">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to delete this school?</p>
+            <p className="text-lg font-semibold mb-4">
+              Are you sure you want to delete this school?
+            </p>
             <div className="flex justify-center gap-4">
-              <button onClick={deleteSchool} className="px-4 py-2 bg-red-500 text-white rounded-lg">Yes</button>
-              <button onClick={() => setDeleteConfirmation(false)} className="px-4 py-2 bg-gray-400 text-white rounded-lg">No</button>
+              <button
+                onClick={deleteSchool}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg"
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setDeleteConfirmation(false)}
+                className="px-4 py-2 bg-gray-400 text-white rounded-lg"
+              >
+                No
+              </button>
             </div>
           </div>
         </div>
