@@ -1,36 +1,35 @@
-import React from 'react'
+import React from 'react';
 import AdminSidebar from "../../../Components/SideBar/AdminSideBar";
 import Header from '../PendingSchool/header/Header';
 import Footer from "../../../Components/Footer/Footer";
 import RegisterSchoolTable from './RegisterSchoolTable';
 
-
 function RegisterSchool() {
-
-  const RegisterSchool = "Registered Schools"
+  const RegisterSchool = "Registered Schools";
 
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row min-h-screen ">
+    <div className="overflow-x-hidden bg-[#ECECEC]">
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        {/* Sidebar */}
         <div>
           <AdminSidebar />
         </div>
-        <div className=" flex flex-col flex-1 ">
 
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 w-full">
           <Header heading={RegisterSchool} />
 
-          <div className="flex-1 overflow-auto">
-            <RegisterSchoolTable/>
-
-          </div>
-
-
+          <main className="flex-1 w-full px-4 sm:px-6 lg:px-8">
+            {/* Register School Table */}
+            <RegisterSchoolTable />
+          </main>
         </div>
       </div>
-      <Footer />
 
+      {/* Footer */}
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default RegisterSchool
+export default RegisterSchool;
