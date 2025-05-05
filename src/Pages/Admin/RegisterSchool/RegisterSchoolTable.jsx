@@ -130,7 +130,7 @@ const RegisterSchoolTable = () => {
         ) : error ? (
           <p className="text-center text-red-500 mt-4">{error}</p>
         ) : (
-          <div className="mt-4 bg-white rounded-lg w-full overflow-x-auto">
+          <div className=" bg-white rounded-lg w-full overflow-x-auto">
             <table className="min-w-full table-auto border-spacing-y-3 border-separate">
               <thead className="bg-[#F4F4F4]">
                 <tr>
