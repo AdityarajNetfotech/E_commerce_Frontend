@@ -19,7 +19,7 @@ function RegisterSchool() {
         <div className="flex flex-col flex-1 w-full">
           <Header heading={RegisterSchool} />
 
-          <main className="flex-1 w-full px-4 sm:px-2 lg:px-6">
+          <main className="flex-1 w-full px-2 sm:px-2 lg:px-6">
             {/* Register School Table */}
             <RegisterSchoolTable />
           </main>

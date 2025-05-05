@@ -1,36 +1,28 @@
-import React from 'react'
+import React from 'react';
 import AdminSidebar from "../../../Components/SideBar/AdminSideBar";
 import Header from '../PendingSchool/header/Header';
 import Footer from "../../../Components/Footer/Footer";
 import OrderList from './orders/OrderList';
 
-
 function ManageOrder() {
-
-  const ManageOrder = "Manage Orders"
+  const ManageOrder = "Manage Orders";
 
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row min-h-screen ">
-        <div>
-          <AdminSidebar />
-        </div>
-        <div className=" flex flex-col flex-1 ">
+    <div className="overflow-x-hidden bg-[#ECECEC]">
+      <div className="flex flex-col lg:flex-row min-h-screen">
+        <AdminSidebar />
 
+        <div className="flex flex-col flex-1 w-full">
           <Header heading={ManageOrder} />
 
-          <div className="flex-1 overflow-auto">
-             <OrderList />
-
-          </div>
-
-
+          <main className="flex-1 w-full px-2 sm:px-2 lg:px-5">
+            <OrderList />
+          </main>
         </div>
       </div>
       <Footer />
-
     </div>
-  )
+  );
 }
 
 export default ManageOrder;
