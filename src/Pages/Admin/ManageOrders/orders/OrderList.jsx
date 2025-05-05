@@ -220,33 +220,33 @@ const OrderList = () => {
             </div>
 
             {/* Order Table */}
-            <div className="mt-4 bg-white rounded-lg overflow-x-auto">
-              <table className="w-full border-spacing-y-2 border-separate min-w-max">
-                <thead className="bg-[#F4F4F4]">
-                  <tr className="text-left">
-                    <th className="p-3">Order ID</th>
-                    <th className="p-3">Product Detail</th>
-                    <th className="p-3">Customer</th>
-                    <th className="p-3">School</th>
-                    <th className="p-3">Total</th>
-                    <th className="p-3">Status</th>
-                    <th className="p-3">Date</th>
-                    <th className="p-3">Detail</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paginatedOrders.length > 0 ? (
-                    paginatedOrders.map(order => <OrderCard key={order._id} order={order} />)
-                  ) : (
-                    <tr>
-                      <td colSpan="7" className="text-center py-10">
-                        <p className="text-xl text-gray-500 font-medium">⚠️ No orders found.</p>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <div className="mt-4 bg-white rounded-lg w-full overflow-x-auto">
+            <table className="min-w-[1000px] w-full table-auto border-spacing-y-2 border-separate">
+            <thead className="bg-[#F4F4F4]">
+            <tr className="text-left">
+            <th className="p-3">Order ID</th>
+            <th className="p-3">Product Detail</th>
+            <th className="p-3">Customer</th>
+            <th className="p-3">School</th>
+            <th className="p-3">Total</th>
+            <th className="p-3">Status</th>
+            <th className="p-3">Date</th>
+            <th className="p-3">Detail</th>
+          </tr>
+        </thead>
+            <tbody>
+            {paginatedOrders.length > 0 ? (
+            paginatedOrders.map(order => <OrderCard key={order._id} order={order} />)
+          ) : (
+          <tr>
+            <td colSpan="8" className="text-center py-10">
+            <p className="text-xl text-gray-500 font-medium">⚠️ No orders found.</p>
+          </td>
+          </tr>
+        )}
+          </tbody>
+       </table>
+      </div>
 
             {/* Pagination Controls */}
             <div className="flex justify-center items-center mt-4 gap-6">
