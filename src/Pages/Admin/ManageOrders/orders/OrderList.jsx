@@ -220,8 +220,8 @@ const OrderList = () => {
             </div>
 
             {/* Order Table */}
-            <div className="mt-4 bg-white rounded-lg overflow-x-auto">
-              <table className="w-full border-spacing-y-2 border-separate min-w-max">
+            <div className="mt-4 bg-white rounded-lg w-full overflow-x-auto">
+              <table className="w-full table-auto border-spacing-y-2 border-separate min-w-max">
                 <thead className="bg-[#F4F4F4]">
                   <tr className="text-left">
                     <th className="p-3">Order ID</th>
